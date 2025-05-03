@@ -51,7 +51,7 @@
 
 | Syntax                   | Description                      |
 |--------------------------|----------------------------------|
-| convert v to DT          | Converts value v to data type DT |
+| convert v to DT          | Converts variable or value v to data type DT |
 | Example: convert a to int| Converts a to integer            |
 
 ---
