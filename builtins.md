@@ -1,45 +1,33 @@
-# Dyno Language Built-in Functions Reference
+# Dyno Language Built-in Functions
 
-> This file lists all core built-in functions officially supported in the *Dyno* programming language. These functions enhance user productivity by providing essential utilities out-of-the-box.
-
----
-
-## Mathematical Functions
-
-| Function       | Description                            | Example                     |
-|----------------|----------------------------------------|-----------------------------|
-| absol(x)       | Returns absolute value of x            | absol(-10) → 10             |
-| exponent(a, b) | Returns a raised to the power of b     | exponent(2, 3) → 8          |
-| Roff(x)        | Rounds a number to nearest integer     | Roff(2.6) → 3               |
+> This file lists official *Dyno* built-in functions that support math, string, and general-purpose operations. These functions are universal and work across all Dyno applications.
 
 ---
 
-## String Operations
+## Math Functions
 
-| Function         | Description                            | Example                              |
-|------------------|----------------------------------------|--------------------------------------|
-| concat(s1, s2)   | Concatenates two strings               | concat("Hi", "There") → "HiThere"    |
-
----
-
-## List & Collection Functions
-
-| Function     | Description                            | Example                     |
-|--------------|----------------------------------------|-----------------------------|
-| vol(x)       | Returns the number of items in x      | vol([1, 2, 3]) → 3          |
+| Function    | Description                          | Example                |
+|-------------|--------------------------------------|------------------------|
+| absol(v)   | Returns the absolute value           | absol(-9) → 9          |
+| elev(x, y) | Raises x to the power of y           | elev(2, 3) → 8         |
+| roff(v)    | Rounds off a float to nearest int    | roff(2.6) → 3          |
 
 ---
 
-## Type Conversion
+## Length & Size
 
-> Handled using the `convert v to DT` syntax as specified in **Keywords.md**.
-
----
-
-## File Operations
-
-> See `fetch` and `modify` under the **File I/O** section of **Keywords.md**.
+| Function  | Description                     | Example                |
+|-----------|---------------------------------|------------------------|
+| vol(obj) | Returns length or size of object | vol("Dyno") → 4        |
 
 ---
 
-This file will grow as Dyno evolves, and new built-ins will be added to match the language's expressiveness and user-oriented philosophy.
+## String Functions
+
+| Function        | Description                          | Example                          |
+|-----------------|--------------------------------------|----------------------------------|
+| merge(s1, s2)  | Concatenates two strings             | merge("Hi ", "there") → "Hi there" |
+
+---
+
+This file evolves as more core utilities are added to Dyno's ecosystem.
