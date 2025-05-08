@@ -14,23 +14,23 @@
 |------------------|------------------------|
 | Paral        | Async                  |
 | Hold         | Await                  |
-| Thread       | Flow                   |
-| Lock         | Barrier                |
+| Flow         | Thread                 |
+| Barrier      | Lock                   |
 | Permit       | Semaphore              |
 | Signal       | Event                  |
 
 ### File Handling
 | Dyno Keyword | Equivalent         |
 |------------------|------------------------|
-| Get          | Fetch                  |
-| Change       | Modify                 |
+| Fetch        | Read                   |
+| Modify       | Write                  |
 | Unlock       | Open                   |
 | Seal         | Close                  |
 
 ### Type Handling/Checking
 | Dyno Keyword | Equivalent         |
 |------------------|------------------------|
-| Kind         | Type checking          |
+| Kind         | Type checking                   |
 | Convert V To DT    | Converts any variable V to user desired data type DT |
 
 ### Inheritance
@@ -43,15 +43,15 @@
 ### Memory Management
 | Dyno Keyword | Equivalent         |
 |------------------|------------------------|
-| Slip         | Free Memory            |
-| Wipe         | Garbage Collection     |
+| Slip      | Free Memory            |
+| Wipe      | Garbage Collection     |
 
 ### Miscellaneous Operations
 | Dyno Keyword | Equivalent         |
 |------------------|------------------------|
-| Certify      | Authen (Verify/Assert) |
-| Alter        | Transform (Map)        |
-| Aggregate    | Reduce (Aggregate)     |
+| Authen       | Verify/Assert          |
+| Transform    | Map                    |
+| Reduce       | Aggregate              |
 
 ### Data Serialization
 | Dyno Keyword | Equivalent         |
@@ -83,3 +83,20 @@
 | Alter        | Conditional (elif)    |
 | Altern       | Conditional (else)    |
 | Conclude     | Finally Block         |
+
+### Modules & Libraries
+| Dyno Keyword | Equivalent         |
+|------------------|------------------------|
+| Use           | Import                 |
+| Share         | Export                 |
+| Toolkit       | Module                 |
+
+---
+
+### Task Handling
+| Dyno Keyword | Equivalent         |
+|------------------|------------------------|
+| Task         | Task/Thread Creation   |
+| Join         | Synchronizing Tasks    |
+| Flow         | Threading              |
+| Signal       | Event                  |
