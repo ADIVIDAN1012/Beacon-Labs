@@ -97,6 +97,6 @@
 | Dyno Keyword | Equivalent         |
 |------------------|------------------------|
 | Task         | Task/Thread Creation   |
-| Join         | Synchronizing Tasks    |
+| link         | Synchronizing Tasks    |
 | Flow         | Threading              |
 | Signal       | Event                  |
