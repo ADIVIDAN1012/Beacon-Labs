@@ -27,7 +27,7 @@
 |--------------|--------------------|---------------------------------------|
 | Fetch        | Read               | `var data = Fetch filePath`             |
 | Modify       | Write              | `Modify filePath with data`             |
-| Unlock       | Open               | `Unlock filePath`                       |
+| inlet      | Open               | `inlet filePath`                       |
 | Seal         | Close              | `Seal filePath`                         |
 
 ## Type Handling/Checking
