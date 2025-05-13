@@ -6,7 +6,7 @@
 
 Dyno is dynamically typed. You don't need to declare types explicitly. Variables are assigned using the = operator.
 
-dyno
+
 x = 42
 name = "Dyno"
 flag = true
@@ -15,14 +15,14 @@ data = [1, 2, 3]
 
 ### Type Conversion
 
-dyno
+
 convert x to float
 convert val to string
 
 
 ### Type Checking
 
-dyno
+
 kind(x)
 
 
@@ -32,7 +32,7 @@ kind(x)
 
 Use spec to define a function. Use send to return a value.
 
-dyno
+
 spec greet():
     output("Hello")
 
@@ -42,7 +42,7 @@ spec add(a, b):
 
 Call functions with funcall.
 
-dyno
+
 funcall greet()
 
 
@@ -52,7 +52,7 @@ funcall greet()
 
 Use check, alter, and altern:
 
-dyno
+
 check x > 0:
     output("Positive")
 alter x == 0:
@@ -67,14 +67,14 @@ altern:
 
 ### Traverse Loop (like for)
 
-dyno
+
 traverse i from 1 to 5:
     output(i)
 
 
 ### Until Loop (like while)
 
-dyno
+
 until x == 5:
     x = x + 1
 
@@ -83,7 +83,7 @@ until x == 5:
 
 ## Error Handling
 
-dyno
+
 attempt:
     riskyFunc()
 trap error:
@@ -98,7 +98,7 @@ conclude:
 
 Use blueprint for classes. prep defines the constructor. own refers to the current object.
 
-dyno
+
 blueprint Person:
     prep(n):
         own.name = n
@@ -108,7 +108,7 @@ blueprint Person:
 
 Use adopt for inheritance:
 
-dyno
+
 blueprint Student adopt Person:
     prep(n, id):
         Person.prep(n)
@@ -121,7 +121,7 @@ blueprint Student adopt Person:
 
 Use bridge to define user interaction interfaces.
 
-dyno
+
 bridge Login:
     ask username
     ask password
@@ -134,7 +134,6 @@ bridge Login:
 
 Use den:
 
-dyno
 square = den x: x * x
 
 
@@ -143,12 +142,11 @@ square = den x: x * x
 ## Comments
 
 Single-line:
-dyno
+
 < This is a comment >
 
 
 Multi-line:
-dyno
 <^
 This is a 
 multi-line comment
@@ -159,7 +157,7 @@ multi-line comment
 
 ## File I/O
 
-dyno
+
 fetch("file.txt")
 modify("file.txt", content)
 
@@ -175,7 +173,7 @@ modify("file.txt", content)
 - belong() – membership check
 - infuse() – insert or push into collections
 - tag() – enumerate elements
-- track() – log or trace behavior
+- track() – log or trace behaviour
 - forward – send data from functions
 - plug – load or connect toolkits
 - toolkit – collection of reusable code
