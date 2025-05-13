@@ -1,112 +1,109 @@
-# Dyno Programming Language Syntax
+# Dyno Programming Language - Keywords
 
-## Access Control
+### *Access Control*
+| *Dyno Keyword* | *Equivalent*         |
+|----------------|----------------------|
+| *Covnito*      | Private              |
+| *Shel*         | Protected            |
+| *Avail*        | Public               |
+| *Internal*     | Package-level access |
+| *Expose*       | Internal/Public exposure |
 
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Covnito      | Private            | `Covnito varName`                      |
-| Shel         | Protected          | `Shel varName`                         |
-| Avail        | Public             | `Avail varName`                        |
-| Internal     | Package-level access| `Internal varName`                     |
-| Expose       | Internal/Public exposure | `Expose varName`                  |
+### *Concurrency/Parallelism*
+| *Dyno Keyword* | *Equivalent*         |
+|----------------|----------------------|
+| *Paral*        | Async                |
+| *Hold*         | Await                |
+| *Flux*         | Flow                 |
+| *Barrier*      | Lock                 |
+| *Permit*       | Semaphore            |
+| *Signal*       | Event                |
 
-## Concurrency/Parallelism
+### *File Handling*
+| *Dyno Keyword* | *Equivalent*         |
+|----------------|----------------------|
+| *Fetch*        | Read                 |
+| *Modify*       | Write                |
+| *inlet*        | Open                 |
+| *Seal*         | Close                |
 
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Paral        | Async              | `Paral funcName() { ... }`             |
-| Hold         | Await              | `Hold asyncFunc()`                      |
-| Flux         | Flow               | `Flux dataStream = ...`                 |
-| Barrier      | Lock               | `Barrier lockName { ... }`              |
-| Permit       | Semaphore          | `Permit semName(count)`                  |
-| Signal       | Event              | `Signal eventName`                      |
+### *Type Handling/Checking*
+| *Dyno Keyword*     | *Equivalent*         |
+|--------------------|----------------------|
+| *Kind*             | Type checking        |
+| *Convert V To DT*  | Converts any variable V to user desired data type DT |
 
-## File Handling
+### *Inheritance*
+| *Dyno Keyword* | *Equivalent*         |
+|----------------|----------------------|
+| *Adopt*        | Inheritance          |
+| *Father*       | Base Class           |
+| *Child*        | Derived Class        |
 
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Fetch        | Read               | `var data = Fetch filePath`             |
-| Modify       | Write              | `Modify filePath with data`             |
-| inlet      | Open               | `inlet filePath`                       |
-| Seal         | Close              | `Seal filePath`                         |
+### *Memory Management*
+| *Dyno Keyword* | *Equivalent*         |
+|----------------|----------------------|
+| *Slip*         | Free Memory          |
+| *Wipe*         | Garbage Collection   |
 
-## Type Handling/Checking
+### *Miscellaneous Operations*
+| *Dyno Keyword* | *Equivalent*         |
+|----------------|----------------------|
+| *Authen*       | Verify/Assert        |
+| *Transform*    | Map                  |
+| *Reduce*       | Aggregate            |
 
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Kind         | Type checking      | `kind(var)`                            |
-| Convert V To DT | Convert variable V to data type DT | `Convert x To Int`         |
+### *Data Serialization*
+| *Dyno Keyword* | *Equivalent*         |
+|----------------|----------------------|
+| *Pack*         | Serialize            |
+| *Unpack*       | Deserialize          |
 
+### *Event Handling*
+| *Dyno Keyword* | *Equivalent*         |
+|----------------|----------------------|
+| *Listen*       | Event Binding        |
+| *Trigger*      | Emit Event           |
 
-## Inheritance
+### *Debugging/Logging*
+| *Dyno Keyword* | *Equivalent*         |
+|----------------|----------------------|
+| *Track*        | Debug Information    |
+| *Trace*        | Execution Tracing    |
+| *Watch*        | Watch Variables      |
 
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Adopt        | Inheritance        | `Child Adopt Father { ... }`            |
-| Father       | Base Class         | `Toolkit Father { ... }`                 |
-| Child        | Derived Class      | `Toolkit Child Adopt Father { ... }`    |
+### *Special Features*
+| *Dyno Keyword* | *Feature*            |
+|----------------|----------------------|
+| *Spec*         | Function Definition  |
+| *Send*         | Function Return      |
+| *Check*        | Conditional (if)     |
+| *Alter*        | Conditional (elif)   |
+| *Altern*       | Conditional (else)   |
+| *Conclude*     | Finally Block        |
+| *Skelet*       | Abstract Class       |
+| *Decon*        | Deconstruct          |
 
-## Memory Management
+### *System/Environment Operations*
+| *Dyno Keyword* | *Equivalent*         |
+|----------------|----------------------|
+| *Plug*         | Import               |
+| *Share*        | Export               |
+| *Toolkit*      | Module               |
+| *Bloc*         | Batch/Block operation|
+| *Embed*        | Include/Embed resources|
+| *Bridge*       | Interface            |
+| *Link*         | Join                 |
+| *Belong*       | Inherits from        |
+| *Peek*         | Access               |
+| *Infuse*       | Inject/Populate      |
 
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Slip         | Free Memory        | `Slip varName`                         |
-| Wipe         | Garbage Collection | `Wipe`                                |
-
-## Miscellaneous Operations
-
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Authen       | Verify/Assert      | `Authen condition`                     |
-| Transform    | Map                | `Transform collection with func`      |
-| Reduce       | Aggregate          | `Reduce collection with func`          |
-
-## Data Serialization
-
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Pack         | Serialize          | `var packedData = Pack data`            |
-| Unpack       | Deserialize        | `var data = Unpack packedData`          |
-
-## Event Handling
-
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Listen       | Event Binding      | `Listen eventName with handler`         |
-| Trigger      | Emit Event         | `Trigger eventName`                     |
-
-## Debugging/Logging
-
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Track        | Debug Information  | `Track "message"`                      |
-| Trace        | Execution Tracing  | `Trace`                               |
-| Watch        | Watch Variables    | `Watch varName`                        |
-
-## Special Features
-
-| Dyno Keyword | Feature            | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Spec         | Function Definition| `Spec funcName(params) { ... }`        |
-| Send         | Function Return    | `Send value`                          |
-| Check        | Conditional (if)   | `Check condition { ... }`              |
-| Alter        | Conditional (elif) | `Alter condition { ... }`              |
-| Altern       | Conditional (else) | `Altern { ... }`                       |
-| Conclude     | Finally Block      | `Conclude { ... }`                     |
-| Skelet       | Abstract Class     | `Skelet className { ... }`             |
-| Decon        | Deconstruct        | `Decon varName into parts`             |
-
-## System/Environment Operations
-
-| Dyno Keyword | Equivalent         | Syntax Example                          |
-|--------------|--------------------|---------------------------------------|
-| Plug         | Import             | `Plug toolkitName`                     |
-| Share        | Export             | `Share funcName`                       |
-| Toolkit      | Module             | `Toolkit toolkitName { ... }`          |
-| Bloc         | Batch/Block operation | `Bloc { ... }`                      |
-| Embed        | Include/Embed resources | `Embed resourceName`               |
-| Bridge       | Interface          | `Bridge interfaceName { ... }`         |
-| Link         | Join               | `Link obj1 with obj2`                  |
-| Belong       | Inherits from      | `className Belong baseClass`           |
-| Peek         | Access             | `Peek varName`                         |
-| Infuse       | Inject/Populate    | `Infuse obj with data`                  |
+### *Error Handling*
+| *Dyno Keyword* | *Equivalent*         | *Purpose*                          |
+|----------------|----------------------|----------------------------------|
+| *attempt*      | try                  | Begin a block that may raise an error |
+| *trap*         | catch                | Handle a specific error           |
+| *conclude*     | finally              | Always run code regardless of errors |
+| *trigger*      | raise                | Manually raise an error           |
+| *check*        | if                   | Conditional check inside error blocks |
+| *peek*         | Exception object     | View the error message/data caught in trap |
