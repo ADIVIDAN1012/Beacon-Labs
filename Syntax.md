@@ -1,184 +1,337 @@
-# Dyno Syntax Reference
+# Syntax for Dyno Programming Language
 
----
+## Variable Declaration
+Variables in Dyno are dynamically typed, allowing developers to assign values without explicitly defining their types. This makes coding more intuitive and reduces the overhead of type management.
 
-## Variables and Data Types
+``` 
+var name = "Dyno"
+var age = 25
+```
 
-Dyno is dynamically typed. You don't need to declare types explicitly. Variables are assigned using the = operator.
+## Conditional Statements
 
+Dyno provides a structured way to handle decision-making with its conditional syntax.
 
-x = 42
-name = "Dyno"
-flag = true
-data = [1, 2, 3]
+### Check
+Used for standard if conditions.
 
+```
+check condition {
+    <Code executes if condition is true>
+}
+```
 
-### Type Conversion
+### Alter
+Acts as an else if, allowing multiple conditions.
 
+```
+check condition {
+    <Code executes if condition is true>
+} alter another_condition {
+    <Code executes if another_condition is true>
+}
+```
 
-convert x to float
-convert val to string
+### Altern
+Functions like else, executing when no prior conditions are met.
 
-
-### Type Checking
-
-
-kind(x)
-
-
----
-
-## Functions
-
-Use spec to define a function. Use send to return a value.
-
-
-spec greet():
-    output("Hello")
-
-spec add(a, b):
-    send a + b
-
-
-Call functions with funcall.
-
-
-funcall greet()
-
-
----
-
-## Conditionals
-
-Use check, alter, and altern:
-
-
-check x > 0:
-    output("Positive")
-alter x == 0:
-    output("Zero")
-altern:
-    output("Negative")
-
-
----
+```
+check condition {
+    <Code executes if condition is true>
+} altern {
+    <Code executes if no condition is true>
+}
+```
 
 ## Loops
 
-### Traverse Loop (like for)
+### Until
+Executes code while a condition remains true, similar to while loops.
 
+```
+until condition {
+    <Code executes until condition is false>
+}
+```
 
-traverse i from 1 to 5:
-    output(i)
+### Traverse
+Iterates over a range, similar to for loops.
 
+```
+traverse variable from 1 to 10 {
+    <Code executes for each iteration>
+}
+```
 
-### Until Loop (like while)
+## Functions
 
+### Spec
+Defines reusable blocks of code.
 
-until x == 5:
-    x = x + 1
+```
+spec function_name() {
+    <Function body>
+}
+```
 
+### Funcall
+Invokes a function.
 
----
+```
+funcall function_name()
+```
+
+### Send
+Returns a value from a function.
+
+```
+send result
+```
 
 ## Error Handling
 
+### Attempt
+Handles operations that may cause errors.
 
-attempt:
-    riskyFunc()
-trap error:
-    output("Error occurred")
-conclude:
-    output("Done")
+```
+attempt {
+    <Code that might throw an error>
+}
+```
 
+### Trap
+Captures errors, preventing application crashes.
 
----
+```
+attempt {
+    <Code that might throw an error>
+} trap error {
+    <Handle the error>
+}
+```
 
-## Object Orientation
+### Conclude
+Executes code regardless of error occurrence.
 
-Use blueprint for classes. prep defines the constructor. own refers to the current object.
+```
+attempt {
+    <Code that might throw an error>
+} trap error {
+    <Handle the error>
+} conclude {
+    <Code to execute always>
+}
+```
 
+## Data Types
 
-blueprint Person:
-    prep(n):
-        own.name = n
-    spec greet():
-        output("Hi, I am " + own.name)
+### Kind
+Checks a variable's type.
 
+```
+kind(variable)
+```
 
-Use adopt for inheritance:
+### Convert
+Converts a variable to a specified type.
 
+```
+convert variable to int
+```
 
-blueprint Student adopt Person:
-    prep(n, id):
-        Person.prep(n)
-        own.id = id
+## Memory Management
 
+### Slip
+Frees allocated memory.
 
----
+```
+slip variable
+```
 
-## User-Oriented Programming (UOP)
+### Wipe
+Initiates garbage collection.
 
-Use bridge to define user interaction interfaces.
+```
+wipe variable
+```
 
+## Miscellaneous Operations
 
-bridge Login:
-    ask username
-    ask password
-    send authen(username, password)
+### Authen
+Performs validation or authentication checks.
 
+```
+authen condition
+```
 
----
+### Transform
+Applies a function to a list, modifying its contents.
 
-## Lambda Functions
+```
+transform list with function
+```
 
-Use den:
+### Reduce
+Aggregates list elements using a function.
 
-square = den x: x * x
+```
+reduce list with function
+```
 
+## Event Handling
 
----
+### Listen
+Binds an event to a handler.
 
-## Comments
+```
+listen event to handler
+```
 
-Single-line:
+### Trigger
+Emits an event.
 
-< This is a comment >
+```
+trigger event
+```
 
+## File Handling
 
-Multi-line:
-<^
-This is a 
-multi-line comment
-^>
+### Fetch
+Reads data from a file.
 
+```
+fetch file
+```
 
----
+### Modify
+Writes data to a file.
 
-## File I/O
+```
+modify file with data
+```
 
+### Unlock
+Opens a file for operations.
 
-fetch("file.txt")
-modify("file.txt", content)
+```
+unlock file
+```
 
+### Seal
+Closes a file.
 
----
+```
+seal file
+```
 
-## Other Keywords
+## Type Handling
 
-- flux – for control flow management
-- trap, trigger – for error handling
-- bloc – for grouped code execution
-- peek() – access value without altering
-- belong() – membership check
-- infuse() – insert or push into collections
-- tag() – enumerate elements
-- track() – log or trace behaviour
-- forward – send data from functions
-- plug – load or connect toolkits
-- toolkit – collection of reusable code
-- link – join collections
-- bridge – user interface definition
-- decon – deconstruct data
-- skelet – structure declaration
-- procsys – encapsulated logic (procedures)
+### Nick
+Defines a type alias.
+
+```
+nick alias = existing_type
+```
+
+### Iden
+Verifies if a variable matches a specific type.
+
+```
+iden(variable, type)
+```
+
+## Inheritance
+
+### Adopt
+Allows a class to inherit from a parent.
+
+```
+blueprint Child adopt Parent
+```
+
+### Father
+Defines the base class.
+
+```
+blueprint Parent
+```
+
+### Child
+Creates a derived class.
+
+```
+blueprint Child adopt Parent
+```
+
+## Concurrency and Parallelism
+
+### Paral
+Marks a task as asynchronous.
+
+```
+paral task
+```
+
+### Hold
+Waits for asynchronous tasks to finish.
+
+```
+hold task
+```
+
+### Flux
+Manages threads and parallel execution.
+
+```
+flux task
+```
+
+### Barrier
+Creates concurrency locks.
+
+```
+barrier lock
+```
+
+### Permit
+Handles semaphores.
+
+```
+permit semaphore
+```
+
+### Signal
+Manages event-driven parallel execution.
+
+```
+signal event
+```
+
+## Miscellaneous
+
+### Procsys
+Defines a system with procedural components.
+
+```
+procsys example
+```
+
+### Bloc
+Groups tasks for structured execution.
+
+```
+bloc group
+```
+
+### Skelet
+Establishes a framework for systems.
+
+```
+skelet structure
+```
+
+### Decon
+Breaks down structures for analysis.
+
+```
+decon structure
