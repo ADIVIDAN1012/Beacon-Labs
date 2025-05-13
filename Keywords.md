@@ -13,8 +13,8 @@
 | *Dyno Keyword* | *Equivalent*         |
 |------------------|------------------------|
 | *Paral*        | Async                  |
-| *hold*         | Await                  |
-| *Flow*         | Thread                 |
+| *hold*      | Await                  |
+| *Flux*         | Flow                   |
 | *Barrier*      | Lock                   |
 | *Permit*       | Semaphore              |
 | *Signal*       | Event                  |
@@ -30,8 +30,8 @@
 ### *Type Handling/Checking*
 | *Dyno Keyword* | *Equivalent*         |
 |------------------|------------------------|
-| *Kind*         | Type checking          |
-| *Convert V To DT* | Converts any variable V to user desired data type DT |
+| *Kind*         | Type checking                   |
+| *Convert V To DT*    | Converts any variable V to user desired data type DT |
 
 ### *Inheritance*
 | *Dyno Keyword* | *Equivalent*         |
@@ -43,8 +43,8 @@
 ### *Memory Management*
 | *Dyno Keyword* | *Equivalent*         |
 |------------------|------------------------|
-| *slip*         | Free Memory            |
-| *wipe*         | Garbage Collection     |
+| *Slip*      | Free Memory            |
+| *Wipe*      | Garbage Collection     |
 
 ### *Miscellaneous Operations*
 | *Dyno Keyword* | *Equivalent*         |
@@ -64,31 +64,25 @@
 |------------------|------------------------|
 | *Listen*       | Event Binding          |
 | *Trigger*      | Emit Event             |
+| *Forward*      | Send Event             |
 
 ### *Debugging/Logging*
 | *Dyno Keyword* | *Equivalent*         |
 |------------------|------------------------|
-| *Log*          | Debug Information      |
+| *Track*        | Log                    |
 | *Trace*        | Execution Tracing      |
 | *Watch*        | Watch Variables        |
 
 ### *Special Features*
-| *Dyno Keyword* | *Feature*             |
+| *Dyno Keyword* | *Feature*           |
 |------------------|-----------------------|
+| *Procsys*      | Method/Procedure      |
 | *Spec*         | Function Definition   |
-| *Send*         | Function Return       |
+| *Forward*      | Function Return       |
 | *Check*        | Conditional (if)      |
 | *Alter*        | Conditional (elif)    |
 | *Altern*       | Conditional (else)    |
 | *Conclude*     | Finally Block         |
-
-### *UOP - User-Oriented Programming*
-| *Dyno Keyword* | *Equivalent*         |
-|------------------|------------------------|
-| *ask()*         | User input             |
-| *output()*      | Display output         |
-| *fetch()*       | Read data              |
-| *modify()*      | Write data             |
-| *use*           | Import external resources |
-| *share*         | Export resources       |
-| *toolkit*       | Module or library      |
+| *Plug*         | Use (Import)          |
+| *Toolkit*      | Module (Library)      |
+| *Embed*        | Include               |
