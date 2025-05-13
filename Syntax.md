@@ -1,161 +1,186 @@
-# Dyno Programming Language Syntax
+# Dyno Syntax Reference
 
-Dyno is a user-oriented, Python-inspired programming language designed for simplicity and intuitiveness. This document outlines the core syntax and keywords used in Dyno.
+---
 
-## Control Flow
+## Variables and Data Types
 
-### check (in place of if)
-Used for conditional checks.
+Dyno is dynamically typed. You don't need to declare types explicitly. Variables are assigned using the = operator.
 
-```dyno
-check condition:
-    // Code to execute if condition is true
+dyno
+x = 42
+name = "Dyno"
+flag = true
+data = [1, 2, 3]
 
-alter (in place of elif)
 
-Used for additional conditions.
+### Type Conversion
 
-check condition:
-    // Code to execute if condition is true
-alter condition:
-    // Code to execute if condition is true
+dyno
+convert x to float
+convert val to string
 
-altern (in place of else)
 
-Used for the fallback condition.
+### Type Checking
 
-check condition:
-    // Code to execute if condition is true
-alter condition:
-    // Code to execute if condition is true
+dyno
+kind(x)
+
+
+---
+
+## Functions
+
+Use spec to define a function. Use send to return a value.
+
+dyno
+spec greet():
+    output("Hello")
+
+spec add(a, b):
+    send a + b
+
+
+Call functions with funcall.
+
+dyno
+funcall greet()
+
+
+---
+
+## Conditionals
+
+Use check, alter, and altern:
+
+dyno
+check x > 0:
+    output("Positive")
+alter x == 0:
+    output("Zero")
 altern:
-    // Code to execute if no conditions were true
-
-Loops
-
-traverse (in place of for)
-
-Used to iterate through a range or collection.
-
-traverse V from 1 to 9:
-    // Code to execute in each iteration
-
-until (in place of while)
-
-Used to run a loop until a condition is false.
-
-until condition:
-    // Code to execute while condition is true
-
-Functions
-
-spec (in place of def)
-
-Used to define functions.
-
-spec function_name(parameters):
-    // Function body
-
-prep (in place of init)
-
-Used for constructors in classes (blueprints).
-
-prep constructor_name():
-    // Constructor body
-
-Error Handling
-
-authen (in place of try)
-
-Used for error handling, similar to try.
-
-authen:
-    // Code that may raise an error
-
-trap (in place of catch)
-
-Used to trap and handle errors.
-
-authen:
-    // Code that may raise an error
-trap:
-    // Code to execute if an error occurs
-
-trigger (in place of raise)
-
-Used to trigger an error.
-
-trigger error_type:
-    // Code to trigger an error
-
-File I/O
-
-fetch (in place of read)
-
-Used to read data from a file.
-
-fetch file_name:
-    // Code to fetch data from the file
-
-modify (in place of write)
-
-Used to write data to a file.
-
-modify file_name data:
-    // Code to modify the file with data
-
-Data Types
-
-Dyno supports standard data types as shown below:
-
-int: Integer data type
-
-float: Floating point number
-
-double: Double precision floating point number
-
-long: Long integer
+    output("Negative")
 
 
-Comments
+---
 
-Dyno uses unique syntax for comments:
+## Loops
 
-Single-line comment
+### Traverse Loop (like for)
 
-< This is a single-line comment >
+dyno
+traverse i from 1 to 5:
+    output(i)
 
-Multi-line comment
 
-<^ This is a multi-line comment
-   spanning multiple lines of comment ^>
+### Until Loop (like while)
 
-Accessing Data
+dyno
+until x == 5:
+    x = x + 1
 
-get (in place of dot operator)
 
-Used to access properties or methods in an object.
+---
 
-object - property
+## Error Handling
 
-Type Conversion
+dyno
+attempt:
+    riskyFunc()
+trap error:
+    output("Error occurred")
+conclude:
+    output("Done")
 
-convert (in place of type casting)
 
-Used to convert a variable to a desired type.
+---
 
-convert variable to type
+## Object Orientation
 
-Miscellaneous
+Use blueprint for classes. prep defines the constructor. own refers to the current object.
 
-vol (in place of len)
+dyno
+blueprint Person:
+    prep(n):
+        own.name = n
+    spec greet():
+        output("Hi, I am " + own.name)
 
-Used to get the length of a collection or string.
 
-vol collection
+Use adopt for inheritance:
 
-nil (in place of null)
+dyno
+blueprint Student adopt Person:
+    prep(n, id):
+        Person.prep(n)
+        own.id = id
 
-Used to represent a null value.
 
-variable = nil
+---
+
+## User-Oriented Programming (UOP)
+
+Use bridge to define user interaction interfaces.
+
+dyno
+bridge Login:
+    ask username
+    ask password
+    send authen(username, password)
+
+
+---
+
+## Lambda Functions
+
+Use den:
+
+dyno
+square = den x: x * x
+
+
+---
+
+## Comments
+
+Single-line:
+dyno
+< This is a comment >
+
+
+Multi-line:
+dyno
+<^
+This is a 
+multi-line comment
+^>
+
+
+---
+
+## File I/O
+
+dyno
+fetch("file.txt")
+modify("file.txt", content)
+
+
+---
+
+## Other Keywords
+
+- flux – for control flow management
+- trap, trigger – for error handling
+- bloc – for grouped code execution
+- peek() – access value without altering
+- belong() – membership check
+- infuse() – insert or push into collections
+- tag() – enumerate elements
+- track() – log or trace behavior
+- forward – send data from functions
+- plug – load or connect toolkits
+- toolkit – collection of reusable code
+- link – join collections
+- bridge – user interface definition
+- decon – deconstruct data
+- skelet – structure declaration
+- procsys – encapsulated logic (procedures)
