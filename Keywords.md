@@ -24,7 +24,7 @@
 |------------------|------------------------|
 | *Fetch*        | Read                   |
 | *Modify*       | Write                  |
-| *Unlock*       | Open                   |
+| *inlet*       | Open                   |
 | *Seal*         | Close                  |
 
 ### *Type Handling/Checking*
