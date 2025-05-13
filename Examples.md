@@ -11,7 +11,7 @@ spec greet_user
     output("Enter your name:")
     name = ask()
     output(f"Hello, {name}!")
-forward
+    forward nil
 
 funcall greet_user()
 ```
@@ -29,7 +29,7 @@ spec calc_sum
     convert b to int
     sum = a + b
     output(f"Sum is: {sum}")
-forward
+    forward nil
 
 funcall calc_sum()
 ```
@@ -50,7 +50,7 @@ spec check_number
         output("Negative number")
     altern
         output("Zero")
-forward
+    forward nil
 
 funcall check_number()
 ```
@@ -63,7 +63,7 @@ funcall check_number()
 spec list_squares
     traverse i from 1 to 5
         output(f"Square of {i} is {i * i}")
-forward
+    forward nil
 
 funcall list_squares()
 ```
@@ -82,7 +82,7 @@ spec file_demo
     content = file.fetch()
     output(f"File says: {content}")
     file.seal()
-forward
+    forward nil
 
 funcall file_demo()
 ```
@@ -105,7 +105,7 @@ spec error_test
         output("Invalid input.")
     conclude
         output("Execution completed.")
-forward
+    forward nil
 
 funcall error_test()
 ```
@@ -122,7 +122,7 @@ spec get_square(x)
 spec use_square
     result = funcall get_square(7)
     output(f"Square is: {result}")
-forward
+    forward nil
 
 funcall use_square()
 ```
@@ -138,7 +138,7 @@ blueprint Car
 
     spec drive(own)
         output(f"{own.name} is driving.")
-forward
+    forward nil
 
 mycar = Car("DynoX")
 funcall mycar.drive()
@@ -162,13 +162,185 @@ share square
 
 Main File:
 
-```
+```  
 plug MathOps
 
 spec run
     result = funcall square(4)
     output(f"Square from toolkit: {result}")
-forward
+forward nil
 
 funcall run()
+```
+
+# Dyno Programming Language - Keywords
+
+## Access Control
+
+```
+covnito spec private_spec
+    output("This is private")
+forward nil
+
+shel spec protected_spec
+    output("This is protected")
+forward nil
+
+avail spec public_spec
+    output("This is public")
+forward nil
+
+internal spec package_spec
+    output("This is package-level access")
+forward nil
+
+expose spec exposed_spec
+    output("This is internal/public exposure")
+forward nil
+```
+
+## Concurrency/Parallelism
+
+```
+paral spec async_task
+    hold some_async_operation()
+    output("Async task completed")
+forward nil
+
+flux spec data_flow
+    output("Data flowing")
+forward nil
+
+barrier spec lock_example
+    permit lock
+    output("Locked section")
+    signal event
+forward nil
+```
+
+## File Handling
+
+```
+spec file_ops
+    file = inlet("file.txt", "write")
+    file.modify("Writing to file")
+    file.seal()
+
+    file = inlet("file.txt", "read")
+    content = file.fetch()
+    output(f"File content: {content}")
+    file.seal()
+forward nil
+```
+
+## Type Handling/Checking
+
+```
+spec type_check
+    kind var_type = kind("int")
+    convert a to int
+forward nil
+```
+
+## Inheritance
+
+```
+blueprint Father
+    spec greet(own)
+        output("Hello from Father")
+    forward nil
+
+blueprint Child belong Father
+    spec greet(own)
+        output("Hello from Child")
+    forward nil
+
+child = Child()
+funcall child.greet()
+```
+
+## Memory Management
+
+```
+spec memory_ops
+    slip some_memory
+    wipe garbage_collector
+forward nil
+```
+
+## Miscellaneous Operations
+
+```
+spec misc_ops
+    authen user
+    transform data
+    reduce data
+forward nil
+```
+
+## Data Serialization
+
+```
+spec serialization
+    pack data
+    unpack data
+forward nil
+```
+
+## Event Handling
+
+```
+spec event_handling
+    listen event
+    trigger event
+forward nil
+```
+
+## Debugging/Logging
+
+```
+spec debugging
+    track info
+    trace execution
+    watch variable
+forward nil 
+```
+
+## Special Features
+
+```
+spec special_features
+    spec my_function
+    check condition
+    alter condition
+    altern
+    conclude
+    skelet skel_class
+    decon object
+    forward nil
+```
+
+## System/Environment Operations
+
+```
+plug toolkit
+
+share function
+
+toolkit MyToolkit
+
+bloc batch_operation
+
+embed resource
+
+bridge interface
+
+link join
+
+belong inheritance
+
+peek access
+
+infuse inject
+forward nil
 ```
