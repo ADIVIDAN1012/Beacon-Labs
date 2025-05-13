@@ -13,7 +13,7 @@
 | *Dyno Keyword* | *Equivalent*         |
 |------------------|------------------------|
 | *Paral*        | Async                  |
-| *hold*      | Await                  |
+| *Hold*      | Await                  |
 | *Flux*         | Flow                   |
 | *Barrier*      | Lock                   |
 | *Permit*       | Semaphore              |
@@ -64,25 +64,36 @@
 |------------------|------------------------|
 | *Listen*       | Event Binding          |
 | *Trigger*      | Emit Event             |
-| *Forward*      | Send Event             |
 
 ### *Debugging/Logging*
 | *Dyno Keyword* | *Equivalent*         |
 |------------------|------------------------|
-| *Track*        | Log                    |
+| *Track*          | Debug Information      |
 | *Trace*        | Execution Tracing      |
 | *Watch*        | Watch Variables        |
 
 ### *Special Features*
 | *Dyno Keyword* | *Feature*           |
 |------------------|-----------------------|
-| *Procsys*      | Method/Procedure      |
 | *Spec*         | Function Definition   |
-| *Forward*      | Function Return       |
+| *Send*         | Function Return       |
 | *Check*        | Conditional (if)      |
 | *Alter*        | Conditional (elif)    |
 | *Altern*       | Conditional (else)    |
-| *Conclude*     | Finally Block         |
-| *Plug*         | Use (Import)          |
-| *Toolkit*      | Module (Library)      |
-| *Embed*        | Include               |
+| *Conclude*     | Finally Block         |
+| *Skelet*       | Abstract Class        |
+| *Decon*        | Deconstruct           |
+
+### *System/Environment Operations*
+| *Dyno Keyword* | *Equivalent*         |
+|------------------|------------------------|
+| *Plug*         | Import                 |
+| *Share*       | Export                 |
+| *Toolkit*     | Module                 |
+| *Bloc*        | Batch/Block operation  |
+| *Embed*       | Include/Embed resources|
+| *Bridge*      | Interface              |
+| *Link*        | Join                   |
+| *Belong*      | Inherits from          |
+| *Peek*        | Access                 |
+| *Infuse*      | Inject/Populate        |
