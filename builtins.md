@@ -1,83 +1,101 @@
-# Dyno Language Built-ins
-
-> This file lists all the built-in functions available in the *Dyno* programming language.
-
----
-
-## Mathematical Operations
-
-| Function   | Description                               | Example                          |
-|------------|-------------------------------------------|----------------------------------|
-| **sumit()** | Returns the sum of elements.             | `sumit([1, 2, 3])` returns `6`  |
-| **diff()**  | Returns the difference between elements.  | `diff([5, 3])` returns `2`      |
-| **prod()**  | Returns the product of elements.         | `prod([2, 3, 4])` returns `24`  |
-| **quot()**  | Returns the quotient of division.        | `quot(10, 2)` returns `5`       |
-| **rem()**   | Returns the remainder of a division.     | `rem(10, 3)` returns `1`        |
-| **elev()**  | Returns the result of exponentiation.    | `elev(2, 3)` returns `8`        |
-| **absol()** | Returns the absolute value.              | `absol(-5)` returns `5`         |
-| **roff()**  | Rounds a number to the nearest integer.  | `roff(3.6)` returns `4`         |
+# Dyno Programming Language – Built-in Functions  
+**Version:** v1.0 | **Format:** Universal User-Oriented Programming (UOP)  
 
 ---
 
-## String & Data Manipulation
+## Overview
 
-| Function     | Description                               | Example                              |
-|--------------|-------------------------------------------|--------------------------------------|
-| **conjoin()**| Joins elements together.                  | `conjoin(['a', 'b', 'c'], '-')` returns `'a-b-c'` |
-| **splitter()**| Splits elements based on a delimiter.    | `splitter('a,b,c', ',')` returns `['a', 'b', 'c']` |
-| **swap()**   | Swaps two elements.                       | `swap([1, 2])` returns `[2, 1]`      |
-| **style()**  | Applies a style transformation.           | `style(text, 'bold')` returns `'bold text'` |
-| **slice()**  | Extracts a portion of a collection.       | `slice([1, 2, 3, 4], 1, 3)` returns `[2, 3]` |
+This document lists all built-in functions available in Dyno. These functions are designed to be intuitive, concise, and consistent with Dyno’s natural-language syntax. They support common operations like type checking, user input, mathematical computation, and sequence processing.
 
 ---
 
-## Input/Output
+## Table of Contents
 
-| Function     | Description                               | Example                             |
-|--------------|-------------------------------------------|-------------------------------------|
-| **readin()** | Reads input data.                         | `readin()` prompts user for input   |
-| **writeout()**| Writes output data.                      | `writeout('Hello World')` prints `'Hello World'` |
-
----
-
-## Memory & Collection Operations
-
-| Function     | Description                               | Example                          |
-|--------------|-------------------------------------------|----------------------------------|
-| **create()** | Creates a new instance or structure.      | `create([1, 2, 3])` returns `[1, 2, 3]` |
-| **erase()**  | Erases or removes an element.             | `erase([1, 2, 3], 2)` returns `[1, 3]` |
-| **locate()** | Finds the position of an element.         | `locate([1, 2, 3], 2)` returns `1`  |
-| **order()**  | Sorts or arranges elements.               | `order([3, 1, 2])` returns `[1, 2, 3]` |
+1. [Type & Value Utilities](#type--value-utilities)  
+2. [Input & Output](#input--output)  
+3. [Math Functions](#math-functions)  
+4. [Sequence Utilities](#sequence-utilities)  
+5. [Conversion Functions](#conversion-functions)  
+6. [Functional Utilities](#functional-utilities)  
+7. [Object Utilities](#object-utilities)  
+8. [Miscellaneous](#miscellaneous)  
 
 ---
 
-## Miscellaneous Operations
+## Type & Value Utilities
 
-| Function     | Description                               | Example                        |
-|--------------|-------------------------------------------|--------------------------------|
-| **logit()**  | Logs a value for debugging or output.     | `logit('Error: Something went wrong')` |
-| **parse_resp()**| Parses a response or data.              | `parse_resp('Response Data')`  |
-| **connect()**| Establishes a connection.                 | `connect('server')`            |
-| **close_conn()**| Closes a connection.                    | `close_conn('server')`         |
-| **randgen()**| Generates a random value.                 | `randgen(1, 100)` returns a random number between 1 and 100 |
-| **shuffle()**| Shuffles elements randomly.               | `shuffle([1, 2, 3])` returns a shuffled list like `[2, 3, 1]` |
-| **reverse()**| Reverses the order of elements.           | `reverse([1, 2, 3])` returns `[3, 2, 1]` |
-| **bound()**  | Binds or ties elements together.          | `bound([1, 2], [3, 4])` returns `[(1, 3), (2, 4)]` |
+| Function | Description                          | Dyno Example               |
+|----------|------------------------------------|---------------------------|
+| `kind(x)`| Returns the data type of x.         | ```output(kind(7))```      |
+| `avail(x)`| Checks if x is defined and usable. | ```output(avail(y))```     |
+| `exist(x)`| Checks if x exists (is not nil).    | ```output(exist(myObj))``` |
 
 ---
 
-## File Operations
+## Input & Output
 
-| Function     | Description                               | Example                            |
-|--------------|-------------------------------------------|------------------------------------|
-| **fetch()**  | Fetches data from a file.                 | `fetch('file.txt')` returns content from file |
-| **modify()** | Writes or modifies data in a file.        | `modify('file.txt', 'New Data')`  |
+| Function | Description                                   | Dyno Example               |
+|----------|-----------------------------------------------|---------------------------|
+| `ask(DT)`| Takes user input and converts it to the specified data type. | ```age = ask(int)```       |
+| `output(x)`| Displays or prints the value.                | ```output("Hello, Dyno!")```|
+| `tag(seq)`| Returns indexed pairs from a sequence.       | ```output(tag(["a", "b"]))```|
 
 ---
 
-## System Operations
+## Math Functions
 
-| Function     | Description                               | Example                             |
-|--------------|-------------------------------------------|-------------------------------------|
-| **sync()**   | Syncs data or system state.               | `sync()` syncs the system state.   |
-| **exit()**   | Exits or terminates a process.            | `exit()` terminates the program.   |
+| Function       | Description                      | Dyno Example                 |
+|----------------|--------------------------------|-----------------------------|
+| `absol(x)`     | Returns the absolute value.     | ```output(absol(-5))```      |
+| `Roff(x)`      | Rounds to the nearest whole number. | ```output(Roff(4.6))```  |
+| `exponent(x, y)`| Returns x to the power of y.   | ```output(exponent(2, 3))``` |
+| `maximum(a, b)`| Returns the greater of two values. | ```output(maximum(3, 9))```|
+| `minimum(a, b)`| Returns the lesser of two values. | ```output(minimum(3, 9))```|
+
+---
+
+## Sequence Utilities
+
+| Function   | Description                  | Dyno Example                 |
+|------------|------------------------------|-----------------------------|
+| `length(x)`| Returns the number of elements. | ```output(length([1, 2, 3]))``` |
+| `reverse(x)`| Reverses the order of elements. | ```output(reverse([1, 2, 3]))``` |
+| `sort(x)`  | Returns a sorted version of the input. | ```output(sort([3, 1, 2]))``` |
+
+---
+
+## Conversion Functions
+
+| Function           | Description                      | Dyno Example                 |
+|--------------------|--------------------------------|-----------------------------|
+| `convert v to DT`  | Converts variable v to data type DT. | ```convert age to float```  |
+| `to_text(x)`       | Converts any value to text.     | ```output(to_text(89))```    |
+| `to_list(x)`       | Converts a value into a list.   | ```output(to_list("abc"))``` |
+
+---
+
+## Functional Utilities
+
+| Function       | Description                          | Dyno Example                   |
+|----------------|------------------------------------|-------------------------------|
+| `apply(f, x)`  | Applies function f to value x.      | ```output(apply(Roff, 5.6))```|
+| `map(f, seq)`  | Applies function to each item in sequence. | ```output(map(Roff, [1.2, 3.4]))``` |
+| `filter(f, s)` | Filters items where function returns true. | ```output(filter(exist, values))``` |
+
+---
+
+## Object Utilities
+
+| Function    | Description                      | Dyno Example                 |
+|-------------|--------------------------------|-----------------------------|
+| `props(x)`  | Returns a list of attributes.   | ```output(props(obj))```     |
+| `methods(x)`| Returns callable methods of x.  | ```output(methods(obj))```   |
+
+---
+
+## Miscellaneous
+
+| Function    | Description                      | Dyno Example                 |
+|-------------|--------------------------------|-----------------------------|
+| `time_now()`| Returns current timestamp.       | ```output(time_now())```     |
+| `halt()`    | Stops execution immediately.     | ```halt()```                 |
