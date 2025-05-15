@@ -76,7 +76,7 @@
 | *Dyno Keyword* | *Feature*            |
 |----------------|----------------------|
 | *Spec*         | Function Definition  |
-| *Send*         | Function Return      |
+| *forward*         | Function Return      |
 | *Check*        | Conditional (if)     |
 | *Alter*        | Conditional (elif)   |
 | *Altern*       | Conditional (else)   |
