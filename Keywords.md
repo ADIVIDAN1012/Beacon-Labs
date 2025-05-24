@@ -1,109 +1,115 @@
 # Dyno Programming Language - Keywords
 
-### *Access Control*
-| *Dyno Keyword* | *Equivalent*         |
-|----------------|----------------------|
-| *Covnito*      | Private              |
-| *Shel*         | Protected            |
-| *Avail*        | Public               |
-| *Internal*     | Package-level access |
-| *Expose*       | Internal/Public exposure |
+## Access Control
+Dyno Keyword    | Equivalent
+----------------|-----------------------
+Covnito         | Private
+Shel            | Protected
+Avail           | Public
+Internal        | Package-level access
+Expose          | Internal/Public exposure
 
-### *Concurrency/Parallelism*
-| *Dyno Keyword* | *Equivalent*         |
-|----------------|----------------------|
-| *Paral*        | Async                |
-| *Hold*         | Await                |
-| *Flux*         | Flow                 |
-| *Barrier*      | Lock                 |
-| *Permit*       | Semaphore            |
-| *Signal*       | Event                |
+## Concurrency/Parallelism
+Dyno Keyword    | Equivalent
+----------------|-----------------------
+Paral           | Async
+Hold            | Await
+Flux            | Flow
+Barrier         | Lock
+Permit          | Semaphore
+Signal          | Event
 
-### *File Handling*
-| *Dyno Keyword* | *Equivalent*         |
-|----------------|----------------------|
-| *Fetch*        | Read                 |
-| *Modify*       | Write                |
-| *inlet*        | Open                 |
-| *Seal*         | Close                |
+## File Handling
+Dyno Keyword    | Equivalent
+----------------|-----------------------
+Fetch           | Read
+Modify          | Write
+Inlet           | Open
+Seal            | Close
 
-### *Type Handling/Checking*
-| *Dyno Keyword*     | *Equivalent*         |
-|--------------------|----------------------|
-| *Kind*             | Type checking        |
-| *Convert V To DT*  | Converts any variable V to user desired data type DT |
+## User I/O
+Dyno Keyword    | Equivalent    | Purpose
+----------------|---------------|----------------------------------------
+ask()           | input()       | Takes user input, auto-casts to type
+output()        | print()       | Outputs text or data to user console
 
-### *Inheritance*
-| *Dyno Keyword* | *Equivalent*         |
-|----------------|----------------------|
-| *Adopt*        | Inheritance          |
-| *Father*       | Base Class           |
-| *Child*        | Derived Class        |
+## Type Handling/Checking
+Dyno Keyword        | Equivalent
+--------------------|-------------------------------
+Kind                | Type checking
+convert V to DT     | Convert variable to desired type
 
-### *Memory Management*
-| *Dyno Keyword* | *Equivalent*         |
-|----------------|----------------------|
-| *Slip*         | Free Memory          |
-| *Wipe*         | Garbage Collection   |
+## Inheritance
+Dyno Keyword    | Equivalent
+----------------|-----------------------
+Adopt           | Inheritance
+Father          | Base Class
+Child           | Derived Class
 
-### *Miscellaneous Operations*
-| *Dyno Keyword* | *Equivalent*         |
-|----------------|----------------------|
-| *Authen*       | Verify/Assert        |
-| *Transform*    | Map                  |
-| *Reduce*       | Aggregate            |
+## Memory Management
+Dyno Keyword    | Equivalent
+----------------|-----------------------
+Slip            | Free Memory
+Wipe            | Garbage Collection
 
-### *Data Serialization*
-| *Dyno Keyword* | *Equivalent*         |
-|----------------|----------------------|
-| *Pack*         | Serialize            |
-| *Unpack*       | Deserialize          |
+## Miscellaneous Operations
+Dyno Keyword    | Equivalent
+----------------|-----------------------
+Authen          | Verify/Assert
+Transform       | Map
+Reduce          | Aggregate
 
-### *Event Handling*
-| *Dyno Keyword* | *Equivalent*         |
-|----------------|----------------------|
-| *Listen*       | Event Binding        |
-| *Trigger*      | Emit Event           |
+## Data Serialization
+Dyno Keyword    | Equivalent
+----------------|-----------------------
+Pack            | Serialize
+Unpack          | Deserialize
 
-### *Debugging/Logging*
-| *Dyno Keyword* | *Equivalent*         |
-|----------------|----------------------|
-| *Track*        | Debug Information    |
-| *Trace*        | Execution Tracing    |
-| *Watch*        | Watch Variables      |
+## Event Handling
+Dyno Keyword    | Equivalent
+----------------|-----------------------
+Listen          | Event Binding
+Trigger         | Emit Event
 
-### *Special Features*
-| *Dyno Keyword* | *Feature*            |
-|----------------|----------------------|
-| *Spec*         | Function Definition  |
-| *forward*         | Function Return      |
-| *Check*        | Conditional (if)     |
-| *Alter*        | Conditional (elif)   |
-| *Altern*       | Conditional (else)   |
-| *Conclude*     | Finally Block        |
-| *Skelet*       | Abstract Class       |
-| *Decon*        | Deconstruct          |
+## Debugging/Logging
+Dyno Keyword    | Equivalent
+----------------|-----------------------
+Track           | Debug Information
+Trace           | Execution Tracing
+Watch           | Watch Variables
 
-### *System/Environment Operations*
-| *Dyno Keyword* | *Equivalent*         |
-|----------------|----------------------|
-| *Plug*         | Import               |
-| *Share*        | Export               |
-| *Toolkit*      | Module               |
-| *Bloc*         | Batch/Block operation|
-| *Embed*        | Include/Embed resources|
-| *Bridge*       | Interface            |
-| *Link*         | Join                 |
-| *Belong*       | Inherits from        |
-| *Peek*         | Access               |
-| *Infuse*       | Inject/Populate      |
+## Special Features
+Dyno Keyword    | Equivalent
+----------------|------------------------
+Spec            | Function Definition
+Forward         | Function Return
+Check           | If
+Alter           | Elif
+Altern          | Else
+Conclude        | Finally Block
+Skelet          | Abstract Class
+Decon           | Deconstruct Pattern
 
-### *Error Handling*
-| *Dyno Keyword* | *Equivalent*         | *Purpose*                          |
-|----------------|----------------------|----------------------------------|
-| *attempt*      | try                  | Begin a block that may raise an error |
-| *trap*         | catch                | Handle a specific error           |
-| *conclude*     | finally              | Always run code regardless of errors |
-| *trigger*      | raise                | Manually raise an error           |
-| *check*        | if                   | Conditional check inside error blocks |
-| *peek*         | Exception object     | View the error message/data caught in trap |
+## System/Environment Operations
+Dyno Keyword    | Equivalent
+----------------|-----------------------------
+Plug            | Import
+Share           | Export
+Toolkit         | Module
+Bloc            | Block/Batch Operation
+Embed           | Embed Resources
+Bridge          | Interface
+Link            | Join
+Belong          | Belongs To
+Peek            | Access/View
+Infuse          | Inject/Populate
+
+## Error Handling
+Dyno Keyword    | Equivalent        | Purpose
+----------------|-------------------|-------------------------------------------
+Attempt         | Try               | Begin risky code block
+Trap            | Catch             | Catch and handle error
+Conclude        | Finally           | Always executes
+Trigger         | Raise             | Manually raise an error
+Check           | If in error block | Conditional evaluation
+Peek            | Exception object  | View the error info from Trap block
