@@ -1,155 +1,221 @@
-# Dyno Programming Language - Keywords and Built-in Functions
+# Dyno Programming Language - Keywords
 
-## Access Control
-| Dyno Keyword | Equivalent       | Purpose                          |
-|--------------|------------------|---------------------------------|
-| covnito     | private           | Private access modifier          |
-| shel        | protected         | Protected access modifier        |
-| avail       | public            | Public access modifier           |
-| internal    | package-level     | Package/internal access          |
-| expose      | internal/public   | Internal or public exposure      |
-
-## Concurrency / Parallelism
-| Dyno Keyword | Equivalent   | Purpose                          |
-|--------------|--------------|---------------------------------|
-| paral       | async         | Asynchronous operation           |
-| hold        | await         | Await async result               |
-| barrier     | lock          | Lock/synchronization             |
-| permit      | semaphore     | Semaphore control                |
-| signal      | event         | Event signaling                 |
-
-## File Handling
-| Dyno Keyword | Equivalent   | Purpose                          |
-|--------------|--------------|---------------------------------|
-| fetch       | read          | Read from file                  |
-| modify      | write         | Write to file                  |
-| inlet       | open          | Open file                      |
-| seal        | close         | Close file                     |
-
-## User Input / Output
-| Dyno Keyword | Equivalent   | Purpose                          |
-|--------------|--------------|---------------------------------|
-| ask()       | input()       | Take user input, auto-casts type|
-| show()      | print()       | Output text/data to user console|
-
-## Type Handling / Checking
-| Dyno Keyword        | Equivalent  | Purpose                         |
-|---------------------|-------------|--------------------------------|
-| kind()              | type()      | Get type of variable           |
-| convert variable to Type | N/A       | Convert variable to desired data type (syntax: `convert v to int`) |
-
-## Inheritance
-| Dyno Keyword | Equivalent   | Purpose                          |
-|--------------|--------------|---------------------------------|
-| adopt       | inheritance   | Inheritance keyword             |
-| father      | base class    | Base/parent class               |
-| child       | derived class | Derived/child class             |
-
-## Memory Management
-| Dyno Keyword | Equivalent     | Purpose                         |
-|--------------|----------------|--------------------------------|
-| slip        | free memory     | Free allocated memory           |
-| wipe        | garbage collect | Run garbage collection          |
-
-## Control Flow
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| check       | if         | Conditional if                  |
-| alter       | elif       | Else-if                        |
-| altern      | else       | Else                          |
-| attempt     | try        | Try block                      |
-| trap        | catch      | Catch errors                   |
-| conclude    | finally    | Finally block                  |
-| trigger     | raise      | Raise error                   |
-
-## Functions
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| spec        | def         | Function definition             |
-| den         | lambda      | Lambda/anonymous function       |
-| forward     | return      | Return from function            |
-| funcall     | N/A         | Optional keyword to explicitly call functions (used for clarity in complex calls) |
-
-## Modules / Imports / Exports
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| plug        | import      | Import module                   |
-| share       | export      | Export module/function          |
-| toolkit     | module      | Module/package                  |
-
-## Classes and Interfaces
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| blueprint   | class       | Class definition                |
-| skelet      | abstract class | Abstract class               |
-| bridge      | interface   | Interface declaration           |
-
-## Blocks & Structure
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| bloc        | block/batch| Block of code or batch operation|
-| embed       | embed      | Embed resource/data             |
-
-## Associations
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| link        | join       | Join/link components            |
-| belong      | belongs to | Association/ownership           |
-
-## Variable Access
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| peek        | access/view| Access or view property/value   |
-| infuse      | inject/populate | Inject or populate data      |
-
-## Data Serialization
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| pack        | serialize  | Serialize data                  |
-| unpack      | deserialize| Deserialize data                |
-
-## Event Handling
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| listen      | event bind | Bind event listener             |
-| trigger     | emit event | Emit/trigger event             |
-
-## Debugging / Logging
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| track       | debug info | Track debug info                |
-| trace       | exec trace | Trace execution flow            |
-| watch       | watch vars | Watch variables                 |
-
-## Miscellaneous Operations
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| authen      | verify/assert| Verification/assertion         |
-| transform   | map         | Transform/map function          |
-| condense    | reduce      | Reduce/aggregate function       |
-
-## Built-in Functions (with parentheses)
-| Dyno Function | Equivalent   | Purpose                        |
-|---------------|--------------|-------------------------------|
-| ask()         | input()      | Takes user input, auto-casts type |
-| show()        | print()      | Output to user console          |
-| kind()        | type()       | Returns type of variable        |
-| scope()       | range()      | Generate a sequence/range       |
-| tag()         | enumerate()  | Enumerate items with index      |
-| solve()       | eval()       | Evaluate expression dynamically |
-
-## Data Types (Synonyms)
-| Dyno Keyword | Equivalent | Purpose                          |
-|--------------|------------|---------------------------------|
-| num          | int        | Integer numeric type             |
-| decim        | float      | Floating point decimal number    |
-| bit          | bool       | Boolean true/false               |
-| text         | string     | Text/String                     |
-| nil          | null       | Null or no value                |
-| firm         | const      | Constant/immutable value        |
+A complete and user-oriented synonym table of Dyno keywords and their standard language equivalents (especially Python).
 
 ---
 
-*Notes:*
+## Access Control
 
-- `convert` is a keyword used in syntax form:
+| Dyno Keyword | Equivalent        |
+|--------------|------------------|
+| avail        | public           |
+| shel         | protected        |
+| covnito      | private          |
+| internal     | package access   |
+| expose       | public/internal  |
+| universe     | global           |
+| outer        | nonlocal         |
+
+---
+
+## Function & Scope
+
+| Dyno Keyword | Equivalent        |
+|--------------|------------------|
+| spec         | def              |
+| den          | lambda           |
+| funcall      | function call    |
+| forward      | return           |
+| provide      | yield            |
+| scope()      | range()          |
+
+---
+
+## Logic Operators
+
+| Dyno Keyword | Equivalent |
+|--------------|-----------|
+| also         | and       |
+| either       | or        |
+| no           | not       |
+| alike        | is        |
+| within       | in        |
+| by           | as        |
+
+---
+
+## Conditional Blocks
+
+| Dyno Keyword | Equivalent |
+|--------------|-----------|
+| check        | if        |
+| alter        | elif      |
+| altern       | else      |
+| proceed      | pass      |
+
+---
+
+## Looping
+
+| Dyno Keyword            | Equivalent |
+|-------------------------|-----------|
+| traverse v from x to y  | for       |
+| until                   | while     |
+| leave                   | break     |
+| skip                    | continue  |
+
+---
+
+## Error Handling
+
+| Dyno Keyword | Equivalent |
+|--------------|-----------|
+| attempt      | try       |
+| trap         | catch     |
+| conclude     | finally   |
+| trigger      | raise     |
+| peek         | error obj |
+
+---
+
+## Data Types
+
+| Dyno Type | Equivalent |
+|-----------|------------|
+| bit       | bool       |
+| num       | int        |
+| decim     | float      |
+| text      | str        |
+| seal      | tuple      |
+| bind      | tuple      |
+| list      | list       |
+| dict      | dict       |
+| nil       | None       |
+| on        | True       |
+| off       | False      |
+
+---
+
+## Input/Output
+
+| Dyno Keyword | Equivalent | Purpose                        |
+|--------------|------------|--------------------------------|
+| ask()        | input()    | Smart type-aware input         |
+| show()       | print()    | Display output to user         |
+| solve()      | eval()     | Evaluate an expression         |
+| tag()        | enumerate()| Tag items with index           |
+
+---
+
+## Type Checking & Conversion
+
+| Dyno Keyword        | Equivalent    |
+|---------------------|---------------|
+| kind()              | type()        |
+| convert x to DT     | type cast     |
+
+---
+
+## File Handling
+
+| Dyno Keyword | Equivalent |
+|--------------|------------|
+| fetch        | read       |
+| modify       | write      |
+| inlet        | open       |
+| seal         | close      |
+
+---
+
+## Concurrency / Parallelism
+
+| Dyno Keyword | Equivalent |
+|--------------|------------|
+| paral        | async      |
+| hold         | await      |
+| flux         | flow       |
+| barrier      | lock       |
+| permit       | semaphore  |
+| signal       | event      |
+
+---
+
+## System & Environment
+
+| Dyno Keyword | Equivalent |
+|--------------|------------|
+| plug         | import     |
+| share        | export     |
+| toolkit      | module     |
+| source       | from       |
+| embed        | embed      |
+| bloc         | batch      |
+| link         | join       |
+| belong       | belong to  |
+| infuse       | inject     |
+| bridge       | interface  |
+
+---
+
+## OOP & Inheritance
+
+| Dyno Keyword | Equivalent    |
+|--------------|---------------|
+| blueprint    | class         |
+| adopt        | extends/inherit |
+| prep         | constructor/init |
+| own          | self/this     |
+| father       | base class    |
+| child        | derived class |
+| skelet       | abstract class|
+
+---
+
+## Math & Transformation
+
+| Dyno Keyword | Equivalent    |
+|--------------|---------------|
+| absol(x)     | abs(x)        |
+| roff(x)      | round(x)      |
+| exponent(x, y)| pow(x, y)    |
+| transform    | map           |
+| condense     | reduce        |
+
+---
+
+## Debugging & Tracing
+
+| Dyno Keyword | Equivalent       |
+|--------------|------------------|
+| track        | debug            |
+| trace        | trace            |
+| watch        | watch variables  |
+
+---
+
+## Data Serialization
+
+| Dyno Keyword | Equivalent   |
+|--------------|--------------|
+| pack         | serialize    |
+| unpack       | deserialize  |
+
+---
+
+## Event Handling
+
+| Dyno Keyword | Equivalent |
+|--------------|------------|
+| listen       | bind       |
+| trigger      | emit       |
+
+---
+
+✅ **Notes**
+- All keywords are lowercase by convention.
+- Only **keywords** are reserved. Function-like features such as `ask()` and `show()` behave like built-ins but are not reserved unless stated.
+- `funcall` is **optional** and used only in ambiguous or complex function call scenarios.
+
+---
+
+🧠 Let me know if you'd like this pushed directly to your GitHub or formatted as a downloadable `.md` file.
