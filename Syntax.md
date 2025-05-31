@@ -16,7 +16,7 @@ flag = off    <false boolean value>
 - Use convert variable to DataType for type conversion
 
 
-num = convert val to int
+Integer = convert val to num
 flt = convert val to decim
 txt = convert val to text
 bitflag = convert val to bit
