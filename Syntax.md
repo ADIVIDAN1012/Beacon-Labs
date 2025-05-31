@@ -1,157 +1,163 @@
-# Dyno Programming Language - Keywords
+# Dyno Programming Language — Syntax
 
-## Access Control
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Covnito         | Private
-Shel            | Protected
-Avail           | Public
-Internal        | Package-level access
-Expose          | Internal/Public exposure
+## Variable Assignment
 
-## Concurrency / Parallelism
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Paral           | Async
-Hold            | Await
-Flux            | Flow
-Barrier         | Lock
-Permit          | Semaphore
-Signal          | Event
 
-## File Handling
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Fetch           | Read
-Modify          | Write
-Inlet           | Open
-Seal            | Close
+var = 10
+name = ask("Enter your name: ")
+flag = off    <false boolean value>
 
-## User I/O
-Dyno Keyword    | Equivalent    | Purpose
-----------------|---------------|----------------------------------------
-Ask()           | input()       | Takes user input, auto-casts to type
-Show()          | print()       | Outputs text or data to user console
 
-## Type Handling / Checking
-Dyno Keyword        | Equivalent
---------------------|-------------------------------
-Kind                | Type checking
-Convert V to DT     | Convert variable to desired data type
+---
 
-## Inheritance
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Adopt           | Inheritance
-Father          | Base Class
-Child           | Derived Class
+## Data Types and Conversions
 
-## Memory Management
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Slip            | Free Memory
-Wipe            | Garbage Collection
+- Dynamic typing like Python
+- Use convert variable to DataType for type conversion
 
-## Miscellaneous Operations
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Authen          | Verify/Assert
-Transform       | Map
-Condense        | Reduce (aggregate)
 
-## Data Serialization
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Pack            | Serialize
-Unpack          | Deserialize
+num = convert val to int
+flt = convert val to decim
+txt = convert val to text
+bitflag = convert val to bit
 
-## Event Handling
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Listen          | Event Binding
-Trigger         | Emit Event / Raise Error
 
-## Debugging / Logging
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Track           | Debug Information
-Trace           | Execution Tracing
-Watch           | Watch Variables
+---
 
-## Special Features
-Dyno Keyword    | Equivalent
-----------------|------------------------
-Spec            | Function Definition
-Funcall         | Function Call (optional for clarity)
-Forward         | Return (send)
-Check           | If
-Alter           | Elif
-Altern          | Else
-Conclude        | Finally Block
-Skelet          | Abstract Class
-Decon           | Deconstruct Pattern
-Den             | Lambda
+## Input / Output
 
-## System / Environment Operations
-Dyno Keyword    | Equivalent
-----------------|-----------------------------
-Plug            | Import
-Share           | Export
-Toolkit         | Module
-Bloc            | Block/Batch Operation
-Embed           | Embed Resources
-Bridge          | Interface
-Link            | Join
-Belong          | Belongs To
-Peek            | Access/View
-Infuse          | Inject/Populate
-Source          | From
-Universal       | Global
+
+name = ask("Enter your name: ")
+show("Hello, {name}")
+show("Welcome!")   <works without variables too>
+
+
+> Dyno supports embedded variables in strings using {} syntax similar to Python f-strings but **without needing the f"" prefix**.
+
+---
+
+## Functions
+
+- Define functions using spec
+- Use funcall to call functions (optional for simple calls, recommended for clarity on complex calls)
+- Use forward to return values
+
+
+spec greet():
+    show("Hello World")
+
+funcall greet()
+
+spec add(a, b):
+    forward a + b
+
+result = funcall add(5, 3)
+show("Sum is {result}")
+
+
+---
+
+## Control Flow
+
+### Conditional Statements
+
+
+check x > 10:
+    show("Greater than 10")
+alter x == 10:
+    show("Equal to 10")
+altern:
+    show("Less than 10")
+
+
+### Loops
+
+- Use until instead of while
+
+
+i = 0
+until i > 10:
+    show("Count {i}")
+    i = i + 1
+
+
+- Use traverse keyword from start to end instead of for
+
+
+traverse i from 1 to 5:
+    show("Number {i}")
+
+
+---
 
 ## Error Handling
-Dyno Keyword    | Equivalent        | Purpose
-----------------|-------------------|-------------------------------------------
-Attempt         | Try               | Begin risky code block
-Trap            | Catch             | Catch and handle error
-Conclude        | Finally           | Always executes
-Trigger         | Raise             | Manually raise an error
-Peek            | Exception object  | View the error info from Trap block
 
-## Control Flow Keywords
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Skip            | Continue
-Ignore          | Pass (do nothing)
-Break           | Break loop
-Until           | While (loop until condition)
-Using           | With (resource management)
-Spill           | Yield (unique synonym for generators)
-Both            | And
-Either          | Or
-No              | Not
-Off             | False
-Nil             | None
-On              | True
-Erase           | Del
 
-## Condition / Boolean Keywords
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Is              | Is
-Within          | In
-Assert          | Assert
+attempt:
+    <risky code here>
+trap ErrorType as e:
+    show("Error occurred: {e}")
+conclude:
+    show("This runs always")
 
-## Data Types Synonyms
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Num             | Int
-Bit             | Bool
-Text            | Str
-Decim           | Float
-Den             | Lambda
-Seal            | Tuple
 
-## Others
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Solve           | Eval
+---
+
+## Keywords and Operators (Partial)
+
+| Dyno Keyword | Python Equivalent | Notes                             |
+|--------------|-------------------|----------------------------------|
+| spec         | def               | function definition              |
+| funcall      | ()                | function call                   |
+| forward      | return            | return value                    |
+| check        | if                | conditional                    |
+| alter        | elif              | else if                       |
+| altern       | else              | else                         |
+| until        | while             | loop                         |
+| traverse     | for               | for loop                    |
+| ask          | input             | input                        |
+| show         | print             | output                       |
+| condense     | reduce            | reduce/fold                 |
+| authen       | authentication    | auth check                 |
+| off          | False             | boolean false                 |
+| both         | and               | logical AND                   |
+| no           | not               | logical NOT                   |
+| either       | or                | logical OR                    |
+| erase        | del               | delete variable              |
+| ignore       | continue          | continue                    |
+| skip         | break             | break                      |
+| spill        | yield             | yield                      |
+| source       | from              | import from                |
+| universal    | global            | global                    |
+| within       | in                | membership                |
+| equal        | is                | identity                  |
+
+---
+
+## Comments
+
+- Single-line comment:
+
+
+< This is a single-line comment >
+
+
+- Multi-line comment:
+
+
+<^
+This is
+a multi-line comment
+^>
+
+
+---
+
+## Notes
+
+- Assignment uses =, not a keyword.
+- Dynamic typing means no need for explicit variable declaration keywords.
+- String interpolation uses {} without f"".
+- Use funcall optionally for clarity in function calls.
+- convert variable to Type is the syntax for type conversion.
+- Keywords have unique synonyms to avoid clashes and keep language clean.
