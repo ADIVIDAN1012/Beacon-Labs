@@ -1,157 +1,203 @@
-# Dyno Programming Language - Keywords
+# Dyno Language – Keywords
 
 ## Access Control
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Covnito         | Private
-Shel            | Protected
-Avail           | Public
-Internal        | Package-level access
-Expose          | Internal/Public exposure
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Covnito   | Private             |
+| Shel      | Protected           |
+| Avail     | Public              |
+| Internal  | Package-level       |
+| Expose    | Exposed/Public      |
+
+---
 
 ## Concurrency/Parallelism
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Paral           | Async
-Hold            | Await
-Flux            | Flow
-Barrier         | Lock
-Permit          | Semaphore
-Signal          | Event
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Paral     | Async/Parallel      |
+| Hold      | Await/pause         |
+| Flux      | Flow/stream         |
+| Barrier   | Lock/barrier        |
+| Permit    | Semaphore           |
+| Signal    | Event/signal        |
+
+---
 
 ## File Handling
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Fetch           | Read
-Modify          | Write
-Inlet           | Open
-Seal            | Close
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Inlet     | File handle/input   |
+| Fetch     | Read/get data       |
+| Modify    | Write/set data      |
+| Seal      | Close file          |
+
+---
 
 ## User I/O
-Dyno Keyword    | Equivalent    | Purpose
-----------------|---------------|----------------------------------------
-ask()           | input()       | Takes user input, auto-casts to type
-show()          | print()       | Outputs text or data to user console
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| ask       | Input               |
+| show      | Output/print        |
+
+---
 
 ## Type Handling/Checking
-Dyno Keyword        | Equivalent
---------------------|-------------------------------
-kind()              | type()         | Function: Get type of variable
-convert V to DT     | Convert        | Keyword: Convert variable V to data type DT
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| kind      | Type of variable    |
+| convert   | Type conversion     |
+
+---
 
 ## Inheritance
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Adopt           | Inheritance
-Father          | Base Class
-Child           | Derived Class
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Adopt     | Inherit/extends     |
+| Father    | Base/superclass     |
+| Child     | Subclass            |
+
+---
 
 ## Memory Management
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Slip            | Free Memory
-Wipe            | Garbage Collection
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Slip      | Free memory         |
+| Wipe      | Garbage collect     |
+
+---
 
 ## Miscellaneous Operations
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Authen          | Verify/Assert
-Transform       | Map
-Condense        | Reduce
-Den             | Lambda Expression (anonymous function)
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Authen    | Assert/verify       |
+| Transform | Map                 |
+| Condense  | Reduce              |
+| Den       | Lambda/anonymous fn |
+
+---
 
 ## Data Serialization
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Pack            | Serialize
-Unpack          | Deserialize
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Pack      | Serialize           |
+| Unpack    | Deserialize         |
+
+---
 
 ## Event Handling
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Listen          | Event Binding
-Trigger         | Raise Event/Error
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Listen    | Event listener      |
+| Trigger   | Fire event          |
+
+---
 
 ## Debugging/Logging
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Track           | Debug Information
-Trace           | Execution Tracing
-Watch           | Watch Variables
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Track     | Debug/log           |
+| Trace     | Trace execution     |
+| Watch     | Watch variable      |
+
+---
 
 ## Special Features
-Dyno Keyword    | Equivalent
-----------------|------------------------
-Spec            | Function Definition (like def)
-Forward         | Return/Send value from function
-Funcall         | Function Call (optional for clarity in complex code)
-Check           | If
-Alter           | Elif
-Altern          | Else
-Conclude        | Finally Block
-Skelet          | Abstract Class
-Decon           | Deconstruct Pattern
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Spec      | Function def        |
+| Forward   | Return              |
+| Funcall   | Call function       |
+| Check     | If                  |
+| Alter     | Else if             |
+| Altern    | Else                |
+| Attempt   | Try block           |
+| Trap      | Catch/except        |
+| Conclude  | Finally             |
+| Peek      | Inspect/peek error  |
+| Assert    | Assertion           |
+| Skelet    | Abstract class      |
+| Decon     | Deconstruct/pattern |
+
+---
 
 ## System/Environment Operations
-Dyno Keyword    | Equivalent
-----------------|-----------------------------
-Plug            | Import
-Share           | Export
-Toolkit         | Module
-Bloc            | Block/Batch Operation
-Embed           | Embed Resources
-Bridge          | Interface
-Link            | Join
-Belong          | Belongs To
-Peek            | Access/View
-Infuse          | Inject/Populate
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Plug      | Import/use module   |
+| Share     | Export              |
+| Toolkit   | Module/package      |
+| Bloc      | Block/batch         |
+| Embed     | Embed resource      |
+| Bridge    | Interface/bridge    |
+| Link      | Join/link           |
+| Belong    | Belongs to/group    |
+| Infuse    | Inject/populate     |
+
+---
 
 ## Error Handling
-Dyno Keyword    | Equivalent        | Purpose
-----------------|-------------------|-------------------------------------------
-Attempt         | Try               | Begin risky code block
-Trap            | Catch             | Catch and handle error
-Conclude        | Finally           | Always executes
-Trigger         | Raise             | Manually raise an error
-Check           | Conditional in error handling
-Peek            | Exception Object  | View error info from Trap block
 
-## Control Flow Keywords
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Skip            | Continue
-Ignore          | Pass (do nothing)
-Break           | Break loop
-Until           | While (loop until condition)
-Using           | With (resource management)
-Give            | Yield (produce value lazily)
-Spill           | Yield (unique synonym for generators)
-Both            | And
-No              | Not
-Off             | False
-Nil             | None
-On              | True
-Erase           | Del
-Source          | From
-Universal       | Global
-Within          | In
-Is              | Is
-Authen          | Assert
-Both            | And
-Or              | Or
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Trigger   | Raise error         |
+
+---
+
+## Control Flow / Loops
+
+| Keyword   | Meaning                        |
+|-----------|--------------------------------|
+| For       | For loop (synonym for traverse)|
+| Traverse  | For/iteration loop             |
+| Within    | Range/membership               |
+| Scope     | Range (for loop)               |
+| Until     | While loop                     |
+| Using     | With/resource context          |
+| Give      | Yield/generator                |
+| Spill     | Yield/generator                |
+| Both      | Logical and                    |
+| No        | Logical not                    |
+| Off       | Boolean false                  |
+| Nil       | Null/none                      |
+| On        | Boolean true                   |
+| Erase     | Delete variable                |
+| Source    | Import from                    |
+| Universal | Global scope                   |
+| Is        | Identity (is)                  |
+| Or        | Logical or                     |
+| Ignore    | Continue                       |
+| Skip      | Break                          |
+| Perform   | Do/start block                 |
+
+---
 
 ## Data Types Synonyms
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Num             | Int
-Decim           | Float
-Bit             | Bool
-Text            | String
-Den             | Lambda (anonymous function)
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Num       | Integer             |
+| Decim     | Decimal/float       |
+| Bit       | Boolean             |
+| Text      | String              |
+
+---
 
 ## Additional Keywords
-Dyno Keyword    | Equivalent
-----------------|-----------------------
-Scope()         | Range()
-Tag()           | Enum()
-Solve()          | eval() 
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Tag       | Enum/tagged type    |
+| Solve     | Evaluate/run code   |
