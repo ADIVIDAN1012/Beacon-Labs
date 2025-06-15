@@ -154,4 +154,4 @@ Dyno Keyword    | Equivalent
 ----------------|-----------------------
 Scope()         | Range()
 Tag()           | Enum()
-Eval()          | Solve()
+Solve()          | eval() 
