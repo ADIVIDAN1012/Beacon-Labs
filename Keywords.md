@@ -160,7 +160,6 @@
 
 | Keyword   | Meaning                        |
 |-----------|--------------------------------|
-| For       | For loop (synonym for traverse)|
 | Traverse  | For/iteration loop             |
 | Within    | Range/membership               |
 | Scope     | Range (for loop)               |
@@ -169,15 +168,15 @@
 | Give      | Yield/generator                |
 | Spill     | Yield/generator                |
 | Both      | Logical and                    |
-| No        | Logical not                    |
+|!>       | Logical not                    |
 | Off       | Boolean false                  |
 | Nil       | Null/none                      |
 | On        | Boolean true                   |
 | Erase     | Delete variable                |
 | Source    | Import from                    |
 | Universal | Global scope                   |
-| Is        | Identity (is)                  |
-| Or        | Logical or                     |
+| be     | Identity (is)                  |
+| either      | Logical or                     |
 | Ignore    | Continue                       |
 | Skip      | Break                          |
 | Perform   | Do/start block                 |
