@@ -1,12 +1,12 @@
-# Dyno Standard Libraries 
+# Beacon Standard Libraries 
 
-Dyno’s standard library collection is built to support its Universal User-Oriented Programming (UOP) paradigm and core language principles. Every library module uses only unique, domain-specific keywords to avoid ambiguity and maximize clarity for new users.
+Beacon’s standard library collection is built to support its Universal User-Oriented Programming (UOP) paradigm and core language principles. Every library module uses only unique, domain-specific key[...]
 
 ---
 
 ## 1. Core & Runtime Utilities
 
-### dyno.core
+### beacon.core
 
 Core utilities and base operations.
 
@@ -16,7 +16,7 @@ Core utilities and base operations.
 - input(): Basic input handling.
 - print(): Basic output handling.
 
-### dyno.io
+### beacon.io
 
 Input/output stream management.
 
@@ -24,7 +24,7 @@ Input/output stream management.
 - write()
 - flush()
 
-### dyno.string
+### beacon.string
 
 String manipulation utilities.
 
@@ -34,7 +34,7 @@ String manipulation utilities.
 - replace()
 - format()
 
-### dyno.collection
+### beacon.collection
 
 Collection data structures and utilities.
 
@@ -44,7 +44,7 @@ Collection data structures and utilities.
 - queue()
 - stack()
 
-### dyno.concurrent
+### beacon.concurrent
 
 Concurrency and parallelism utilities.
 
@@ -54,7 +54,7 @@ Concurrency and parallelism utilities.
 - wait()
 - signal()
 
-### dyno.track
+### beacon.track
 
 Logging and tracking system behavior.
 
@@ -62,7 +62,7 @@ Logging and tracking system behavior.
 - track.warn()
 - track.crit()
 
-### dyno.time
+### beacon.time
 
 Time and date management.
 
@@ -70,7 +70,7 @@ Time and date management.
 - pause(ms)
 - clock()
 
-### dyno.rand
+### beacon.rand
 
 Random generation and entropy utilities.
 
@@ -82,7 +82,7 @@ Random generation and entropy utilities.
 
 ## 2. User-Oriented Libraries
 
-### dyno.bridge
+### beacon.bridge
 
 UOP Interfaces and interaction handlers.
 
@@ -90,7 +90,7 @@ UOP Interfaces and interaction handlers.
 - bridge.map()
 - bridge.link()
 
-### dyno.peer
+### beacon.peer
 
 Manages user and identity information.
 
@@ -98,7 +98,7 @@ Manages user and identity information.
 - authen()
 - peek()
 
-### dyno.hub
+### beacon.hub
 
 Communication and event triggers.
 
@@ -110,20 +110,20 @@ Communication and event triggers.
 
 ## 3. Structural & Logical
 
-### dyno.logic
+### beacon.logic
 
 Control flow utilities.
 
 - both, either, deny
 - flux for conditional flow structures.
 
-### dyno.nick
+### beacon.nick
 
 User-defined type nicknaming.
 
 - nick Data as Integer
 
-### dyno.bloc
+### beacon.bloc
 
 Functional blocks and procedural flows.
 
@@ -131,7 +131,7 @@ Functional blocks and procedural flows.
 - bloc onfail()
 - bloc retry()
 
-### dyno.trap
+### beacon.trap
 
 Error and exception handling.
 
@@ -141,20 +141,20 @@ Error and exception handling.
 
 ## 4. Math, Data & Transformation
 
-### dyno.math
+### beacon.math
 
 Arithmetic, scientific, and geometric calculations.
 
 - absol(), exponent(), Roff()
 - scope() for sequence generation.
 
-### dyno.kind
+### beacon.kind
 
 Data type discovery.
 
 - kind(), convert, plug()
 
-### dyno.infuse
+### beacon.infuse
 
 Data structures and transformations.
 
@@ -166,14 +166,14 @@ Data structures and transformations.
 
 ## 5. Files & Persistence
 
-### dyno.file
+### beacon.file
 
 File operations and data persistence.
 
 - fetch(), modify()
 - lock(), unlock()
 
-### dyno.logix
+### beacon.logix
 
 Persistent workflow scripting.
 
@@ -183,14 +183,14 @@ Persistent workflow scripting.
 
 ## 6. Networking & Communication
 
-### dyno.net
+### beacon.net
 
 Basic network communications.
 
 - ping.remote()
 - plug.remote()
 
-### dyno.sigma
+### beacon.sigma
 
 Signals and real-time streams.
 
@@ -200,7 +200,7 @@ Signals and real-time streams.
 
 ## 7. DevTools & Meta
 
-### dyno.meta
+### beacon.meta
 
 Introspection and reflection.
 
@@ -208,13 +208,13 @@ Introspection and reflection.
 - kind()
 - peek()
 
-### dyno.skelet
+### beacon.skelet
 
 Structural blueprints.
 
 - blueprint, procsys, skelet
 
-### dyno.decon
+### beacon.decon
 
 Destructuring utilities.
 
@@ -224,14 +224,14 @@ Destructuring utilities.
 
 ## 8. Experimental & Plug-ins
 
-### dyno.toolkit
+### beacon.toolkit
 
 Modular plug-and-play extensions.
 
 - plug bridge from toolkit
 - plug infuse from toolkit
 
-### dyno.funcall
+### beacon.funcall
 
 Function call wrappers and decorators.
 
@@ -242,7 +242,7 @@ Function call wrappers and decorators.
 
 ## 9. Custom Libraries (Cus-libs)
 
-Dyno supports the creation of custom libraries, allowing programmers to define and manage their own reusable code modules tailored to their specific needs.
+Beacon supports the creation of custom libraries, allowing programmers to define and manage their own reusable code modules tailored to their specific needs.
 
 - define(): Define a new custom library.
 - import(): Import a custom library into a project.
