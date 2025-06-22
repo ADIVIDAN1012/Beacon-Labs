@@ -8,9 +8,8 @@ This document provides complete example programs written in the Beacon Programmi
 
 ```
 spec greet_user
-    output("Enter your name:")
-    name = ask()
-    output(f"Hello, {name}!")
+    name = ask("Enter your name:")
+    output("Hello, |name|!")
     forward nil
 
 funcall greet_user()
@@ -22,13 +21,10 @@ funcall greet_user()
 
 ```
 spec calc_sum
-    output("Enter two numbers:")
-    a = ask()
-    b = ask()
-    convert a to int
-    convert b to int
+    a = ask("Enter first number:")
+    b = ask("Enter second number:")
     sum = a + b
-    output(f"Sum is: {sum}")
+    output("Sum is: |sum|")
     forward nil
 
 funcall calc_sum()
@@ -40,9 +36,7 @@ funcall calc_sum()
 
 ```
 spec check_number
-    output("Enter a number:")
-    n = ask()
-    convert n to int
+    n = ask("Enter a number:")
 
     check n > 0
         output("Positive number")
@@ -62,7 +56,7 @@ funcall check_number()
 ```
 spec list_squares
     traverse i from 1 to 5
-        output(f"Square of {i} is {i * i}")
+        output("Square of |i| is |i * i|")
     forward nil
 
 funcall list_squares()
@@ -80,7 +74,7 @@ spec file_demo
 
     file = inlet("data.txt", "read")
     content = file.fetch()
-    output(f"File says: {content}")
+    output("File says: |content|")
     file.seal()
     forward nil
 
@@ -94,11 +88,9 @@ funcall file_demo()
 ```
 spec error_test
     attempt
-        output("Enter number:")
-        x = ask()
-        convert x to int
+        x = ask("Enter number:")
         result = 10 / x
-        output(f"Result: {result}")
+        output("Result: |result|")
     trap ZeroDivisionError by e
         output("Cannot divide by zero.")
     trap ValueError by e
@@ -116,12 +108,11 @@ funcall error_test()
 
 ```
 spec get_square(x)
-    convert x to int
     forward x * x
 
 spec use_square
     result = funcall get_square(7)
-    output(f"Square is: {result}")
+    output("Square is: |result|")
     forward nil
 
 funcall use_square()
@@ -137,7 +128,7 @@ blueprint Car
         own.name = name
 
     spec drive(own)
-        output(f"{own.name} is driving.")
+        output("|own.name| is driving.")
     forward nil
 
 mycar = Car("BeaconX")
@@ -154,7 +145,6 @@ File: math_toolkit.beacon
 toolkit MathOps
 
 spec square(n)
-    convert n to int
     forward n * n
 
 share square
@@ -162,12 +152,12 @@ share square
 
 Main File:
 
-```  
+```
 plug MathOps
 
 spec run
     result = funcall square(4)
-    output(f"Square from toolkit: {result}")
+    output("Square from toolkit: |result|")
 forward nil
 
 funcall run()
@@ -228,7 +218,7 @@ spec file_ops
 
     file = inlet("file.txt", "read")
     content = file.fetch()
-    output(f"File content: {content}")
+    output("File content: |content|")
     file.seal()
 forward nil
 ```
@@ -238,8 +228,7 @@ forward nil
 ```
 spec type_check
     kind var_type = kind("int")
-    convert a to int
-forward nil
+    forward nil
 ```
 
 ## Inheritance
@@ -344,3 +333,5 @@ peek access
 infuse inject
 forward nil
 ```
+
+---
