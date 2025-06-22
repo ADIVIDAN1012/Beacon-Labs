@@ -1,10 +1,10 @@
-# Dyno Sample Programs
+# Beacon Sample Programs
 
-This document provides complete example programs written in the Dyno Programming Language to demonstrate syntax, control flow, file handling, error management, and modular UOP structure.
+This document provides complete example programs written in the Beacon Programming Language to demonstrate syntax, control flow, file handling, error management, and modular UOP structure.
 
 ---
 
-## 1. Hello Dyno – Basic Output and Input
+## 1. Hello Beacon – Basic Output and Input
 
 ```
 spec greet_user
@@ -75,7 +75,7 @@ funcall list_squares()
 ```
 spec file_demo
     file = inlet("data.txt", "write")
-    file.modify("This is Dyno File System.")
+    file.modify("This is Beacon File System.")
     file.seal()
 
     file = inlet("data.txt", "read")
@@ -140,7 +140,7 @@ blueprint Car
         output(f"{own.name} is driving.")
     forward nil
 
-mycar = Car("DynoX")
+mycar = Car("BeaconX")
 funcall mycar.drive()
 ```
 
@@ -148,7 +148,7 @@ funcall mycar.drive()
 
 ## 9. Modular Programming using plug, share, toolkit
 
-File: math_toolkit.dyno
+File: math_toolkit.beacon
 
 ```
 toolkit MathOps
@@ -173,7 +173,7 @@ forward nil
 funcall run()
 ```
 
-# Dyno Programming Language - Keywords
+# Beacon Programming Language - Keywords
 
 ## Access Control
 
