@@ -1,8 +1,8 @@
-# Dyno Modular System
+# Beacon Modular System
 
 ## Overview
 
-Dyno uses a lightweight, semantic, and UOP-compliant modular system built around three core keywords:
+Beacon uses a lightweight, semantic, and UOP-compliant modular system built around three core keywords:
 
 - **plug** – for importing modules
 - **share** – for exporting functions, data, or interfaces
@@ -100,7 +100,7 @@ spec run
 ```
 toolkit Auth
     share spec verify pass
-        check pass == "dyno123"
+        check pass == "beacon123"
             forward true
         altern
             forward false
@@ -121,4 +121,6 @@ spec login
 
 ## Conclusion
 
-Dyno's modular system is built for clarity and simplicity. It brings together the accessibility of scripting with the power of full module-based programming — made universally understandable through UOP.
+Beacon's modular system is built for clarity and simplicity. It brings together the accessibility of scripting with the power of full module-based programming — made universally understandable.
+
+---
