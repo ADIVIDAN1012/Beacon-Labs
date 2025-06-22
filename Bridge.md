@@ -1,12 +1,12 @@
-# UOP Interfaces & Interaction Logic in Dyno
+# UOP Interfaces & Interaction Logic in Beacon
 
-Dyno's Bridge System is designed around Universal User-Oriented Programming (UOP) — allowing natural, modular, and intuitive communication between components, users, and systems. This system enables seamless interface declaration, interaction design, and user-focused logic handling.
+Beacon's Bridge System is designed around Universal User-Oriented Programming (UOP) — allowing natural, modular, and intuitive communication between components, users, and systems. This system enables[...]
 
 ---
 
 ## 1. Core Concepts
 
-| Dyno Keyword | Role                     | Equivalent           |
+| Beacon Keyword | Role                     | Equivalent           |
 |--------------|--------------------------|---------------------|
 | bridge       | Defines a UOP interface  | interface / API     |
 | link         | Binds implementations    | connect / bind      |
@@ -51,7 +51,7 @@ Use inlet to define interaction logic entry points:
 
 ```plaintext
 inlet
-    output("Welcome to Dyno Interface")
+    output("Welcome to Beacon Interface")
     val = ask()
     bridge_id = convert val to int
 
@@ -68,7 +68,7 @@ inlet
 ```plaintext
 bridge AuthBridge
     expose spec validate token
-        check token == "dyno123"
+        check token == "beacon123"
             forward "Access Granted"
         forward "Access Denied"
 
@@ -105,4 +105,4 @@ inlet
 - Peek = View internal states or response
 - Embed = Bring in nested logic
 
-Dyno's Bridge structure allows full modularity without breaking UOP flow, ensuring that users always interact through intentful, understandable units.
+Beacon's Bridge structure allows full modularity without breaking UOP flow, ensuring that users always interact through intentful, understandable units.
