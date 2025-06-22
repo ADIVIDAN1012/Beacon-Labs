@@ -68,10 +68,8 @@ Example:
 ```
 blueprint LoginBridge
     spec ask_credentials
-        output("Enter ID:")
-        id = ask()
-        output("Enter passcode:")
-        pass = ask()
+        id = ask("Enter ID:")
+        pass = ask("Enter passcode:")
         forward id, pass
 ```
 
