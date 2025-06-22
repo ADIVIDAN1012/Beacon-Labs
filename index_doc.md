@@ -1,4 +1,4 @@
-# Dyno Foundation Documentation Links
+# Beacon Lab Documentation Links
 
 - [Toolkit](https://github.com/ADIVIDAN1012/Dyno-Foundation/blob/main/toolkit.md)
 - [Error Handling](https://github.com/ADIVIDAN1012/Dyno-Foundation/blob/main/error.md)
