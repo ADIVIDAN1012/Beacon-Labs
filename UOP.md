@@ -2,7 +2,7 @@
 
 ## What is UOP?
 
-Universal User-Oriented Programming (UOP) is the core paradigm of the Dyno Programming Language, focused on:
+Universal User-Oriented Programming (UOP) is the core paradigm of the Beacon Programming Language, focused on:
 
 - Clarity for the User
 - Natural Expression of Logic
