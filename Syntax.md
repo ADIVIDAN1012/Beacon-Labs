@@ -1,4 +1,4 @@
-# Dyno Programming Language — Syntax
+# Beacon Programming Language — Syntax
 
 ## Variable Assignment
 
@@ -32,7 +32,7 @@ show("Hello, {name}")
 show("Welcome!")   <works without variables too>
 
 
-> Dyno supports embedded variables in strings using {} syntax similar to Python f-strings but **without needing the f"" prefix**.
+> Beacon supports embedded variables in strings using {} syntax similar to Python f-strings but **without needing the f"" prefix**.
 
 ---
 
@@ -105,7 +105,7 @@ conclude:
 
 ## Keywords and Operators (Partial)
 
-| Dyno Keyword | Python Equivalent | Notes                             |
+| Beacon Keyword | Python Equivalent | Notes                             |
 |--------------|-------------------|----------------------------------|
 | spec         | def               | function definition              |
 | funcall      | ()                | function call                   |
