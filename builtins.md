@@ -1,4 +1,4 @@
-# Dyno Programming Language – Built-in Functions  
+# Beacon Programming Language – Built-in Functions  
 **Version:** v1.0 | **Format:** Universal User-Oriented Programming (UOP)  
 
 ---
@@ -37,7 +37,7 @@ This document lists all built-in functions available in Dyno. These functions ar
 | Function | Description                                   | Dyno Example               |
 |----------|-----------------------------------------------|---------------------------|
 | `ask(DT)`| Takes user input and converts it to the specified data type. | ```age = ask(int)```       |
-| `output(x)`| Displays or prints the value.                | ```output("Hello, Dyno!")```|
+| `output(x)`| Displays or prints the value.                | ```output("Hello, Beacon!")```|
 | `tag(seq)`| Returns indexed pairs from a sequence.       | ```output(tag(["a", "b"]))```|
 
 ---
