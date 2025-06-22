@@ -1,6 +1,6 @@
 # Dyno Standard Libraries 
 
-Dyno’s standard library collection is built to support its Universal User-Oriented Programming (UOP) paradigm and core language principles. Every library module uses only unique, domain-specific names and avoids conflicts with existing language ecosystems. Below is the structured hierarchy:
+Dyno’s standard library collection is built to support its Universal User-Oriented Programming (UOP) paradigm and core language principles. Every library module uses only unique, domain-specific keywords to avoid ambiguity and maximize clarity for new users.
 
 ---
 
