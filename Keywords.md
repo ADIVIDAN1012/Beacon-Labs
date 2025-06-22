@@ -1,4 +1,4 @@
-# Dyno Language – Keywords
+# Beacon Language – Keywords
 
 ## Access Control
 
@@ -51,7 +51,7 @@
 |-----------|---------------------|
 | kind      | Type of variable    |
 | convert   | Type conversion     |
-
+              
 ---
 
 ## Inheritance
