@@ -1,163 +1,273 @@
-# Beacon Programming Language — Syntax
+# Beacon Programming Language – Complete Syntax Reference
+
+<^
+This document describes the syntax of every Beacon language keyword and major feature.
+Each Beacon keyword replaces a mainstream programming keyword with the same structure, but blocks always use { }.
+No indentation or : is required for blocks.
+Comments use < ... > and <^ ... ^>.
+^>
+
+---
 
 ## Variable Assignment
 
+num = 10
+name = ask("Enter}
 
-var = 10
-name = ask("Enter your name: ")
-flag = off    <false boolean value>
+Adopt Dog from Animal {
+    Spec speak() {
+        show("{name} barks")
+    }
+}
 
+Crate Point {
+    facet x
+    facet y
+}
 
----
+Facet age
+Fetch age
+Assign age
 
-## Data Types and Conversions
+Morph operator +(a, b) {
+    Forward a.value + b.value
+}
 
-- Dynamic typing like Python
-- Use convert variable to DataType for type conversion
-
-
-Integer = convert val to num
-flt = convert val to decim
-txt = convert val to text
-bitflag = convert val to bit
-
-
----
-
-## Input / Output
-
-
-name = ask("Enter your name: ")
-show("Hello, {name}")
-show("Welcome!")   <works without variables too>
-
-
-> Beacon supports embedded variables in strings using |v| syntax unlike Python f-strings.
+Model T
 
 ---
 
-## Functions
+## Constants and Statics
 
-- Define functions using spec
-- Use funcall to call functions (optional for simple calls, recommended for clarity on complex calls)
-- Use forward to return values
+Firm PI = 3.14
+Solid counter = 0
 
+---
 
-spec greet():
-    show("Hello World")
+## Access Control
 
-funcall greet()
+Covnito spec secret() {
+    < Only accessible within the class >
+}
 
-spec add(a, b):
-    forward a + b
+Avail spec public_func() {
+    show("This is public")
+}
 
-result = funcall add(5, 3)
-show("Sum is {result}")
+Shel facet internal_id
 
+Internal spec pkg_func() {
+    < Restricted to package >
+}
+
+Expose spec api() {
+    < Publicly exposed function >
+}
 
 ---
 
 ## Control Flow
 
-### Conditional Statements
+Check x > 0 {
+    show("Positive")
+} Alter x == 0 {
+    show("Zero")
+} Altern {
+    show("Negative")
+}
 
+Select color {
+    Option "red" {
+        show("Red!")
+    }
+    Option "blue" {
+        show("Blue!")
+    }
+}
 
-check x > 10:
-    show("Greater than 10")
-alter x == 10:
-    show("Equal to 10")
-altern:
-    show("Less than 10")
+Traverse i from 1 to 5 {
+    show(i)
+}
 
+Until x > 10 {
+    x = x + 1
+}
 
-### Loops
+Within x in [1,2,3] {
+    show(x)
+}
 
-- Use until instead of while
-
-
-i = 0
-until i > 10:
-    show("Count {i}")
-    i = i + 1
-
-
-- Use traverse keyword from start to end instead of for
-
-
-traverse i from 1 to 5:
-    show("Number {i}")
-
-
----
-
-## Error Handling
-
-
-attempt:
-    <risky code here>
-trap ErrorType as e:
-    show("Error occurred: {e}")
-conclude:
-    show("This runs always")
-
+Scope i from 0 to 10 {
+    show(i)
+}
 
 ---
 
-## Keywords and Operators (Partial)
+## Loops and Loop Control
 
-| Beacon Keyword | Python Equivalent | Notes                             |
-|--------------|-------------------|----------------------------------|
-| spec         | def               | function definition              |
-| funcall      | ()                | function call                   |
-| forward      | return            | return value                    |
-| check        | if                | conditional                    |
-| alter        | elif              | else if                       |
-| altern       | else              | else                         |
-| until        | while             | loop                         |
-| traverse     | for               | for loop                    |
-| ask          | input             | input                        |
-| show         | print             | output                       |
-| condense     | reduce            | reduce/fold                 |
-| authen       | authentication    | auth check                 |
-| off          | False             | boolean false                 |
-| both         | and               | logical AND                   |
-| no           | not               | logical NOT                   |
-| either       | or                | logical OR                    |
-| erase        | del               | delete variable              |
-| ignore       | continue          | continue                    |
-| skip         | break             | break                      |
-| spill        | yield             | yield                      |
-| source       | from              | import from                |
-| universal    | global            | global                    |
-| within       | in                | membership                |
-| equal        | is                | identity                  |
+Traverse i from 1 to 5 {
+    if i == 3 {
+        Skip
+    }
+    show(i)
+}
+
+Until x < 5 {
+    Ignore
+    x = x - 1
+}
+
+---
+
+## Try/Catch/Finally (Error Handling)
+
+Attempt {
+    risky_op()
+} Trap Blame as e {
+    show("Error: {e}")
+} Conclude {
+    show("Cleanup always runs")
+}
+
+Peek error
+Blame MyError("fail")
+Trigger Blame("fail")
+
+---
+
+## Boolean, Null, Identity
+
+On
+Off
+Nil
+
+Be a Be b
+
+---
+
+## Import/Export/Modules
+
+Plug math
+Share spec api() {
+    < Exported function >
+}
+
+Toolkit utils
+
+Source math from "toolkit/math"
+
+---
+
+## File Handling
+
+Inlet file = open("data.txt")
+Fetch line = file.Fetch()
+Modify file.Modify("New data")
+Seal file
+
+---
+
+## User I/O
+
+Ask name = ask("Enter your name: ")
+Show("Welcome, {name}")
+
+---
+
+## Serialization
+
+Pack data = Pack(obj)
+Unpack obj = Unpack(data)
+
+---
+
+## Event Handling
+
+Listen button.Click, handler
+Trigger event
+
+---
+
+## Debugging/Logging
+
+Track("Debug info")
+Trace("Tracing execution")
+Watch var
+
+---
+
+## System/Environment Operations
+
+Bloc {
+    Plug math
+    show("In a block")
+}
+
+Embed resource "logo.png"
+
+Bridge Drawable {
+    Spec draw()
+}
+
+Link a, b
+Infuse config
+
+Universal counter
+
+Launch main() {
+    show("Starting program!")
+}
+
+---
+
+## Memory Management
+
+Slip ptr
+Wipe cache
+
+---
+
+## Generics
+
+Model T
+
+---
+
+## Lambda (Anonymous Functions)
+
+Den = (a, b) => a + b
 
 ---
 
 ## Comments
 
-- Single-line comment:
-
-
 < This is a single-line comment >
 
-
-- Multi-line comment:
-
-
 <^
-This is
-a multi-line comment
+This is a multi-line comment.
+Spanning multiple lines.
 ^>
 
+Note: "This is a docstring for a function or class"
 
 ---
 
-## Notes
+## Enum/Tag
 
-- Assignment uses =, not a keyword.
-- Dynamic typing means no need for explicit variable declaration keywords.
-- String interpolation uses {} without f"".
-- Use funcall optionally for clarity in function calls.
-- convert variable to Type is the syntax for type conversion.
-- Keywords have unique synonyms to avoid clashes and keep language clean.
+Tag Color {
+    RED
+    BLUE
+}
+
+---
+
+## Miscellaneous Operations
+
+Authen x == y
+Transform arr, f
+Condense arr, f
+Solve expr
+
+---
+
+< End of Syntax Reference >
