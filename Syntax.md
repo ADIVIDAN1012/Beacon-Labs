@@ -32,7 +32,7 @@ show("Hello, {name}")
 show("Welcome!")   <works without variables too>
 
 
-> Beacon supports embedded variables in strings using {} syntax similar to Python f-strings but **without needing the f"" prefix**.
+> Beacon supports embedded variables in strings using |v| syntax unlike Python f-strings.
 
 ---
 
