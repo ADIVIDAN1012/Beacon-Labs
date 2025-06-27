@@ -25,6 +25,72 @@
 ## Class & Object Orientation
 
 | Keyword     | Meaning               |
+|-------------|-----------------------|
+| Blueprint   | Class                 |
+| Skelet      | Abstract class        |
+| Bridge      | Interface/protocol    |
+| Adopt       | Inherit/extends       |
+| Father      | Base/superclass       |
+| Child       | Subclass              |
+| Crate       | Struct/dataclass      |
+| Facet       | Property              |
+| Fetch       | Getter                |
+| Assign      | Setter                |
+| Morph       | Operator overload     |
+| Model       | Generic/template      |
+| Belong      | Belongs to/inherit    |
+
+---
+
+## Constants, Statics, and Immutability
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Firm      | Constant/immutable  |
+| Solid     | Static              |
+
+---
+
+## Functions & Special Features
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Spec      | Function def        |
+| Forward   | Return              |
+| Funcall   | Call function       |
+| Den       | Lambda/anonymous fn |
+| Adorn     | Decorator/attribute |
+| Note      | Docstring           |
+
+---
+
+## Concurrency/Parallelism
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Paral     | Async/Parallel      |
+| Hold      | Await/pause         |
+| Flux      | Flow/stream         |
+| Barrier   | Lock/barrier        |
+| Permit    | Semaphore           |
+| Signal    | Event/signal        |
+
+---
+
+## File Handling
+
+| Keyword   | Meaning             |
+|-----------|---------------------|
+| Inlet     | File handle/input   |
+| Fetch     | Read/get data       |
+| Modify    | Write/set data      |
+| Seal      | Close file          |
+
+---
+
+## User I/O
+
+| Keyword   | Meaning             |
 |-----------|---------------------|
 | ask       | Input               |
 | show      | Output/print        |
