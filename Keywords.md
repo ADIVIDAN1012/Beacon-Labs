@@ -25,7 +25,6 @@
 ## Class & Object Orientation
 
 | Keyword     | Meaning               |
-|-------------|-----------------------|
 |-----------|---------------------|
 | ask       | Input               |
 | show      | Output/print        |
