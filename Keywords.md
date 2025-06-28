@@ -4,8 +4,8 @@
 
 | Keyword   | Meaning             |
 |-----------|---------------------|
-| Covnito   | Private             |
-| Shel      | Protected           |
+| Hidden    | Private             |
+| Shielded  | Protected           |
 | Avail     | Public              |
 | Internal  | Package-level       |
 | Expose    | Exposed/Public      |
@@ -16,22 +16,19 @@
 
 | Keyword   | Meaning             |
 |-----------|---------------------|
-| kind      | Type of variable    |
-| convert   | Type conversion     |
+| Kind      | Type of variable    |
+| Convert   | Type conversion     |
 | Ascribe   | Type annotation     |
 
 ---
 
-## Class & Object Orientation
+## Classes & Objects
 
 | Keyword     | Meaning               |
 |-------------|-----------------------|
 | Blueprint   | Class                 |
-| Skelet      | Abstract class        |
 | Bridge      | Interface/protocol    |
 | Adopt       | Inherit/extends       |
-| Father      | Base/superclass       |
-| Child       | Subclass              |
 | Crate       | Struct/dataclass      |
 | Facet       | Property              |
 | Fetch       | Getter                |
@@ -55,9 +52,8 @@
 
 | Keyword   | Meaning             |
 |-----------|---------------------|
-| Spec      | Function def        |
+| Spec      | Function definition |
 | Forward   | Return              |
-| Funcall   | Call function       |
 | Den       | Lambda/anonymous fn |
 | Adorn     | Decorator/attribute |
 | Note      | Docstring           |
@@ -70,9 +66,6 @@
 |-----------|---------------------|
 | Paral     | Async/Parallel      |
 | Hold      | Await/pause         |
-| Flux      | Flow/stream         |
-| Barrier   | Lock/barrier        |
-| Permit    | Semaphore           |
 | Signal    | Event/signal        |
 
 ---
@@ -82,7 +75,6 @@
 | Keyword   | Meaning             |
 |-----------|---------------------|
 | Inlet     | File handle/input   |
-| Fetch     | Read/get data       |
 | Modify    | Write/set data      |
 | Seal      | Close file          |
 
@@ -92,8 +84,8 @@
 
 | Keyword   | Meaning             |
 |-----------|---------------------|
-| ask       | Input               |
-| show      | Output/print        |
+| Ask       | Input               |
+| Show      | Output/print        |
 
 ---
 
@@ -132,9 +124,7 @@
 | Plug      | Import/use module   |
 | Share     | Export              |
 | Toolkit   | Module/package      |
-| Bloc      | Block/batch         |
 | Embed     | Embed resource      |
-| Bridge    | Interface/bridge    |
 | Link      | Join/link           |
 | Infuse    | Inject/populate     |
 | Source    | Import from         |
@@ -152,35 +142,26 @@
 
 ---
 
-## Control Flow / Loops
+## Control Flow & Loops
 
-| Keyword   | Meaning                        |
-|-----------|--------------------------------|
-| Check     | If                             |
-| Alter     | Else if                        |
-| Altern    | Else                           |
-| Select    | Switch                         |
-| Option    | Case                           |
-| Traverse  | For/iteration loop             |
-| Within    | Range/membership               |
-| Scope     | Range (for loop)               |
-| Until     | While loop                     |
-| Using     | With/resource context          |
-| Give      | Yield/generator                |
-| Spill     | Yield/generator                |
-| Both      | Logical and                    |
-| either    | Logical or                     |
-| Off       | Boolean false                  |
-| On        | Boolean true                   |
-| Nil       | Null/none                      |
-| Erase     | Delete variable                |
-| Ignore    | Continue                       |
-| Skip      | Break                          |
-| Perform   | Do/start block                 |
-| Leap      | Goto                           |
-| Mark      | Label                          |
-| be        | Identity (is)                  |
-| Assert    | Assertion                      |
+| Keyword   | Meaning                |
+|-----------|------------------------|
+| Check     | If                     |
+| Alter     | Else if                |
+| Altern    | Else                   |
+| Select    | Switch                 |
+| Option    | Case                   |
+| Traverse  | For/iteration loop     |
+| Within    | Membership/range       |
+| Scope     | Range (for loop)       |
+| Until     | While loop             |
+| Give      | Yield/generator        |
+| Halt      | Break                  |
+| Proceed   | Continue               |
+| Wait      | Pass                   |
+| Leap      | Goto                   |
+| Mark      | Label                  |
+| Be        | Identity (is)          |
 
 ---
 
@@ -193,11 +174,10 @@
 | Conclude  | Finally             |
 | Peek      | Inspect/peek error  |
 | Blame     | Exception/error     |
-| Trigger   | Raise error         |
 
 ---
 
-## Data Types Synonyms
+## Data Types
 
 | Keyword   | Meaning             |
 |-----------|---------------------|
@@ -206,23 +186,26 @@
 | Bit       | Boolean             |
 | Text      | String              |
 | Tag       | Enum/tagged type    |
+| On        | Boolean true        |
+| Off       | Boolean false       |
+| Nil       | Null/none           |
 
 ---
 
-## Miscellaneous Operations
+## Miscellaneous
 
 | Keyword   | Meaning             |
 |-----------|---------------------|
 | Authen    | Assert/verify       |
 | Transform | Map                 |
 | Condense  | Reduce              |
-| Den       | Lambda/anonymous fn |
 | Solve     | Evaluate/run code   |
+| Erase     | Delete variable     |
 
 ---
 
 ## Comments
 
-- **Single-line comment:** `< ... >`
-- **Multi-line comment:** `<^ ... ^>`
-- **Docstring:** `Note: "function description..."`
+- Single-line comment: < ... >
+- Multi-line comment: <^ ... ^>
+- Docstring: Note: "function description..."
