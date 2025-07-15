@@ -6,15 +6,15 @@ Beacon's Bridge System is designed around Universal User-Oriented Programming (U
 
 ## 1. Core Concepts
 
-| Beacon Keyword | Role                     | Equivalent           |
-|--------------|--------------------------|---------------------|
-| bridge       | Defines a UOP interface  | interface / API     |
-| link         | Binds implementations    | connect / bind      |
-| peek         | Access values inside bridge | get / property accessor |
-| expose       | Makes bridge methods callable | public function  |
-| inlet        | Entry point handler      | main() / entry()    |
-| forward      | Return response to caller | return             |
-| embed        | Embed resource or handler | Include resource    |
+| Beacon Keyword | Role                          | Equivalent              |
+| -------------- | ----------------------------- | ----------------------- |
+| bridge         | Defines a UOP interface       | interface / API         |
+| link           | Binds implementations         | connect / bind          |
+| peek           | Access values inside bridge   | get / property accessor |
+| expose         | Makes bridge methods callable | public function         |
+| inlet          | Entry point handler           | main() / entry()        |
+| forward        | Return response to caller     | return                  |
+| embed          | Embed resource or handler     | Include resource        |
 
 ---
 
@@ -40,7 +40,7 @@ toolkit MathCore
     spec main
         link calc to Calculator
         result = calc.add(5, 3)
-        output(f"Result: {result}")
+        output(f"Result: |result}")
 ```
 
 ---
@@ -58,7 +58,7 @@ inlet
     check bridge_id == 1
         link action to Calculator
         result = action.add(4, 2)
-        output(f"Sum is {result}")
+        output(f"Sum is |result}")
 ```
 
 ---

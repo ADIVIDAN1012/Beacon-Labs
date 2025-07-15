@@ -29,7 +29,7 @@ Rather than forcing users to adapt to machine-centric language rules, UOP ensure
 
 3. **User Roles in Focus**
 
-   Dyno classifies users as:
+   Beacon classifies users as:
 
    - Writer – the one who builds the logic
    - User – the one who interacts with the system
@@ -41,17 +41,17 @@ Rather than forcing users to adapt to machine-centric language rules, UOP ensure
 
 ## Key UOP Keywords
 
-| Keyword  | Role in UOP                                  |
-|----------|----------------------------------------------|
-| bridge   | Defines user-to-logic interface               |
-| spec     | Defines a logical unit (function)             |
-| plug     | Brings in external modules                     |
-| toolkit  | Self-contained, reusable module                |
-| forward  | Sends values or signals (return)               |
-| check    | Conditional check for user input or logic     |
-| ask()    | Prompt user for input                           |
-| output() | Display user-friendly output                    |
-| attempt  | Handle errors in user-friendly manner          |
+| Keyword  | Role in UOP                               |
+| -------- | ----------------------------------------- |
+| bridge   | Defines user-to-logic interface           |
+| spec     | Defines a logical unit (function)         |
+| plug     | Brings in external modules                |
+| toolkit  | Self-contained, reusable module           |
+| forward  | Sends values or signals (return)          |
+| check    | Conditional check for user input or logic |
+| ask()    | Prompt user for input                     |
+| output() | Display user-friendly output              |
+| attempt  | Handle errors in user-friendly manner     |
 
 ---
 
@@ -77,17 +77,17 @@ blueprint LoginBridge
 
 ## UOP vs Traditional OOP
 
-| Aspect          | UOP (Dyno)                      | Traditional OOP           |
-|-----------------|--------------------------------|---------------------------|
-| Focus           | User Logic & Flow              | Object & Data Models       |
-| Syntax          | Natural Language-Inspired      | Technical Keywords         |
-| Flexibility     | Multi-paradigm                 | Mostly Class-based         |
-| Interfaces      | bridge, toolkit                | interface, module          |
-| Error Handling  | attempt, trap, trigger         | try, catch, throw          |
-| Output/Input    | output(), ask()                | print(), input()           |
+| Aspect         | UOP (Beacon)              | Traditional OOP      |
+| -------------- | ------------------------- | -------------------- |
+| Focus          | User Logic & Flow         | Object & Data Models |
+| Syntax         | Natural Language-Inspired | Technical Keywords   |
+| Flexibility    | Multi-paradigm            | Mostly Class-based   |
+| Interfaces     | bridge, toolkit           | interface, module    |
+| Error Handling | attempt, trap, trigger    | try, catch, throw    |
+| Output/Input   | output(), ask()           | print(), input()     |
 
 ---
 
 ## Conclusion
 
-UOP empowers developers to think like users, write like communicators, and code like creators. Dyno's approach puts people first, making code feel like dialogue rather than instruction.
+UOP empowers developers to think like users, write like communicators, and code like creators. Beacon's approach puts people first, making code feel like dialogue rather than instruction.
