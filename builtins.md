@@ -1,102 +1,104 @@
-# Beacon Programming Language – Built-in Functions
+# Built-in Functions in Beacon
 
-**Version:** v1.0 | **Format:** Universal User-Oriented Programming (UOP)
-
----
-
-## Overview
-
-This document lists all built-in functions available in Beacon. These functions are designed to be intuitive, concise, and consistent with Beacon’s natural-language syntax. They support common operations like type checking, user input, mathematical computation, and sequence processing.
+This document provides a comprehensive list of all built-in functions available in the Beacon language. These functions are designed to be intuitive and align with Beacon's UOP (Universal User-Oriented Programming) philosophy, providing straightforward ways to perform common tasks.
 
 ---
 
 ## Table of Contents
 
-1. [Type & Value Utilities](#type--value-utilities)
-2. [Input & Output](#input--output)
-3. [Math Functions](#math-functions)
-4. [Sequence Utilities](#sequence-utilities)
-5. [Conversion Functions](#conversion-functions)
-6. [Functional Utilities](#functional-utilities)
-7. [Object Utilities](#object-utilities)
-8. [Miscellaneous](#miscellaneous)
-
----
-
-## Type & Value Utilities
-
-| Function   | Description                        | Beacon Example         |
-| ---------- | ---------------------------------- | ---------------------- |
-| `kind(x)`  | Returns the data type of x.        | `output(kind(7))`      |
-| `avail(x)` | Checks if x is defined and usable. | `output(avail(y))`     |
-| `exist(x)` | Checks if x exists (is not nil).   | `output(exist(myObj))` |
+1. [Input & Output](#input--output)
+2. [State & Type Utilities](#state--type-utilities)
+3. [Data Conversion](#data-conversion)
+4. [Math](#math)
+5. [Sequence Manipulation](#sequence-manipulation)
+6. [Functional Programming](#functional-programming)
+7. [Object Introspection](#object-introspection)
+8. [Control Flow](#control-flow)
+9. [Miscellaneous](#miscellaneous)
 
 ---
 
 ## Input & Output
 
-| Function    | Description                                                  | Beacon Example             |
-| ----------- | ------------------------------------------------------------ | -------------------------- |
-| `ask(DT)`   | Takes user input and converts it to the specified data type. | `age = ask(int)`           |
-| `output(x)` | Displays or prints the value.                                | `output("Hello, Beacon!")` |
-| `tag(seq)`  | Returns indexed pairs from a sequence.                       | `output(tag(["a", "b"]))`  |
+| Function | Description | Example |
+|---|---|---|
+| `ask(prompt)` | Prompts the user for input and returns the entered value as text. | `name = ask("Enter your name: ")` |
+| `show(value)` | Displays a value to the standard output. | `show("Hello, Beacon!")` |
 
 ---
 
-## Math Functions
+## State & Type Utilities
 
-| Function         | Description                         | Beacon Example           |
-| ---------------- | ----------------------------------- | ------------------------ |
-| `absol(x)`       | Returns the absolute value.         | `output(absol(-5))`      |
-| `Roff(x)`        | Rounds to the nearest whole number. | `output(Roff(4.6))`      |
-| `exponent(x, y)` | Returns x to the power of y.        | `output(exponent(2, 3))` |
-| `maximum(a, b)`  | Returns the greater of two values.  | `output(maximum(3, 9))`  |
-| `minimum(a, b)`  | Returns the lesser of two values.   | `output(minimum(3, 9))`  |
+| Function | Description | Example |
+|---|---|---|
+| `kind(variable)` | Returns the data type of a variable as text (e.g., "Num", "Text"). | `type = kind(123)` |
+| `exist(variable)` | Returns `On` if a variable has been defined and is not `Nil`, otherwise `Off`. | `check exist(my_var) { ... }` |
+| `avail(variable)` | Similar to `exist`, checks for non-nil and defined state. | `check avail(user_input) { ... }` |
 
 ---
 
-## Sequence Utilities
+## Data Conversion
 
-| Function     | Description                            | Beacon Example               |
-| ------------ | -------------------------------------- | ---------------------------- |
-| `length(x)`  | Returns the number of elements.        | `output(length([1, 2, 3]))`  |
-| `reverse(x)` | Reverses the order of elements.        | `output(reverse([1, 2, 3]))` |
-| `sort(x)`    | Returns a sorted version of the input. | `output(sort([3, 1, 2]))`    |
-
----
-
-## Conversion Functions
-
-| Function          | Description                          | Beacon Example           |
-| ----------------- | ------------------------------------ | ------------------------ |
-| `convert v to DT` | Converts variable v to data type DT. | `convert age to float`   |
-| `to_text(x)`      | Converts any value to text.          | `output(to_text(89))`    |
-| `to_list(x)`      | Converts a value into a list.        | `output(to_list("abc"))` |
+| Function | Description | Example |
+|---|---|---|
+| `convert <var> to <type>` | Converts a variable to the specified data type (`Num`, `Decim`, `Text`). | `num_val = convert "123" to Num` |
+| `to_text(value)` | Converts any value to its text representation. | `text_val = to_text(45.6)` |
+| `to_list(value)` | Converts a sequence or single item into a list. | `list_of_chars = to_list("abc")` |
 
 ---
 
-## Functional Utilities
+## Math
 
-| Function       | Description                                | Beacon Example                  |
-| -------------- | ------------------------------------------ | ------------------------------- |
-| `apply(f, x)`  | Applies function f to value x.             | `output(apply(Roff, 5.6))`      |
-| `map(f, seq)`  | Applies function to each item in sequence. | `output(map(Roff, [1.2, 3.4]))` |
-| `filter(f, s)` | Filters items where function returns true. | `output(filter(exist, values))` |
+| Function | Description | Example |
+|---|---|---|
+| `absol(number)` | Returns the absolute value of a number. | `positive_val = absol(-10)` |
+| `round(number)` | Rounds a decimal number to the nearest integer. | `rounded = round(4.6)` |
+| `exponent(base, power)` | Calculates `base` to the power of `power`. | `result = exponent(2, 3)` |
+| `maximum(a, b)` | Returns the greater of two numbers. | `larger = maximum(10, 20)` |
+| `minimum(a, b)` | Returns the lesser of two numbers. | `smaller = minimum(10, 20)` |
 
 ---
 
-## Object Utilities
+## Sequence Manipulation
 
-| Function     | Description                    | Beacon Example         |
-| ------------ | ------------------------------ | ---------------------- |
-| `props(x)`   | Returns a list of attributes.  | `output(props(obj))`   |
-| `methods(x)` | Returns callable methods of x. | `output(methods(obj))` |
+| Function | Description | Example |
+|---|---|---|
+| `length(sequence)` | Returns the number of items in a list, text, or other sequence. | `size = length([1, 2, 3])` |
+| `reverse(sequence)` | Returns a reversed copy of a sequence. | `rev_list = reverse([1, 2, 3])` |
+| `sort(sequence)` | Returns a sorted copy of a sequence. | `sorted_list = sort([3, 1, 2])` |
+| `tag(sequence)` | Returns a list of (index, value) pairs from a sequence. | `tagged = tag(["a", "b"])` |
+
+---
+
+## Functional Programming
+
+| Function | Description | Example |
+|---|---|---|
+| `apply(function, value)` | Applies a function to a single value. | `result = apply(round, 5.6)` |
+| `map(function, sequence)` | Applies a function to each item in a sequence and returns a new list of the results. | `rounded_nums = map(round, [1.2, 3.8])` |
+| `filter(function, sequence)` | Returns a new list containing only the items from the sequence for which the function returns `On`. | `non_nils = filter(exist, [1, Nil, 3])` |
+
+---
+
+## Object Introspection
+
+| Function | Description | Example |
+|---|---|---|
+| `props(object)` | Returns a list of the names of an object's properties (facets). | `properties = props(my_obj)` |
+| `methods(object)` | Returns a list of the names of an object's callable methods (specs). | `callable_specs = methods(my_obj)` |
+
+---
+
+## Control Flow
+
+| Function | Description | Example |
+|---|---|---|
+| `halt()` | Immediately stops the execution of the program. | `check user_input == "exit" { halt() }` |
 
 ---
 
 ## Miscellaneous
 
-| Function     | Description                  | Beacon Example       |
-| ------------ | ---------------------------- | -------------------- |
-| `time_now()` | Returns current timestamp.   | `output(time_now())` |
-| `halt()`     | Stops execution immediately. | `halt()`             |
+| Function | Description | Example |
+|---|---|---|
+| `time_now()` | Returns the current system timestamp. | `timestamp = time_now()` |

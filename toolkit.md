@@ -1,126 +1,128 @@
-# Beacon Modular System
+# Toolkits (Modules) in Beacon
 
-## Overview
-
-Beacon uses a lightweight, semantic, and UOP-compliant modular system built around three core keywords:
-
-- **plug** – for importing modules
-- **share** – for exporting functions, data, or interfaces
-- **toolkit** – to define a reusable, self-contained module
-
-This system is designed for clarity, reusability, and structured interaction between logic components.
+In Beacon, a **toolkit** is a self-contained module that bundles reusable code, such as `spec`s, `blueprint`s, and `firm` constants. Toolkits are central to creating organized, maintainable, and shareable code. The modular system is built on three primary keywords: `toolkit`, `share`, and `plug`.
 
 ---
 
-## 1. toolkit – Define a Module
+## 1. Defining a Toolkit
 
-A toolkit is a logical unit that can contain:
+A `toolkit` is declared in its own file. The `toolkit` keyword is followed by the name of the module.
 
-- Functions (`spec`)
-- Blueprints (classes)
-- Constants, shared data
-- Embedded bridges (optional interfaces)
+A toolkit can contain:
+- Functions (`spec`s)
+- Classes (`blueprint`s)
+- Constants (`firm` variables)
+- Interfaces (`bridge`s)
 
-**Example:**
+**Example: `math_utils.beacon`**
+```beacon
+toolkit MathUtils {
+    firm PI = 3.14159
 
-```
-toolkit MathOps
-    share PI = 3.1416
+    spec add(a, b) {
+        forward a + b
+    }
 
-    spec square x
-        forward x * x
-
-    spec cube x
-        forward x * x * x
+    spec subtract(a, b) {
+        forward a - b
+    }
+}
 ```
 
 ---
 
-## 2. share – Expose from Toolkit
+## 2. Exporting with `share`
 
-Inside a toolkit, use `share` to export:
+By default, all code inside a `toolkit` is private. To make a `spec`, `blueprint`, or `firm` variable accessible from other files, you must explicitly export it using the `share` keyword.
 
-- Constants
-- Functions
-- Blueprints
+**Example: `string_utils.beacon`**
+```beacon
+toolkit StringUtils {
+    < This spec is private to the toolkit >
+    spec internal_helper {
+        ...
+    }
 
-Only shared elements can be accessed externally.
+    < This spec is public and can be imported >
+    share spec capitalize(text) {
+        < logic to capitalize text >
+        forward ...
+    }
 
-**Example:**
-
-```
-toolkit Messages
-    share greeting = "Welcome!"
-    share spec shout msg
-        forward msg + "!!"
+    share firm GREETING = "Hello"
+}
 ```
 
 ---
 
-## 3. plug – Import a Toolkit
+## 3. Importing with `plug`
 
-Use `plug` to bring external toolkits into scope. You may also use `by` to alias the import.
+To use a `toolkit` in another file, you import it with the `plug` keyword, followed by the toolkit's name and its file path.
 
 **Syntax:**
-
-```
-plug ToolkitName
-```
-
-or
-
-```
-plug ToolkitName by Alias
+```beacon
+plug ToolkitName from "path/to/file.beacon"
 ```
 
-**Example:**
-
-```
-plug MathOps
-plug Messages by Msg
-
-spec run
-    area = square 5
-    output(area)
-    output(Msg.shout("Hello"))
+You can also provide an alias for the toolkit using `as`.
+```beacon
+plug ToolkitName from "path/to/file.beacon" as Alias
 ```
 
----
+**Example: `main.beacon`**
+```beacon
+plug MathUtils from "math_utils.beacon"
+plug StringUtils from "string_utils.beacon" as Str
 
-## 4. Best Practices
+spec main {
+    sum = MathUtils.add(10, 5)
+    show("Sum: |sum|")
 
-- Keep each toolkit focused on one domain (e.g., FileOps, UI, Auth).
-- Always share only what’s necessary.
-- Use `by` for aliases when importing multiple toolkits with overlapping names.
-
----
-
-## 5. Modular Flow Example
-
-```
-toolkit Auth
-    share spec verify pass
-        check pass == "beacon123"
-            forward true
-        altern
-            forward false
-
-plug Auth
-
-spec login
-    output("Enter pass:")
-    p = ask()
-    result = verify p
-    check result
-        output("Access granted.")
-    altern
-        output("Access denied.")
+    greeting = Str.GREETING
+    show(greeting)
+}
 ```
 
 ---
 
-## Conclusion
+## 4. A Complete Example
 
-Beacon's modular system is built for clarity and simplicity. It brings together the accessibility of scripting with the power of full module-based programming — made universally understandable.
+This example demonstrates how to define a `toolkit`, `share` its functionality, and `plug` it into a main program.
+
+**File: `auth.beacon`**
+```beacon
+toolkit Auth {
+    share spec verify_password(password) {
+        check password == "beacon123" {
+            forward On
+        }
+        forward Off
+    }
+}
+```
+
+**File: `app.beacon`**
+```beacon
+plug Auth from "auth.beacon"
+
+inlet {
+    password_input = ask("Enter your password: ")
+    
+    is_valid = Auth.verify_password(password_input)
+
+    check is_valid {
+        show("Access granted.")
+    }
+    altern {
+        show("Access denied.")
+    }
+}
+```
 
 ---
+
+## Best Practices
+
+- **Single Responsibility:** Each `toolkit` should focus on a single domain (e.g., math, authentication, file operations).
+- **Explicit Exports:** Only `share` what is necessary to be used by other modules.
+- **Clear Naming:** Use descriptive names for your `toolkit`s to make their purpose clear.

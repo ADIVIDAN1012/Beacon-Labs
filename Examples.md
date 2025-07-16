@@ -1,337 +1,180 @@
-# Beacon Sample Programs
+# Beacon Code Examples
 
-This document provides complete example programs written in the Beacon Programming Language to demonstrate syntax, control flow, file handling, error management, and modular UOP structure.
+This document provides a series of code examples to demonstrate the syntax, features, and UOP (Universal User-Oriented Programming) principles of the Beacon language.
 
 ---
 
-## 1. Hello Beacon – Basic Output and Input
+## 1. Hello, World
 
-```
-spec greet_user
-    name = ask("Enter your name:")
-    output("Hello, |name|!")
-    forward nil
+This example shows basic input and output using `ask` and `show`.
 
-funcall greet_user()
+```beacon
+spec greet_user {
+    name = ask("Enter your name: ")
+    show("Hello, |name|!")
+}
+
+greet_user()
 ```
 
 ---
 
 ## 2. Type Conversion and Arithmetic
 
-```
-spec calc_sum
-    a = ask("Enter first number:")
-    b = ask("Enter second number:")
+This example demonstrates how to convert text input to numbers and perform a simple calculation.
+
+```beacon
+spec calculate_sum {
+    a_text = ask("Enter the first number: ")
+    b_text = ask("Enter the second number: ")
+
+    a = convert a_text to Num
+    b = convert b_text to Num
+
     sum = a + b
-    output("Sum is: |sum|")
-    forward nil
+    show("The sum is: |sum|")
+}
 
-funcall calc_sum()
+calculate_sum()
 ```
 
 ---
 
-## 3. Control Flow (if-elif-else using check-alter-altern)
+## 3. Conditional Logic
 
-```
-spec check_number
-    n = ask("Enter a number:")
+Beacon uses `check`, `alter`, and `altern` for conditional branching, similar to `if`, `else if`, and `else`.
 
-    check n > 0
-        output("Positive number")
-    alter n < 0
-        output("Negative number")
-    altern
-        output("Zero")
-    forward nil
+```beacon
+spec check_number {
+    n_text = ask("Enter a number: ")
+    n = convert n_text to Num
 
-funcall check_number()
-```
+    check n > 0 {
+        show("The number is positive.")
+    }
+    alter n < 0 {
+        show("The number is negative.")
+    }
+    altern {
+        show("The number is zero.")
+    }
+}
 
----
-
-## 4. Looping with traverse
-
-```
-spec list_squares
-    traverse i from 1 to 5
-        output("Square of |i| is |i * i|")
-    forward nil
-
-funcall list_squares()
+check_number()
 ```
 
 ---
 
-## 5. File Handling with inlet, fetch, modify, seal
+## 4. Looping
 
-```
-spec file_demo
-    file = inlet("data.txt", "write")
-    file.modify("This is Beacon File System.")
-    file.seal()
+The `traverse` keyword is used for iterating over a range of numbers.
 
-    file = inlet("data.txt", "read")
-    content = file.fetch()
-    output("File says: |content|")
-    file.seal()
-    forward nil
+```beacon
+spec list_squares {
+    show("Squares of numbers from 1 to 5:")
+    traverse i from 1 to 5 {
+        show("Square of |i| is |i * i|")
+    }
+}
 
-funcall file_demo()
+list_squares()
 ```
 
 ---
 
-## 6. Error Handling using attempt, trap, trigger, conclude
+## 5. Error Handling
 
-```
-spec error_test
-    attempt
-        x = ask("Enter number:")
-        result = 10 / x
-        output("Result: |result|")
-    trap ZeroDivisionError by e
-        output("Cannot divide by zero.")
-    trap ValueError by e
-        output("Invalid input.")
-    conclude
-        output("Execution completed.")
-    forward nil
+This example shows how to handle potential errors, such as division by zero, using `attempt` and `trap`.
 
-funcall error_test()
+```beacon
+spec safe_divide {
+    attempt {
+        a = convert ask("Enter numerator: ") to Num
+        b = convert ask("Enter denominator: ") to Num
+
+        check b == 0 {
+            trigger ZeroDivide
+        }
+
+        result = a / b
+        show("Result: |result|")
+    }
+    trap ZeroDivide {
+        show("Error: Cannot divide by zero.")
+    }
+    trap TypeFail {
+        show("Error: Both inputs must be valid numbers.")
+    }
+}
+
+safe_divide()
 ```
 
 ---
 
-## 7. Function with Return (forward)
+## 6. Functions and Return Values
 
-```
-spec get_square(x)
+Functions (or `spec`s) use the `forward` keyword to return a value.
+
+```beacon
+spec get_square(x) {
     forward x * x
+}
 
-spec use_square
-    result = funcall get_square(7)
-    output("Square is: |result|")
-    forward nil
+spec use_square {
+    result = get_square(7)
+    show("The square of 7 is: |result|")
+}
 
-funcall use_square()
+use_square()
 ```
 
 ---
 
-## 8. Using Blueprint (Classes)
+## 7. Blueprints (Classes) and Objects
 
-```
-blueprint Car
-    prep(own, name)
-        own.name = name
+A `blueprint` is used to define a class. Objects are instances of blueprints.
 
-    spec drive(own)
-        output("|own.name| is driving.")
-    forward nil
+```beacon
+blueprint Car {
+    facet name
 
-mycar = Car("BeaconX")
-funcall mycar.drive()
-```
+    prep(own, car_name) {
+        own.name = car_name
+    }
 
----
+    spec drive(own) {
+        show("|own.name| is driving.")
+    }
+}
 
-## 9. Modular Programming using plug, share, toolkit
-
-File: math_toolkit.beacon
-
-```
-toolkit MathOps
-
-spec square(n)
-    forward n * n
-
-share square
-```
-
-Main File:
-
-```
-plug MathOps
-
-spec run
-    result = funcall square(4)
-    output("Square from toolkit: |result|")
-forward nil
-
-funcall run()
-```
-
-# Beacon Programming Language - Keywords
-
-## Access Control
-
-```
-covnito spec private_spec
-    output("This is private")
-forward nil
-
-shel spec protected_spec
-    output("This is protected")
-forward nil
-
-avail spec public_spec
-    output("This is public")
-forward nil
-
-internal spec package_spec
-    output("This is package-level access")
-forward nil
-
-expose spec exposed_spec
-    output("This is internal/public exposure")
-forward nil
-```
-
-## Concurrency/Parallelism
-
-```
-paral spec async_task
-    hold some_async_operation()
-    output("Async task completed")
-forward nil
-
-flux spec data_flow
-    output("Data flowing")
-forward nil
-
-barrier spec lock_example
-    permit lock
-    output("Locked section")
-    signal event
-forward nil
-```
-
-## File Handling
-
-```
-spec file_ops
-    file = inlet("file.txt", "write")
-    file.modify("Writing to file")
-    file.seal()
-
-    file = inlet("file.txt", "read")
-    content = file.fetch()
-    output("File content: |content|")
-    file.seal()
-forward nil
-```
-
-## Type Handling/Checking
-
-```
-spec type_check
-    kind var_type = kind("int")
-    forward nil
-```
-
-## Inheritance
-
-```
-blueprint Father
-    spec greet(own)
-        output("Hello from Father")
-    forward nil
-
-blueprint Child belong Father
-    spec greet(own)
-        output("Hello from Child")
-    forward nil
-
-child = Child()
-funcall child.greet()
-```
-
-## Memory Management
-
-```
-spec memory_ops
-    slip some_memory
-    wipe garbage_collector
-forward nil
-```
-
-## Miscellaneous Operations
-
-```
-spec misc_ops
-    authen user
-    transform data
-    reduce data
-forward nil
-```
-
-## Data Serialization
-
-```
-spec serialization
-    pack data
-    unpack data
-forward nil
-```
-
-## Event Handling
-
-```
-spec event_handling
-    listen event
-    trigger event
-forward nil
-```
-
-## Debugging/Logging
-
-```
-spec debugging
-    track info
-    trace execution
-    watch variable
-forward nil 
-```
-
-## Special Features
-
-```
-spec special_features
-    spec my_function
-    check condition
-    alter condition
-    altern
-    conclude
-    skelet skel_class
-    decon object
-    forward nil
-```
-
-## System/Environment Operations
-
-```
-plug toolkit
-
-share function
-
-toolkit MyToolkit
-
-bloc batch_operation
-
-embed resource
-
-bridge interface
-
-link join
-
-belong inheritance
-
-peek access
-
-infuse inject
-forward nil
+my_car = Car("BeaconX")
+my_car.drive()
 ```
 
 ---
+
+## 8. Modular Programming with Toolkits
+
+Code can be organized into reusable `toolkit`s. Use `plug` to import a toolkit and `share` to export its functions.
+
+**File: `math_utils.beacon`**
+```beacon
+toolkit MathOps {
+    share spec square(n) {
+        forward n * n
+    }
+}
+```
+
+**Main File:**
+```beacon
+plug MathOps from "math_utils.beacon"
+
+spec main {
+    result = square(5)
+    show("The square from the toolkit is: |result|")
+}
+
+main()
+```

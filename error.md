@@ -1,99 +1,113 @@
 # Error Handling in Beacon
 
-Beacon uses a clean and expressive approach to error management based on UOP (Universal User-Oriented Programming). It prioritizes clarity over verbosity.
+Error handling in Beacon is designed to be expressive, clear, and aligned with the UOP (Universal User-Oriented Programming) philosophy. Instead of traditional `try-catch-finally` blocks, Beacon uses an `attempt-trap-conclude` structure that reads more like natural language.
 
 ---
 
-## 1. Core Error Handling Keywords
+## 1. Core Keywords
 
-| Beacon Keyword | Equivalent     | Purpose                                      |
-|----------------|---------------|----------------------------------------------|
-| attempt        | try           | Begin a block that may raise an error        |
-| trap           | catch         | Handle a specific error                      |
-| conclude       | finally       | Always run code regardless of errors         |
-| trigger        | raise         | Manually raise an error                      |
-| check          | if            | Conditional check inside error blocks        |
-| peek           | Exception obj | View the error message/data caught in trap   |
-
----
-
-## 2. Built-in Error Types
-
-| Error Name   | Meaning                            |
-|--------------|------------------------------------|
-| TypeFail     | Type mismatch or invalid conversion|
-| ZeroDivide   | Division by zero attempted         |
-| NilAccess    | Accessed a nil (null) value        |
-| IndexOver    | Index out of valid range           |
-| KeyVoid      | Missing key in a bind (dictionary) |
-| Denied       | Access or permission denied        |
-| Missing      | Expected item not provided         |
-| Timeout      | Operation took too long            |
-| SyntaxBreak  | Invalid Beacon syntax encountered  |
-| FailGeneral  | Unspecified or general failure     |
+| Keyword | Role | Equivalent | Description |
+|---|---|---|---|
+| `attempt` | Begins a monitored block | `try` | Encloses code that might raise an error. |
+| `trap` | Catches a specific error | `catch` / `except` | Defines a block to handle a specific type of error. |
+| `conclude` | Final execution block | `finally` | Contains code that will always run, regardless of whether an error occurred. |
+| `trigger` | Raises an error | `raise` / `throw` | Manually initiates an error. |
+| `Blame` | The error object type | `Exception` | Represents the error itself, which can be inspected. |
+| `peek` | Accesses error details | (none) | A special variable inside a `trap` block that holds the error message. |
 
 ---
 
-## 3. Error Handling Syntax Example
+## 2. Common Error Types
 
-```plaintext
-attempt
-    x = ask("Enter a number:")
-    y = 10 / x
-    output("Result is |y|")
-trap ZeroDivide
-    output("You can't divide by zero.")
-trap TypeFail
-    output("Input must be a valid number.")
-conclude
-    output("Division attempt concluded.")
+Beacon includes several built-in error types to cover common failure scenarios:
+
+| Error Type | Description |
+|---|---|
+| `TypeFail` | Occurs on a type mismatch or invalid data conversion. |
+| `ZeroDivide` | Triggered when attempting to divide by zero. |
+| `NilAccess` | Raised when trying to use a `Nil` value as if it were a valid object. |
+| `IndexOver` | Occurs when an index is outside the valid range of a sequence. |
+| `KeyVoid` | Raised when a key is not found in a dictionary or map. |
+| `Denied` | Triggered due to a lack of permissions or failed authentication. |
+| `Missing` | Occurs when a required resource or value is not found. |
+| `Timeout` | Raised when an operation exceeds its allowed time. |
+| `FailGeneral` | A generic error for unspecified problems. |
+
+---
+
+## 3. Basic Error Handling
+
+The `attempt-trap-conclude` structure is the foundation of error handling in Beacon.
+
+```beacon
+attempt {
+    num = convert "abc" to Num
+    show("Conversion successful.")
+}
+trap TypeFail {
+    show("Could not convert the text to a number.")
+}
+conclude {
+    show("Execution finished.")
+}
 ```
 
 ---
 
-## 4. Raising Custom Errors with trigger
+## 4. Triggering Errors
 
-```plaintext
-spec safe_sqrt val
-    check val < 0
-        trigger TypeFail by "Negative values not allowed."
-    forward val ** 0.5
+You can manually `trigger` an error. This is useful for enforcing constraints in your own functions.
+
+```beacon
+spec set_age(new_age) {
+    check new_age < 0 {
+        trigger TypeFail with "Age cannot be negative."
+    }
+    own.age = new_age
+}
 ```
 
 ---
 
-## 5. Accessing Error Info with peek
+## 5. Accessing Error Details with `peek`
 
-```plaintext
-attempt
-    trigger FailGeneral by "Custom failure triggered."
-trap FailGeneral by peek
-    output("Error caught: |peek|")
+Inside a `trap` block, the special variable `peek` contains the message or data associated with the error.
+
+```beacon
+attempt {
+    trigger FailGeneral with "Something went wrong."
+}
+trap FailGeneral {
+    show("Error caught: |peek|") < Output: Error caught: Something went wrong. >
+}
 ```
 
 ---
 
-## 6. Multi-Trap & Conditional Errors
+## 6. Handling Multiple Error Types
 
-```plaintext
-attempt
-    x = ask("Enter a number:")
+You can chain multiple `trap` blocks to handle different types of errors from a single `attempt` block.
 
-    check x == 0
+```beacon
+spec divide(a, b) {
+    check kind(a) != "Num" or kind(b) != "Num" {
+        trigger TypeFail with "Both inputs must be numbers."
+    }
+    check b == 0 {
         trigger ZeroDivide
+    }
+    forward a / b
+}
 
-    check x < 0
-        trigger TypeFail by "Negative numbers not accepted."
-
-    result = 100 / x
-    output("Result is |result|")
-trap ZeroDivide
-    output("Division by zero is not allowed.")
-trap TypeFail by peek
-    output("Type error occurred: |peek|")
-conclude
-    output("Finished checking input.")
+attempt {
+    result = divide(10, 0)
+    show("Result: |result|")
+}
+trap ZeroDivide {
+    show("Cannot divide by zero.")
+}
+trap TypeFail {
+    show("Invalid input: |peek|")
+}
 ```
-
----
 

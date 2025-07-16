@@ -1,270 +1,198 @@
-# Beacon Programming Language – Complete Syntax Reference
+# Beacon Syntax Reference
+
+This document provides a complete reference to the syntax of the Beacon programming language. All code blocks are enclosed in curly braces `{}` and do not require indentation.
+
+---
+
+## Basic Syntax
+
+### Comments
+Single-line and multi-line comments are used to add notes that are ignored by the compiler.
+```beacon
+< This is a single-line comment >
 
 <^
-This document describes the syntax of every Beacon language keyword and major feature.
-Each Beacon keyword replaces a mainstream programming keyword with the same structure, but blocks always use { }.
-No indentation or : is required for blocks.
-Comments use < ... > and <^ ... ^>.
+This is a multi-line comment.
+It can span several lines.
 ^>
+```
+
+### Variable Declaration
+Variables are assigned using the `=` operator.
+```beacon
+my_variable = "Hello, Beacon"
+user_age = 30
+```
+
+### Constants
+A `firm` variable is a constant and cannot be reassigned.
+```beacon
+firm PI = 3.14159
+```
+
+### Output
+The `show` keyword prints values to the console.
+```beacon
+show("Welcome to Beacon!")
+show("The value of PI is |PI|")
+```
 
 ---
 
-## Variable Assignment
+## Functions
 
-num = 10
-name = ask("Enter your name: ")
+A function, or `spec`, is a reusable block of code.
+```beacon
+spec my_function(param1, param2) {
+    < function body >
+    forward param1 + param2 < returns a value >
+}
+
+< Calling a function >
+result = my_function(10, 20)
+```
+
+A `note` can be used to add a docstring.
+```beacon
+spec calculate_sum(a, b) {
+    note: "This spec returns the sum of two numbers."
+    forward a + b
+}
+```
 
 ---
 
-## Classes & Objects
+## Control Flow
 
-Blueprint Dog {
-    Spec speak() {
-        Show("|name| barks")
-    }
+### Conditionals
+`check`, `alter`, and `altern` are used for conditional logic.
+```beacon
+check x > 10 {
+    show("x is greater than 10")
+}
+alter x == 10 {
+    show("x is exactly 10")
+}
+altern {
+    show("x is less than 10")
+}
+```
+
+### Loops
+`traverse` and `until` are used for looping.
+```beacon
+< For loop >
+traverse i from 1 to 5 {
+    show("Iteration: |i|")
 }
 
-Adopt Poodle from Dog {
-    Spec speak() {
-        Show("|name| yaps")
-    }
+< While loop >
+count = 0
+until count >= 5 {
+    show("Count is |count|")
+    count = count + 1
 }
-
-Crate Point {
-    Facet x
-    Facet y
-}
-
-Facet age
-Fetch age
-Assign age
-
-Morph operator +(a, b) {
-    Forward a.value + b.value
-}
-
-Model T
-
----
-
-## Constants and Statics
-
-Firm PI = 3.14
-Solid counter = 0
-
----
-
-## Access Control
-
-Hidden Spec secret() {
-    < Only accessible within the class >
-}
-
-Avail Spec public_func() {
-    Show("This is public")
-}
-
-Shielded Facet internal_id
-
-Internal Spec pkg_func() {
-    < Restricted to package >
-}
-
-Expose Spec api() {
-    < Publicly exposed function >
-}
-
----
-
-## Control Flow & Loops
-
-Check x > 0 {
-    Show("Positive")
-} Alter x == 0 {
-    Show("Zero")
-} Altern {
-    Show("Negative")
-}
-
-Select color {
-    Option "red" {
-        Show("Red!")
-    }
-    Option "blue" {
-        Show("Blue!")
-    }
-}
-
-Traverse i from 1 to 5 {
-    Show(i)
-}
-
-Until x > 10 {
-    x = x + 1
-}
-
-Within x in [1,2,3] {
-    Show(x)
-}
-
-Scope i from 0 to 10 {
-    Show(i)
-}
-
-Halt     < break >
-Proceed  < continue >
-Wait     < pass >
-Leap     < goto >
-Mark     < label >
-Be a Be b
+```
 
 ---
 
 ## Error Handling
 
-Attempt {
-    risky_op()
-} Trap Blame as e {
-    Show("Error: |e|")
-} Conclude {
-    Show("Cleanup always runs")
+The `attempt-trap-conclude` block is used for handling errors.
+```beacon
+attempt {
+    risky_operation()
+}
+trap SomeError {
+    show("Caught an error: |peek|")
+}
+conclude {
+    show("This block always executes.")
+}
+```
+
+---
+
+## Object-Oriented Syntax
+
+### Blueprints (Classes)
+A `blueprint` defines the structure for an object.
+```beacon
+blueprint Dog {
+    facet name
+    solid species = "Canine"
+
+    prep(own, dog_name) {
+        own.name = dog_name
+    }
+
+    spec bark(own) {
+        show("|own.name| says woof!")
+    }
+}
+```
+
+### Inheritance
+A `blueprint` can `adopt` from another.
+```beacon
+blueprint Poodle {
+    adopt Dog
+
+    spec groom(own) {
+        show("|own.name| is being groomed.")
+    }
+}
+```
+
+### Objects
+Create an instance of a `blueprint`.
+```beacon
+my_dog = Dog("Buddy")
+my_dog.bark()
+```
+
+---
+
+## Modules
+
+### Toolkits
+A `toolkit` is a file that contains reusable code.
+```beacon
+< In file "math_utils.beacon" >
+toolkit Math {
+    share spec add(a, b) {
+        forward a + b
+    }
+}
+```
+
+### Importing
+Use `plug` to import a `toolkit`.
+```beacon
+plug Math from "math_utils.beacon"
+
+sum = Math.add(5, 10)
+show("Sum from toolkit: |sum|")
+```
+
+---
+
+## Interfaces
+
+A `bridge` defines an interface that can be implemented by `toolkit`s or `blueprint`s.
+```beacon
+bridge Greeter {
+    expose spec say_hello(name)
 }
 
-Peek error
-Blame MyError("fail")
-
----
-
-## Boolean, Null, Identity
-
-On
-Off
-Nil
-
----
-
-## Import/Export/Modules
-
-Plug math
-Share Spec api() {
-    < Exported function >
+toolkit FormalGreeter {
+    spec say_hello(name) {
+        show("Greetings, |name|.")
+    }
 }
 
-Toolkit utils
-Source math from "toolkit/math"
-
----
-
-## File Handling
-
-Inlet file = open("data.txt")
-Fetch line = file.Fetch()
-Modify file.Modify("New data")
-Seal file
-
----
-
-## User I/O
-
-Ask name = ask("Enter your name: ")
-Show("Welcome, |name|")
-
----
-
-## Serialization
-
-Pack data = Pack(obj)
-Unpack obj = Unpack(data)
-
----
-
-## Event Handling
-
-Listen button.Click, handler
-Trigger event
-
----
-
-## Debugging/Logging
-
-Track("Debug info")
-Trace("Tracing execution")
-Watch var
-
----
-
-## System/Environment Operations
-
-Bloc {
-    Plug math
-    Show("In a block")
+inlet {
+    link my_greeter to FormalGreeter
+    my_greeter.say_hello("Alice")
 }
-
-Embed resource "logo.png"
-
-Bridge Drawable {
-    Spec draw()
-}
-
-Link a, b
-Infuse config
-
-Universal counter
-
-Launch main() {
-    Show("Starting program!")
-}
-
----
-
-## Memory Management
-
-Slip ptr
-Wipe cache
-
----
-
-## Generics
-
-Model T
-
----
-
-## Lambda (Anonymous Functions)
-
-Den = (a, b) => a + b
-
----
-
-## Comments
-
-< This is a single-line comment >
-
-<^
-This is a multi-line comment.
-Spanning multiple lines.
-^>
-
-Note: "This is a docstring for a function or class"
-
----
-
-## Enum/Tag
-
-Tag Color {
-    RED
-    BLUE
-}
-
----
-
-## Miscellaneous Operations
-
-Authen x == y
-Transform arr, f
-Condense arr, f
-Solve expr
-
----
-
-< End of Syntax Reference >
+```

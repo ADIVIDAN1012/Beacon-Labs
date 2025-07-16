@@ -1,11 +1,19 @@
-# Beacon Lab Documentation Links
+# Beacon Documentation
 
-- [Toolkit](https://github.com/ADIVIDAN1012/Beacon-Foundation/blob/main/toolkit.md)
-- [Error Handling](https://github.com/ADIVIDAN1012/Beacon-Foundation/blob/main/error.md)
-- [Builtins](https://github.com/ADIVIDAN1012/Beacon-Foundation/blob/main/builtins.md)
-- [UOP](https://github.com/ADIVIDAN1012/Beacon-Foundation/blob/main/UOP.md)
-- [Syntax](https://github.com/ADIVIDAN1012/Beacon-Foundation/blob/main/Syntax.md)
-- [Lib](https://github.com/ADIVIDAN1012/Beacon-Foundation/blob/main/Lib.md)
-- [Keywords](https://github.com/ADIVIDAN1012/Beacon-Foundation/blob/main/Keywords.md)
-- [Examples](https://github.com/ADIVIDAN1012/Beacon-Foundation/blob/main/Examples.md)
-- [Bridge](https://github.com/ADIVIDAN1012/Beacon-Foundation/blob/main/Bridge.md)
+Welcome to the official documentation for the Beacon Programming Language. This collection of documents provides a comprehensive guide to its syntax, features, and core philosophy.
+
+## Core Concepts
+- **[UOP (Universal User-Oriented Programming)](./UOP.md)**: Understand the core philosophy behind Beacon.
+- **[Syntax](./Syntax.md)**: A complete reference for the language's syntax.
+- **[Keywords](./Keywords.md)**: A dictionary of all language keywords.
+
+## Language Features
+- **[Built-in Functions](./builtins.md)**: A guide to the standard functions available in Beacon.
+- **[Error Handling](./error.md)**: Learn how to handle errors using the `attempt-trap` system.
+- **[Bridge Interfaces](./Bridge.md)**: Understand how to create and use interfaces for modular design.
+- **[Toolkits (Modules)](./toolkit.md)**: Learn how to organize code into reusable modules.
+- **[Standard Library](./Lib.md)**: Explore the libraries included with Beacon.
+
+## Learning Resources
+- **[Examples](./Examples.md)**: Practical code examples for common tasks.
+- **[README](./README.md)**: The main project README file.
