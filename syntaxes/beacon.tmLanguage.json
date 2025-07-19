@@ -1,0 +1,63 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Beacon",
+    "scopeName": "source.beacon",
+    "patterns": [
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#numbers"
+        },
+        {
+            "include": "#operators"
+        }
+    ],
+    "repository": {
+        "keywords": {
+            "patterns": [{
+                "name": "keyword.control.beacon",
+                "match": "\\b(spec|funcall|forward|check|alter|altern|until|traverse|ask|show|erase|ignore|skip|spill|convert|off|on|both|either|no|source|universal|within|equal|attempt|trap|conclude|authen|condense|tag|solve|private|protected|public|internal|expose|paral|hold|flux|barrier|permit|signal|inlet|fetch|modify|seal|kind|adopt|father|child|slip|wipe|transform|den|pack|unpack|listen|trigger|track|trace|watch|plug|share|toolkit|bloc|embed|bridge|link|belong|infuse|peek|assert|skelet|decon|from|to|nick|blueprint)\\b"
+            }, {
+                "name": "support.function.beacon",
+                "match": "\\b(kind|avail|exist|output|absol|Roff|exponent|maximum|minimum|length|reverse|sort|to_text|to_list|apply|map|filter|props|methods|time_now|halt|ask|tag)\\b"
+            }]
+        },
+        "strings": {
+            "name": "string.quoted.double.beacon",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.beacon",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        "comments": {
+            "patterns": [{
+                "name": "comment.line.angle-bracket.beacon",
+                "begin": "<",
+                "end": ">"
+            }, {
+                "name": "comment.block.beacon",
+                "begin": "<\\^",
+                "end": "\\^>"
+            }]
+        },
+        "numbers": {
+            "name": "constant.numeric.beacon",
+            "match": "\\b\\d+(\\.\\d+)?\\b"
+        },
+        "operators": {
+            "name": "keyword.operator.beacon",
+            "match": "==|!=|<=|>=|="
+        }
+    }
+}

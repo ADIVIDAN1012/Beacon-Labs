@@ -1,0 +1,52 @@
+{
+    "name": "beacon-language-support",
+    "displayName": "Beacon Language Support",
+    "description": "Beacon language support",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ADIVIDAN1012/Beacon-Labs.git"
+    },
+    "engines": {
+        "vscode": "^1.102.0"
+    },
+    "main": "./out/extension.js",
+    "activationEvents": [
+        "onLanguage:beacon" 
+    ],
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "beacon",
+                "aliases": [
+                    "Beacon",
+                    "beacon"
+                ],
+                "extensions": [
+                    ".bpl"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "beacon",
+                "scopeName": "source.beacon",
+                "path": "./syntaxes/beacon.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "beacon",
+                "path": "./snippets/snippets.json"
+            }
+        ]
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.102.0",
+        "typescript": "^5.8.3"
+    }
+}
