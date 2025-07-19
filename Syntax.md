@@ -136,7 +136,7 @@ A `blueprint` defines the structure for an object.
 
 ```beacon
 blueprint Dog {
-    trait name
+    shard name
     solid species = "Canine"
 
     prep(own, dog_name) {

@@ -137,7 +137,7 @@ A `blueprint` is used to define a class. Objects are instances of blueprints.
 
 ```beacon
 blueprint Car {
-    trait name
+    shard name
 
     prep(own, car_name) {
         own.name = car_name

@@ -84,7 +84,7 @@ This document provides a comprehensive list of all built-in functions available 
 
 | Function          | Description                                                          | Example                            |
 | ----------------- | -------------------------------------------------------------------- | ---------------------------------- |
-| `props(object)`   | Returns a list of the names of an object's properties (traits).      | `properties = props(my_obj)`       |
+| `props(object)`   | Returns a list of the names of an object's properties (shards).      | `properties = props(my_obj)`       |
 | `methods(object)` | Returns a list of the names of an object's callable methods (specs). | `callable_specs = methods(my_obj)` |
 
 ---

@@ -11,7 +11,7 @@ This document provides a comprehensive dictionary of all keywords in the Beacon 
 | `spec`      | Function    | Defines a function or method.                                                        |
 | `blueprint` | Class       | Declares a class for creating objects.                                               |
 | `bridge`    | Interface   | Defines a contract for interaction between components.                               |
-| `trait`     | Property    | Declares a property or attribute within a `blueprint`.                               |
+| `shard`     | Property    | Declares a property or attribute within a `blueprint`.                               |
 | `prep`      | Constructor | Defines the initializer method for a `blueprint`.                                    |
 | `forward`   | Return      | Returns a value from a `spec`.                                                       |
 | `firm`      | Constant    | Declares a variable whose value cannot be changed.                                   |
@@ -69,7 +69,7 @@ This document provides a comprehensive dictionary of all keywords in the Beacon 
 | `plug`     | Import    | Imports a `toolkit`.                                                             |
 | `share`    | Export    | Makes a `spec`, `blueprint`, or `firm` variable available outside its `toolkit`. |
 | `expose`   | Public    | Marks a `bridge` method as publicly accessible.                                  |
-| `hidden`   | Private   | Restricts access to a `spec` or `trait` to within its defining `blueprint`.      |
+| `hidden`   | Private   | Restricts access to a `spec` or `shard` to within its defining `blueprint`.      |
 | `shielded` | Protected | Restricts access to the defining `blueprint` and its children.                   |
 | `internal` | Internal  | Restricts access to within the same `toolkit`.                                   |
 
