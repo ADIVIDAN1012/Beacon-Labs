@@ -137,7 +137,7 @@ A `blueprint` is used to define a class. Objects are instances of blueprints.
 
 ```beacon
 blueprint Car {
-    facet name
+    trait name
 
     prep(own, car_name) {
         own.name = car_name
@@ -159,6 +159,7 @@ my_car.drive()
 Code can be organized into reusable `toolkit`s. Use `plug` to import a toolkit and `share` to export its functions.
 
 **File: `math_utils.beacon`**
+
 ```beacon
 toolkit MathOps {
     share spec square(n) {
@@ -168,6 +169,7 @@ toolkit MathOps {
 ```
 
 **Main File:**
+
 ```beacon
 plug MathOps from "math_utils.beacon"
 

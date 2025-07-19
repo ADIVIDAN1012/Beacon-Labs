@@ -7,7 +7,9 @@ This document provides a complete reference to the syntax of the Beacon programm
 ## Basic Syntax
 
 ### Comments
+
 Single-line and multi-line comments are used to add notes that are ignored by the compiler.
+
 ```beacon
 < This is a single-line comment >
 
@@ -18,20 +20,26 @@ It can span several lines.
 ```
 
 ### Variable Declaration
+
 Variables are assigned using the `=` operator.
+
 ```beacon
 my_variable = "Hello, Beacon"
 user_age = 30
 ```
 
 ### Constants
+
 A `firm` variable is a constant and cannot be reassigned.
+
 ```beacon
 firm PI = 3.14159
 ```
 
 ### Output
+
 The `show` keyword prints values to the console.
+
 ```beacon
 show("Welcome to Beacon!")
 show("The value of PI is |PI|")
@@ -42,6 +50,7 @@ show("The value of PI is |PI|")
 ## Functions
 
 A function, or `spec`, is a reusable block of code.
+
 ```beacon
 spec my_function(param1, param2) {
     < function body >
@@ -53,6 +62,7 @@ result = my_function(10, 20)
 ```
 
 A `note` can be used to add a docstring.
+
 ```beacon
 spec calculate_sum(a, b) {
     note: "This spec returns the sum of two numbers."
@@ -65,7 +75,9 @@ spec calculate_sum(a, b) {
 ## Control Flow
 
 ### Conditionals
+
 `check`, `alter`, and `altern` are used for conditional logic.
+
 ```beacon
 check x > 10 {
     show("x is greater than 10")
@@ -79,7 +91,9 @@ altern {
 ```
 
 ### Loops
+
 `traverse` and `until` are used for looping.
+
 ```beacon
 < For loop >
 traverse i from 1 to 5 {
@@ -99,6 +113,7 @@ until count >= 5 {
 ## Error Handling
 
 The `attempt-trap-conclude` block is used for handling errors.
+
 ```beacon
 attempt {
     risky_operation()
@@ -116,10 +131,12 @@ conclude {
 ## Object-Oriented Syntax
 
 ### Blueprints (Classes)
+
 A `blueprint` defines the structure for an object.
+
 ```beacon
 blueprint Dog {
-    facet name
+    trait name
     solid species = "Canine"
 
     prep(own, dog_name) {
@@ -133,7 +150,9 @@ blueprint Dog {
 ```
 
 ### Inheritance
+
 A `blueprint` can `adopt` from another.
+
 ```beacon
 blueprint Poodle {
     adopt Dog
@@ -145,7 +164,9 @@ blueprint Poodle {
 ```
 
 ### Objects
+
 Create an instance of a `blueprint`.
+
 ```beacon
 my_dog = Dog("Buddy")
 my_dog.bark()
@@ -156,7 +177,9 @@ my_dog.bark()
 ## Modules
 
 ### Toolkits
+
 A `toolkit` is a file that contains reusable code.
+
 ```beacon
 < In file "math_utils.beacon" >
 toolkit Math {
@@ -167,7 +190,9 @@ toolkit Math {
 ```
 
 ### Importing
+
 Use `plug` to import a `toolkit`.
+
 ```beacon
 plug Math from "math_utils.beacon"
 
@@ -180,6 +205,7 @@ show("Sum from toolkit: |sum|")
 ## Interfaces
 
 A `bridge` defines an interface that can be implemented by `toolkit`s or `blueprint`s.
+
 ```beacon
 bridge Greeter {
     expose spec say_hello(name)
