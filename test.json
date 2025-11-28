@@ -1,0 +1,43 @@
+{
+  "type": "ProgramNode",
+  "statements": [
+    {
+      "type": "BlueprintNode",
+      "name": "MyBlueprint",
+      "attributes": [
+        {
+          "type": "ConstantDeclNode",
+          "name": "my_attr",
+          "value": {
+            "type": "NumberNode",
+            "value": 123
+          }
+        }
+      ]
+    },
+    {
+      "type": "ConstantDeclNode",
+      "name": "instance",
+      "value": {
+        "type": "SpawnNode",
+        "blueprint_expr": {
+          "type": "VarAccessNode",
+          "var_name": "MyBlueprint"
+        }
+      }
+    },
+    {
+      "type": "ShowStatementNode",
+      "expressions": [
+        {
+          "type": "AttributeAccessNode",
+          "object": {
+            "type": "VarAccessNode",
+            "var_name": "instance"
+          },
+          "attribute_name": "my_attr"
+        }
+      ]
+    }
+  ]
+}

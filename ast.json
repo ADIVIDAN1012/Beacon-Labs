@@ -1,0 +1,274 @@
+{
+    "type": "ProgramNode",
+    "statements": [
+        {
+            "type": "VarAssignNode",
+            "target": {
+                "type": "VarAccessNode",
+                "var_name": "x"
+            },
+            "value": {
+                "type": "BooleanNode",
+                "value": true
+            }
+        },
+        {
+            "type": "VarAssignNode",
+            "target": {
+                "type": "VarAccessNode",
+                "var_name": "y"
+            },
+            "value": {
+                "type": "BooleanNode",
+                "value": false
+            }
+        },
+        {
+            "type": "VarAssignNode",
+            "target": {
+                "type": "VarAccessNode",
+                "var_name": "z"
+            },
+            "value": {
+                "type": "NilNode"
+            }
+        },
+        {
+            "type": "CheckStatementNode",
+            "condition": {
+                "type": "BinaryOpNode",
+                "left": {
+                    "type": "VarAccessNode",
+                    "var_name": "x"
+                },
+                "op": {
+                    "type": "EQUALS",
+                    "value": "=="
+                },
+                "right": {
+                    "type": "BooleanNode",
+                    "value": true
+                }
+            },
+            "body": [
+                {
+                    "type": "ShowStatementNode",
+                    "expressions": [
+                        {
+                            "type": "StringNode",
+                            "value": "x is On"
+                        }
+                    ]
+                }
+            ],
+            "alter_clauses": [],
+            "altern_clause": null
+        },
+        {
+            "type": "NickNode",
+            "original": "NUM",
+            "alias": "MyInt"
+        },
+        {
+            "type": "VarAssignNode",
+            "target": {
+                "type": "VarAccessNode",
+                "var_name": "a"
+            },
+            "value": {
+                "type": "ConvertNode",
+                "expression": {
+                    "type": "NumberNode",
+                    "value": 10.0
+                },
+                "target_type": "TEXT"
+            }
+        },
+        {
+            "type": "CheckStatementNode",
+            "condition": {
+                "type": "BinaryOpNode",
+                "left": {
+                    "type": "NumberNode",
+                    "value": 10.0
+                },
+                "op": {
+                    "type": "GREATER_THAN",
+                    "value": ">"
+                },
+                "right": {
+                    "type": "NumberNode",
+                    "value": 5.0
+                }
+            },
+            "body": [
+                {
+                    "type": "ShowStatementNode",
+                    "expressions": [
+                        {
+                            "type": "StringNode",
+                            "value": "Greater"
+                        }
+                    ]
+                }
+            ],
+            "alter_clauses": [],
+            "altern_clause": null
+        },
+        {
+            "type": "CheckStatementNode",
+            "condition": {
+                "type": "BinaryOpNode",
+                "left": {
+                    "type": "NumberNode",
+                    "value": 5.0
+                },
+                "op": {
+                    "type": "LESS_THAN",
+                    "value": "<"
+                },
+                "right": {
+                    "type": "NumberNode",
+                    "value": 10.0
+                }
+            },
+            "body": [
+                {
+                    "type": "ShowStatementNode",
+                    "expressions": [
+                        {
+                            "type": "StringNode",
+                            "value": "Less"
+                        }
+                    ]
+                }
+            ],
+            "alter_clauses": [],
+            "altern_clause": null
+        },
+        {
+            "type": "CheckStatementNode",
+            "condition": {
+                "type": "BinaryOpNode",
+                "left": {
+                    "type": "NumberNode",
+                    "value": 5.0
+                },
+                "op": {
+                    "type": "LESS_THAN_EQUAL",
+                    "value": "<="
+                },
+                "right": {
+                    "type": "NumberNode",
+                    "value": 5.0
+                }
+            },
+            "body": [
+                {
+                    "type": "ShowStatementNode",
+                    "expressions": [
+                        {
+                            "type": "StringNode",
+                            "value": "Less Equal"
+                        }
+                    ]
+                }
+            ],
+            "alter_clauses": [],
+            "altern_clause": null
+        },
+        {
+            "type": "CheckStatementNode",
+            "condition": {
+                "type": "BinaryOpNode",
+                "left": {
+                    "type": "NumberNode",
+                    "value": 10.0
+                },
+                "op": {
+                    "type": "GREATER_THAN_EQUAL",
+                    "value": ">="
+                },
+                "right": {
+                    "type": "NumberNode",
+                    "value": 10.0
+                }
+            },
+            "body": [
+                {
+                    "type": "ShowStatementNode",
+                    "expressions": [
+                        {
+                            "type": "StringNode",
+                            "value": "Greater Equal"
+                        }
+                    ]
+                }
+            ],
+            "alter_clauses": [],
+            "altern_clause": null
+        },
+        {
+            "type": "CheckStatementNode",
+            "condition": {
+                "type": "BinaryOpNode",
+                "left": {
+                    "type": "NumberNode",
+                    "value": 5.0
+                },
+                "op": {
+                    "type": "LESS_THAN",
+                    "value": "<"
+                },
+                "right": {
+                    "type": "NumberNode",
+                    "value": 10.0
+                }
+            },
+            "body": [
+                {
+                    "type": "ShowStatementNode",
+                    "expressions": [
+                        {
+                            "type": "StringNode",
+                            "value": "Less with space"
+                        }
+                    ]
+                }
+            ],
+            "alter_clauses": [],
+            "altern_clause": null
+        },
+        {
+            "type": "CheckStatementNode",
+            "condition": {
+                "type": "BinaryOpNode",
+                "left": {
+                    "type": "NumberNode",
+                    "value": 10.0
+                },
+                "op": {
+                    "type": "NOT_EQUALS",
+                    "value": "'="
+                },
+                "right": {
+                    "type": "NumberNode",
+                    "value": 5.0
+                }
+            },
+            "body": [
+                {
+                    "type": "ShowStatementNode",
+                    "expressions": [
+                        {
+                            "type": "StringNode",
+                            "value": "Not Equal using '="
+                        }
+                    ]
+                }
+            ],
+            "alter_clauses": [],
+            "altern_clause": null
+        }
+    ]
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beacon - Illuminate Your Logic</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/icon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glow-overlay"></div>
+    
+    <header>
+        <div class="logo">
+            <img src="assets/icon.png" alt="Beacon Logo">
+            <span>Beacon</span>
+        </div>
+        <nav>
+            <a href="#features">Features</a>
+            <a href="#code">Code</a>
+            <a href="#contact">Contact</a>
+            <a href="#" class="btn-nav">Get Started</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Illuminate Your <span class="gradient-text">Logic</span></h1>
+                <p class="subtitle">A modern, readable, and powerful programming language designed to bring clarity to your code.</p>
+                <div class="cta-group">
+                    <a href="../dist/beacon.exe" class="btn btn-primary" download>
+                        <span class="icon">⚡</span> Download Compiler
+                    </a>
+                    <a href="../beacon-vscode-extension/beacon-0.0.3.vsix" class="btn btn-secondary" download>
+                        <span class="icon">🧩</span> VS Code Extension
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="code-window">
+                    <div class="window-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <pre><code class="language-beacon"><span class="keyword">nick</span> <span class="type">MyInt</span> = <span class="type">Num</span>
+
+<span class="keyword">check</span>(x == <span class="literal">On</span>) {
+    <span class="function">show</span>(<span class="string">"System is Active"</span>)
+}
+
+<span class="keyword">traverse</span> i <span class="keyword">from</span> 1 <span class="keyword">to</span> 10 {
+    <span class="function">show</span>(<span class="string">"Count: |i|"</span>)
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2>Why Beacon?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">💡</div>
+                    <h3>Readable Syntax</h3>
+                    <p>Designed to read like natural language, making your logic clear and accessible.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Safe & Secure</h3>
+                    <p>Built-in safety features to prevent common errors and ensure robust execution.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🚀</div>
+                    <h3>High Performance</h3>
+                    <p>Compiled to efficient C code for maximum speed and minimal overhead.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Get in Touch</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="label">Phone</span>
+                    <a href="tel:+916005706055" class="value">+91 6005706055</a>
+                </div>
+                <div class="contact-item">
+                    <span class="label">Email</span>
+                    <a href="mailto:aadityasadhu50@gmail.com" class="value">aadityasadhu50@gmail.com</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Beacon Labs. All rights reserved.</p>
+    </footer>
+</body>
+</html>
