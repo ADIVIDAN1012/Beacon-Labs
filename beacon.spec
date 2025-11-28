@@ -2,11 +2,11 @@
 
 
 a = Analysis(
-    ['compiler_frontend_py\\frontend.py'],
+    ['compiler_frontend_py\\main.py'],
     pathex=['compiler_frontend_py'],
     binaries=[('compiler_backend_c/c_backend.exe', '.')],
     datas=[],
-    hiddenimports=[],
+    hiddenimports=['interpreter', 'frontend', 'lexer', 'parser', 'beacon_ast', 'symbol_table'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='beacon',
+    name='BPL',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
