@@ -4,7 +4,13 @@
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![C](https://img.shields.io/badge/C-GCC-green.svg)](https://gcc.gnu.org/)
 
-**Beacon** is a modern, dynamically-typed, object-oriented programming language designed with a focus on **concurrency**, **safety**, and **expressiveness**. With an intuitive syntax and powerful features, Beacon aims to make parallel programming accessible while maintaining code clarity and robustness.
+**Beacon** is a revolutionary programming language built on **UOP (Universal User-Oriented Programming)**—a paradigm that prioritizes **human readability**, **intuitive syntax**, and **natural language constructs**. Unlike traditional languages that focus on machine-oriented optimizations, Beacon makes coding feel like a conversation between developer and computer.
+
+Beacon combines the power of modern programming with unprecedented clarity:
+- **Dynamically-Typed** with runtime safety
+- **Object-Oriented** with blueprints and inheritance  
+- **Concurrency-First** with parallel programming primitives
+- **Human-Centric** keywords that read like plain English
 
 This repository contains the complete Beacon toolchain:
 - **Python-based Frontend:** Lexer, parser, and AST generator
@@ -16,11 +22,37 @@ This repository contains the complete Beacon toolchain:
 
 ## ✨ Key Features
 
-### 🎯 Core Language Features
+### � UOP (Universal User-Oriented Programming)
+Beacon's foundational philosophy that sets it apart from traditional languages:
+
+- **Human-Centric Keywords:** Natural words like `ask` (input), `show` (print), `check` (if), `attempt` (try)
+- **Intuitive Structure:** Code that follows the logical flow of human thought
+- **Clarity Over Brevity:** Self-documenting code that reads like plain language
+- **Universal Accessibility:** Approachable for beginners, powerful for experts
+
+**Traditional OOP vs. Beacon UOP:**
+```python
+# Traditional Python (OOP)
+try:
+    result = int(input("Enter number: "))
+except ValueError:
+    print("Invalid input")
+```
+
+```beacon
+# Beacon (UOP)
+attempt {
+    result = convert ask("Enter number: ") to Num
+} trap {
+    show("Invalid input")
+}
+```
+
+### �🎯 Core Language Features
 - **Dynamic Typing:** Flexible type system with runtime type checking
-- **Object-Oriented:** Full OOP support with blueprints (classes), inheritance, and polymorphism
-- **Unique Syntax:** Distinctive keywords like `spec` (function), `blueprint` (class), `traverse` (for), and more
-- **Rich Standard Library:** Built-in functions for common operations
+- **Blueprint-Based OOP:** Classes (`blueprint`), inheritance (`adopt`), self-reference (`own`)
+- **Semantic Keywords:** `spec` (function), `traverse` (for), `until` (while), `forward` (return)
+- **Rich Standard Library:** Built-in functions optimized for human understanding
 
 ### ⚡ Concurrency & Parallelism
 - **Parallel Execution:** `paral` keyword for parallel function execution
