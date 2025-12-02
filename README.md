@@ -1,105 +1,273 @@
-<<<<<<< HEAD
-# Beacon Language
+# 🔥 Beacon Programming Language
 
-Beacon is a dynamically-typed, object-oriented programming language with a focus on concurrency and safety. This repository contains the Python-based frontend and C-based backend for the Beacon compiler.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![C](https://img.shields.io/badge/C-GCC-green.svg)](https://gcc.gnu.org/)
 
-## Features
+**Beacon** is a modern, dynamically-typed, object-oriented programming language designed with a focus on **concurrency**, **safety**, and **expressiveness**. With an intuitive syntax and powerful features, Beacon aims to make parallel programming accessible while maintaining code clarity and robustness.
 
-- **Dynamically-Typed:** Types are checked at runtime, providing flexibility.
-- **Object-Oriented:** Supports blueprints (classes), inheritance, and objects.
-- **Concurrency:** Provides features for parallel execution, including `paral`, `hold`, `signal`, and `listen`.
-- **Error Handling:** Includes `attempt-trap-conclude` blocks for robust error handling.
-- **Modules:** Supports toolkits for organizing and reusing code.
+This repository contains the complete Beacon toolchain:
+- **Python-based Frontend:** Lexer, parser, and AST generator
+- **C-based Backend:** AST interpreter and runtime execution engine
+- **VS Code Extension:** Syntax highlighting and language support
+- **Documentation:** Comprehensive language specification and guides
 
-### Implemented Keywords
+---
 
-- `convert ... to ...`: Type conversion
-- `note`: Docstrings for functions and blueprints
-- `prep`: Constructors for blueprints
-- `adopt`: Inheritance for blueprints
-- `own`: Self-reference within blueprints
-- `peek`: Error peeking in `trap` blocks
+## ✨ Key Features
 
-## Getting Started
+### 🎯 Core Language Features
+- **Dynamic Typing:** Flexible type system with runtime type checking
+- **Object-Oriented:** Full OOP support with blueprints (classes), inheritance, and polymorphism
+- **Unique Syntax:** Distinctive keywords like `spec` (function), `blueprint` (class), `traverse` (for), and more
+- **Rich Standard Library:** Built-in functions for common operations
+
+### ⚡ Concurrency & Parallelism
+- **Parallel Execution:** `paral` keyword for parallel function execution
+- **Async/Await:** `hold` for awaiting parallel operations
+- **Event-Driven:** `signal` and `listen` for event-based programming
+- **Thread-Safe:** Built-in concurrency primitives
+
+### 🛡️ Error Handling & Safety
+- **Structured Error Handling:** `attempt-trap-conclude` blocks (try-catch-finally)
+- **Error Inspection:** `peek` keyword for error details
+- **Assertions:** `authen` for runtime validation
+- **Type Safety:** Runtime type checking and conversion with `convert`
+
+### 📦 Modularity
+- **Toolkit System:** Organize code with `toolkit` (modules)
+- **Import/Export:** `plug` and `share` for code reusability
+- **Access Modifiers:** `hidden`, `shielded`, `internal`, `expose` for encapsulation
+- **Interfaces:** `bridge` for defining contracts between components
+
+### 🔧 Advanced Features
+- **Functional Programming:** `transform` (map) and `condense` (reduce)
+- **Serialization:** `pack` and `unpack` for data persistence
+- **Static Members:** `solid` keyword for class-level variables and methods
+- **Constants:** `firm` for immutable values
+- **Docstrings:** `note` for inline documentation
+
+---
+
+## 📚 Documentation
+
+Explore the comprehensive documentation to learn more about Beacon:
+
+- **[Keywords Reference](Keywords.md)** - Complete dictionary of all Beacon keywords
+- **[Syntax Guide](Syntax.md)** - Language syntax and grammar
+- **[Examples](Examples.md)** - Code examples and tutorials
+- **[Built-in Functions](builtins.md)** - Standard library reference
+- **[Error Handling](error.md)** - Error types and handling patterns
+- **[Toolkits/Modules](toolkit.md)** - Module system documentation
+- **[Bridges (Interfaces)](Bridge.md)** - Interface specifications
+- **[Library Reference](Lib.md)** - Extended library documentation
+- **[UOP (Unique Object Protocol)](UOP.md)** - Object protocol specification
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Python 3.10+
-- C Compiler (GCC recommended)
+- **Python 3.10 or higher**
+- **C Compiler** (GCC recommended for Windows, or Clang/MSVC)
+- **Git** (for cloning the repository)
 
-### Building and Running
+### Installation
 
-1. **Compile the C backend (from `compiler_backend_c`):**
-
-   ```
-   .\build.bat
-   ```
-
-   This produces `main.exe`.
-
-2. **Generate AST JSON with the Python frontend (from `compiler_frontend_py`):**
-
-   ```
-   python frontend.py <path-to-source>.bpl
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ADIVIDAN1012/Beacon-Labs.git
+   cd Beacon-Labs
    ```
 
-   This writes `..\ast.json` at the project root.
-
-3. **Run the backend on the generated AST (from `compiler_backend_c`):**
-
+2. **Set up Python environment (optional but recommended):**
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate  # On Windows
    ```
-   .\main.exe ..\ast.json
-   ```
-=======
-# Beacon Programming Language
 
-Welcome to the official repository for Beacon, a **user-oriented programming language** designed for clarity, simplicity, and intuitive coding. Beacon's core philosophy is Universal User-Oriented Programming (UOP), which prioritizes human-readable syntax and a natural logical flow over complex, machine-centric constructs.
+### Building the Compiler
 
-This repository contains the complete documentation for the Beacon language, including its syntax, standard library, and core principles.
+#### Step 1: Compile the C Backend
+
+Navigate to the C backend directory and build:
+
+```bash
+cd compiler_backend_c
+.\build.bat
+```
+
+This generates `main.exe` - the Beacon runtime interpreter.
+
+#### Step 2: Write Your First Beacon Program
+
+Create a file `hello.bpl`:
+
+```beacon
+spec main() {
+    show("Hello, Beacon! 🔥")
+}
+
+main()
+```
+
+#### Step 3: Compile to AST
+
+From the `compiler_frontend_py` directory:
+
+```bash
+cd ..\compiler_frontend_py
+py frontend.py ..\hello.bpl
+```
+
+This generates `ast.json` in the project root.
+
+#### Step 4: Execute Your Program
+
+From the `compiler_backend_c` directory:
+
+```bash
+cd ..\compiler_backend_c
+.\main.exe ..\ast.json
+```
+
+Output:
+```
+Hello, Beacon! 🔥
+```
 
 ---
 
-## About Beacon
+## 💡 Quick Examples
 
-Beacon was created to bridge the gap between human thought and code. It is designed for a wide range of users—from beginners and educators to experienced developers and domain experts.
+### Hello World
+```beacon
+spec greet(name) {
+    show("Hello, " + name + "!")
+}
 
-### Core Philosophy
-- **Human-Centric Syntax:** Keywords like `ask`, `show`, `check`, and `attempt` make code easy to read and write.
-- **Intuitive Structure:** The language is structured to be predictable and easy to follow.
-- **Clarity Over All:** Beacon's design emphasizes clear, self-documenting code.
+greet("World")
+```
+
+### Object-Oriented Programming
+```beacon
+blueprint Person {
+    shard name
+    shard age
+    
+    prep(n, a) {
+        own.name = n
+        own.age = a
+    }
+    
+    spec introduce() {
+        show("Hi, I'm " + own.name + " and I'm " + convert own.age to Text + " years old.")
+    }
+}
+
+firm person = Person("Alice", 30)
+person.introduce()
+```
+
+### Error Handling
+```beacon
+attempt {
+    firm result = convert "not a number" to Num
+} trap {
+    show("Error: " + peek)
+} conclude {
+    show("Cleanup complete")
+}
+```
+
+### Parallel Execution
+```beacon
+paral spec compute(x) {
+    forward x * x
+}
+
+firm result = hold compute(10)
+show(result)  < Output: 100 >
+```
+
+More examples can be found in [Examples.md](Examples.md).
 
 ---
 
-## Key Features
+## 🏗️ Project Structure
 
-- **User-Oriented Syntax:** A simple, expressive syntax based on the principles of UOP.
-- **Modular by Design:** Organize code into reusable `toolkits`.
-- **Clear Error Handling:** A straightforward `attempt-trap` system for managing errors.
-- **Powerful Interfaces:** Use `bridge`s to define clean contracts between components.
-- **Object-Oriented:** Supports classes (`blueprint`s), inheritance (`adopt`), and other OOP features.
-
----
-
-## Documentation
-
-This repository serves as the central source of truth for Beacon's documentation.
-
-| Document | Description |
-|---|---|
-| **[Start Here](./index_doc.md)** | The main index for all documentation. |
-| **[UOP Philosophy](./UOP.md)** | Learn about the core principles behind Beacon. |
-| **[Syntax Reference](./Syntax.md)** | A complete guide to the language's syntax. |
-| **[Keywords](./Keywords.md)** | A dictionary of all keywords and their meanings. |
-| **[Built-in Functions](./builtins.md)** | A reference for all standard functions. |
-| **[Standard Library](./Lib.md)** | An overview of the built-in `toolkits`. |
-| **[Error Handling](./error.md)** | A guide to the `attempt-trap` system. |
-| **[Toolkits (Modules)](./toolkit.md)** | Learn how to create and use modules. |
-| **[Bridge Interfaces](./Bridge.md)** | A guide to defining interfaces. |
-| **[Code Examples](./Examples.md)** | See practical examples of Beacon code. |
+```
+Beacon-Labs/
+├── compiler_frontend_py/     # Python-based lexer, parser, AST generator
+├── compiler_backend_c/        # C-based interpreter and runtime
+├── beacon-vscode-extension/   # VS Code language extension
+├── beacon-website/            # Official Beacon website
+├── bpl-icon-theme/           # Icon theme for .bpl files
+├── tests/                    # Test suite
+├── cJSON/                    # JSON parsing library (dependency)
+├── assets/                   # Project assets
+├── *.md                      # Documentation files
+└── README.md                 # This file
+```
 
 ---
 
-## Getting Started
+## 🛠️ Development
 
-To get started with Beacon, we recommend reading the **[UOP Philosophy](./UOP.md)** to understand its core concepts, followed by the **[Syntax Reference](./Syntax.md)** to learn the basics of the language. The **[Code Examples](./Examples.md)** are a great resource for seeing the language in action.
->>>>>>> b6c5e32b5b83935ac26efd256f5e7d0972be5d72
+### VS Code Extension
+
+Install the Beacon VS Code extension for syntax highlighting and language support:
+
+1. Open the `beacon-vscode-extension` folder in VS Code
+2. Press `F5` to launch a new VS Code window with the extension loaded
+3. Open any `.bpl` file to see syntax highlighting
+
+### Running Tests
+
+```bash
+cd tests
+py test_runner.py
+```
+
+---
+
+## 🌐 Website
+
+Visit the official Beacon website for interactive tutorials and playground:
+
+```bash
+cd beacon-website
+# Follow GITHUB_PAGES_SETUP.md or REDEPLOY_WEBSITE.md for deployment
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Whether it's bug fixes, new features, documentation improvements, or examples:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📧 Contact & Links
+
+- **Repository:** [https://github.com/ADIVIDAN1012/Beacon-Labs](https://github.com/ADIVIDAN1012/Beacon-Labs)
+- **Issues:** [Report a bug or request a feature](https://github.com/ADIVIDAN1012/Beacon-Labs/issues)
+
+---
+
+**Made with ❤️ by the Beacon Team**
+
+*Light the way with Beacon* 🔥
