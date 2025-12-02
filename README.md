@@ -6,6 +6,9 @@
 
 **Beacon** is a revolutionary programming language built on **UOP (Universal User-Oriented Programming)**—a paradigm that prioritizes **human readability**, **intuitive syntax**, and **natural language constructs**. Unlike traditional languages that focus on machine-oriented optimizations, Beacon makes coding feel like a conversation between developer and computer.
 
+> [!NOTE]
+> Beacon is actively under development. Core features are stable and functional, while advanced features (concurrency, modules) are experimental. See [Implementation Status](#-implementation-status) below.
+
 Beacon combines the power of modern programming with unprecedented clarity:
 - **Dynamically-Typed** with runtime safety
 - **Object-Oriented** with blueprints and inheritance  
@@ -22,7 +25,7 @@ This repository contains the complete Beacon toolchain:
 
 ## ✨ Key Features
 
-### � UOP (Universal User-Oriented Programming)
+### 🌟 UOP (Universal User-Oriented Programming)
 Beacon's foundational philosophy that sets it apart from traditional languages:
 
 - **Human-Centric Keywords:** Natural words like `ask` (input), `show` (print), `check` (if), `attempt` (try)
@@ -48,36 +51,66 @@ attempt {
 }
 ```
 
-### �🎯 Core Language Features
-- **Dynamic Typing:** Flexible type system with runtime type checking
-- **Blueprint-Based OOP:** Classes (`blueprint`), inheritance (`adopt`), self-reference (`own`)
-- **Semantic Keywords:** `spec` (function), `traverse` (for), `until` (while), `forward` (return)
-- **Rich Standard Library:** Built-in functions optimized for human understanding
+---
 
-### ⚡ Concurrency & Parallelism
-- **Parallel Execution:** `paral` keyword for parallel function execution
-- **Async/Await:** `hold` for awaiting parallel operations
-- **Event-Driven:** `signal` and `listen` for event-based programming
-- **Thread-Safe:** Built-in concurrency primitives
+## 🚀 Implementation Status
 
-### 🛡️ Error Handling & Safety
-- **Structured Error Handling:** `attempt-trap-conclude` blocks (try-catch-finally)
-- **Error Inspection:** `peek` keyword for error details
-- **Assertions:** `authen` for runtime validation
-- **Type Safety:** Runtime type checking and conversion with `convert`
+> [!IMPORTANT]
+> Beacon is actively under development. Below is a clear breakdown of **stable**, **experimental**, and **planned** features.
 
-### 📦 Modularity
-- **Toolkit System:** Organize code with `toolkit` (modules)
-- **Import/Export:** `plug` and `share` for code reusability
-- **Access Modifiers:** `hidden`, `shielded`, `internal`, `expose` for encapsulation
-- **Interfaces:** `bridge` for defining contracts between components
+### ✅ Stable & Production-Ready
 
-### 🔧 Advanced Features
-- **Functional Programming:** `transform` (map) and `condense` (reduce)
-- **Serialization:** `pack` and `unpack` for data persistence
-- **Static Members:** `solid` keyword for class-level variables and methods
-- **Constants:** `firm` for immutable values
-- **Docstrings:** `note` for inline documentation
+These features are **fully implemented and tested**:
+
+#### Core Language
+- **Variables & Constants:** `firm` declarations
+- **Functions:** `spec` (functions), `forward` (return), function calls
+- **I/O:** `show` (output), `ask` (input)
+- **Comments:** Single-line `< ... >`, multi-line `<^ ... ^>`, docstrings with `note`
+
+#### Control Flow
+- **Conditionals:** `check` (if), `alter` (else if), `altern` (else)
+- **Loops:** `traverse` (for), `until` (while)
+- **Loop Control:** `halt` (break), `proceed` (continue), `wait` (pass)
+
+#### Error Handling
+- **Try-Catch-Finally:** `attempt`, `trap`, `conclude`
+- **Error Raising:** `trigger`
+- **Error Inspection:** `peek` for error details
+
+#### Data Types & Operators
+- **Literals:** `Num`, `Text`, `On` (true), `Off` (false), `Nil` (null)
+- **Type Conversion:** `convert ... to ...`
+- **Operators:** Arithmetic (`+`, `-`, `*`, `/`), comparison (`==`, `'=`, `<`, `>`, `<=`, `>=`)
+- **String Interpolation:** `"text |expression| more text"`
+
+#### Object-Oriented Programming
+- **Classes:** `blueprint` (class declaration)
+- **Properties:** `shard` (fields)
+- **Constructors:** `prep`
+- **Self-Reference:** `own` (self/this)
+- **Inheritance:** `adopt` (extends)
+- **Object Creation:** `spawn` keyword
+
+### ⚠️ Experimental Features
+
+These features have **parser support** but require further testing and validation:
+
+- ⚠️ **Module System:** `toolkit`, `plug`, `share` (grammar exists, file loading needs testing)
+- ⚠️ **Concurrency:** `paral`, `hold`, `signal`, `listen` (keywords recognized, runtime implementation under development)
+- ⚠️ **Interfaces:** `bridge`, `expose`, `link`, `embed` (parsed, runtime contracts need validation)
+- ⚠️ **Access Modifiers:** `hidden`, `shielded`, `internal` (keywords exist, enforcement needs testing)
+- ⚠️ **Static Members:** `solid` (keyword recognized, functionality needs verification)
+
+### 🚧 Planned Features
+
+Advanced features being developed:
+
+- 🚧 **Functional Programming:** `transform` (map), `condense` (reduce)
+- 🚧 **Serialization:** `pack`, `unpack`
+- 🚧 **Assertions:** `authen`
+- 🚧 **Type Aliases:** `nick ... as ...`
+- 🚧 **Collections:** `den` (arrays/lists)
 
 ---
 
@@ -173,6 +206,9 @@ Hello, Beacon! 🔥
 
 ## 💡 Quick Examples
 
+> [!NOTE]
+> The following examples demonstrate **stable, tested features**. See [Examples.md](Examples.md) for more comprehensive tutorials.
+
 ### Hello World
 ```beacon
 spec greet(name) {
@@ -182,24 +218,33 @@ spec greet(name) {
 greet("World")
 ```
 
-### Object-Oriented Programming
+### Variables and Conditionals
 ```beacon
-blueprint Person {
-    shard name
-    shard age
-    
-    prep(n, a) {
-        own.name = n
-        own.age = a
-    }
-    
-    spec introduce() {
-        show("Hi, I'm " + own.name + " and I'm " + convert own.age to Text + " years old.")
+spec check_greater(val) {
+    check (val > 5) {
+        show("val is greater than 5")
+    } altern {
+        show("val is not greater than 5")
     }
 }
 
-firm person = Person("Alice", 30)
-person.introduce()
+firm a = 10 
+funcall check_greater(a)
+funcall check_greater(3)
+```
+
+### Type Conversion
+```beacon
+x = On
+y = Off
+z = Nil
+
+check(x == On) {
+    show("x is On")
+}
+
+a = convert 10 to Text
+show("Number as text: " + a)
 ```
 
 ### Error Handling
@@ -213,17 +258,19 @@ attempt {
 }
 ```
 
-### Parallel Execution
+### Loops
 ```beacon
-paral spec compute(x) {
-    forward x * x
+spec list_numbers() {
+    traverse i from 1 to 5 {
+        show("Number: " + convert i to Text)
+    }
 }
 
-firm result = hold compute(10)
-show(result)  < Output: 100 >
+list_numbers()
 ```
 
-More examples can be found in [Examples.md](Examples.md).
+> [!TIP]
+> For advanced examples including OOP, modules, and concurrency (experimental features), see the [Examples.md](Examples.md) documentation.
 
 ---
 
@@ -246,6 +293,17 @@ Beacon-Labs/
 ---
 
 ## 🛠️ Development
+
+### Testing & Verification
+
+To verify if a feature works:
+
+1. **Write a test:** Create a `.bpl` file using the feature
+2. **Compile:** Run `py frontend.py yourtest.bpl` to generate `ast.json`
+3. **Execute:** Run `.\main.exe ..\ast.json` from `compiler_backend_c`
+4. **Verify:** Does it produce the expected output?
+
+See **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)** for detailed feature status and testing recommendations.
 
 ### VS Code Extension
 
