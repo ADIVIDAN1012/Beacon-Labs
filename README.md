@@ -106,11 +106,11 @@ These features have **parser support** but require further testing and validatio
 
 Advanced features being developed:
 
+- 🚧 **Anonymous Functions:** `den` (lambda expressions)
 - 🚧 **Functional Programming:** `transform` (map), `condense` (reduce)
 - 🚧 **Serialization:** `pack`, `unpack`
 - 🚧 **Assertions:** `authen`
 - 🚧 **Type Aliases:** `nick ... as ...`
-- 🚧 **Collections:** `den` (arrays/lists)
 
 ---
 
