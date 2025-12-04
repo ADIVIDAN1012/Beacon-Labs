@@ -647,6 +647,59 @@ struct ASTNode {
     ASTNodeData data;
 };
 
+// Helper function to detect and convert input string to appropriate type
+Value* detect_and_convert_type(const char* input) {
+    Value* result = (Value*)malloc(sizeof(Value));
+    
+    // Trim leading/trailing whitespace
+    while (*input == ' ' || *input == '\t') input++;
+    size_t len = strlen(input);
+    while (len > 0 && (input[len-1] == ' ' || input[len-1] == '\t')) len--;
+    
+    // Create trimmed copy
+    char* trimmed = (char*)malloc(len + 1);
+    strncpy(trimmed, input, len);
+    trimmed[len] = '\0';
+    
+    // Check for boolean keywords
+    if (strcmp(trimmed, "On") == 0) {
+        result->type = VAL_BOOL;
+        result->as.boolean = true;
+        free(trimmed);
+        return result;
+    }
+    if (strcmp(trimmed, "Off") == 0) {
+        result->type = VAL_BOOL;
+        result->as.boolean = false;
+        free(trimmed);
+        return result;
+    }
+    
+    // Check for nil keyword
+    if (strcmp(trimmed, "Nil") == 0) {
+        result->type = VAL_NIL;
+        free(trimmed);
+        return result;
+    }
+    
+    // Try to parse as number
+    char* endptr;
+    double num_val = strtod(trimmed, &endptr);
+    
+    // Check if entire string was consumed (valid number)
+    if (*trimmed != '\0' && *endptr == '\0') {
+        result->type = VAL_NUMBER;
+        result->as.number = num_val;
+        free(trimmed);
+        return result;
+    }
+    
+    // Default to string
+    result->type = VAL_STRING;
+    result->as.string = trimmed;
+    return result;
+}
+
 Value* interpret_ast(ASTNode* node, Scope* scope) {
     if (!node) {
         Value* nil_val = (Value*)malloc(sizeof(Value));
@@ -1273,9 +1326,11 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
                 line[strlen(line) - 1] = '\0';
             }
 
-            result_val = (Value*)malloc(sizeof(Value));
-            result_val->type = VAL_STRING;
-            result_val->as.string = line;
+            // Use dynamic type detection
+            result_val = detect_and_convert_type(line);
+            
+            // Free the original line since detect_and_convert_type makes a copy
+            free(line);
             break;
         }
 
@@ -2098,6 +2153,15 @@ ASTNode* parse_ast_from_json(cJSON *json_node) {
         node->data.listen.num_body_statements = body_count;
         for (int i = 0; i < body_count; i++) {
             node->data.listen.body[i] = parse_ast_from_json(cJSON_GetArrayItem(body_json, i));
+        }
+    } else if (strcmp(type_str, "AskNode") == 0) {
+        node->type = NODE_ASK;
+        cJSON *body_json = cJSON_GetObjectItemCaseSensitive(json_node, "body");
+        int body_count = cJSON_GetArraySize(body_json);
+        node->data.ask.body = (ASTNode**)malloc(body_count * sizeof(ASTNode*));
+        node->data.ask.num_body_statements = body_count;
+        for (int i = 0; i < body_count; i++) {
+            node->data.ask.body[i] = parse_ast_from_json(cJSON_GetArrayItem(body_json, i));
         }
     } else if (strcmp(type_str, "BlueprintNode") == 0) {
         node->type = NODE_BLUEPRINT;

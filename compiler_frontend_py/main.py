@@ -102,8 +102,8 @@ def main():
         file_path = sys.argv[2]
     
     else:
-        # Default to run mode
-        mode = 'run'
+        # Default to compile mode (uses C backend)
+        mode = 'compile'
         file_path = first_arg
     
     # Validate file extension

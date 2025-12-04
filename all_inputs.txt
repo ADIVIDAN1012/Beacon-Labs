@@ -1,0 +1,7 @@
+42
+3.14
+On
+Off
+Nil
+hello world
+123abc

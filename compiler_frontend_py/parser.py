@@ -518,6 +518,31 @@ class Parser:
             self.eat('LPAREN')
             node = self.expression()
             self.eat('RPAREN')
+        elif token.type == 'ASK':
+            # Handle ask as a function-like expression
+            self.eat('ASK')
+            # Check if it's being used as a function call with parentheses
+            if self.current_token.type == 'LPAREN':
+                self.eat('LPAREN')
+                # Parse the prompt argument (optional)
+                prompt = None
+                if self.current_token.type != 'RPAREN':
+                    prompt = self.expression()
+                self.eat('RPAREN')
+                # Return as AskNode with the prompt as body
+                return AskNode([ExpressionStatementNode(prompt)] if prompt else [])
+            else:
+                # Legacy syntax: ask { ... } or ask "prompt"
+                block = []
+                if self.current_token.type == 'LBRACE':
+                    self.eat('LBRACE')
+                    while self.current_token.type != 'RBRACE':
+                        block.append(self.statement())
+                    self.eat('RBRACE')
+                else:
+                    expr = self.expression()
+                    block.append(ExpressionStatementNode(expr))
+                return AskNode(block)
         elif token.type == 'WORD' or token.type == 'OWN':
             if token.type == 'WORD' and self.position + 1 < len(self.tokens) and self.tokens[self.position + 1].type == 'LPAREN':
                 node = self.parse_function_call()
@@ -525,7 +550,7 @@ class Parser:
                 self.eat(token.type)
                 node = VarAccessNode(token.value)
         else:
-            raise Exception(f"Expected number, LPAREN, WORD, or OWN, got {token.type}")
+            raise Exception(f"Expected number, LPAREN, WORD, OWN, or ASK, got {token.type}")
 
         while self.current_token and self.current_token.type == 'DOT':
             self.eat('DOT')

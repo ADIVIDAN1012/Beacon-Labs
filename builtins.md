@@ -22,7 +22,7 @@ This document provides a comprehensive list of all built-in functions available 
 
 | Function      | Description                                                       | Example                           |
 | ------------- | ----------------------------------------------------------------- | --------------------------------- |
-| `ask(prompt)` | Prompts the user for input and returns the entered value as text. | `name = ask("Enter your name: ")` |
+| `ask(prompt)` | Prompts the user for input and **automatically detects and converts the type**. Returns `Num` for numbers, `On`/`Off` for booleans, `Nil` for nil, or `Text` for everything else. | `age = ask("Enter your age: ")` ← auto-converts to number |
 | `show(value)` | Displays a value to the standard output.                          | `show("Hello, Beacon!")`          |
 
 ---

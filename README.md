@@ -65,8 +65,17 @@ These features are **fully implemented and tested**:
 #### Core Language
 - **Variables & Constants:** `firm` declarations
 - **Functions:** `spec` (functions), `forward` (return), function calls
-- **I/O:** `show` (output), `ask` (input)
+- **I/O:** `show` (output), `ask` (input with **automatic type detection**)
 - **Comments:** Single-line `< ... >`, multi-line `<^ ... ^>`, docstrings with `note`
+
+> [!TIP]
+> **Dynamic Type Conversion:** The `ask()` function automatically detects and converts user input to the appropriate type:
+> - Numbers: `"42"` → `Num`, `"3.14"` → `Num`
+> - Booleans: `"On"` → `true`, `"Off"` → `false`
+> - Nil: `"Nil"` → `Nil`
+> - Text: Everything else defaults to `Text`
+>
+> Example: `firm age = ask("Enter age: ")` - automatically converts numeric input!
 
 #### Control Flow
 - **Conditionals:** `check` (if), `alter` (else if), `altern` (else)

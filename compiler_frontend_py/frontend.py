@@ -26,15 +26,15 @@ def generate_ast_json(source_code: str):
     print(f"AST saved to {ast_path}")
 
     # Execute with C Backend
-    # Locate c_backend.exe
+    # Locate main.exe
     if getattr(sys, 'frozen', False):
         # Running as compiled executable
         base_path = sys._MEIPASS
-        backend_exe = os.path.join(base_path, 'c_backend.exe')
+        backend_exe = os.path.join(base_path, 'main.exe')
     else:
         # Running as script
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        backend_exe = os.path.join(script_dir, '..', 'compiler_backend_c', 'c_backend.exe')
+        backend_exe = os.path.join(script_dir, '..', 'compiler_backend_c', 'main.exe')
     
     backend_exe = os.path.abspath(backend_exe)
 
