@@ -28,10 +28,10 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>Illuminate Your <span class="gradient-text">Logic</span></h1>
-                <p class="subtitle">A modern, readable programming language with dual execution modes: compile to C for performance or interpret for rapid development.</p>
+                <p class="subtitle">A modern, readable programming language with <strong>intelligent type conversion</strong>. Features dual execution modes: compile to C for performance or interpret for rapid development.</p>
                 <div class="cta-group">
-                    <a href="https://github.com/ADIVIDAN1012/Beacon-Labs/releases/download/v1.0.0/BPL.exe" class="btn btn-primary" download>
-                        <span class="icon">⚡</span> Download BPL.exe
+                    <a href="https://github.com/ADIVIDAN1012/Beacon-Labs/releases/download/v1.1.0/BPL.exe" class="btn btn-primary" download>
+                        <span class="icon">⚡</span> Download BPL.exe v1.1.0
                     </a>
                     <a href="https://github.com/ADIVIDAN1012/Beacon-Labs/releases/download/v1.0.0/beacon-0.0.3.vsix" class="btn btn-secondary" download>
                         <span class="icon">🧩</span> VS Code Extension
@@ -45,13 +45,15 @@
                         <span class="dot yellow"></span>
                         <span class="dot green"></span>
                     </div>
-                    <pre><code class="language-beacon"><span class="keyword">nick</span> <span class="type">MyInt</span> = <span class="type">Num</span>
+                    <pre><code class="language-beacon"><span class="comment">&lt; NEW: Auto type conversion! &gt;</span>
+<span class="keyword">firm</span> age = <span class="function">ask</span>(<span class="string">"Age: "</span>)  <span class="comment">&lt; "42" → 42 &gt;</span>
+<span class="keyword">firm</span> active = <span class="function">ask</span>(<span class="string">"Active: "</span>)  <span class="comment">&lt; "On" → true &gt;</span>
 
-<span class="keyword">check</span>(x == <span class="literal">On</span>) {
-    <span class="function">show</span>(<span class="string">"System is Active"</span>)
+<span class="keyword">check</span>(active == <span class="literal">On</span>) {
+    <span class="function">show</span>(<span class="string">"User is |age| years old"</span>)
 }
 
-<span class="keyword">traverse</span> i <span class="keyword">from</span> 1 <span class="keyword">to</span> 10 {
+<span class="keyword">traverse</span> i <span class="keyword">from</span> 1 <span class="keyword">to</span> age {
     <span class="function">show</span>(<span class="string">"Count: |i|"</span>)
 }</code></pre>
                 </div>
@@ -75,6 +77,11 @@
                     <div class="icon">🚀</div>
                     <h3>High Performance</h3>
                     <p>Compiled to efficient C code for maximum speed and minimal overhead.</p>
+                </div>
+                <div class="feature-card" style="border: 2px solid #ff6b35;">
+                    <div class="icon">🎯</div>
+                    <h3>Smart Type Detection <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7em; margin-left: 8px;">NEW</span></h3>
+                    <p>ask() automatically converts input: numbers, booleans (On/Off), Nil, or text - no manual conversion needed!</p>
                 </div>
             </div>
         </section>

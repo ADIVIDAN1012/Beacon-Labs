@@ -222,6 +222,7 @@ pre {
 .function { color: #50fa7b; }
 .string { color: #f1fa8c; }
 .literal { color: #bd93f9; }
+.comment { color: #6272a4; font-style: italic; }
 
 /* Features */
 .features {
