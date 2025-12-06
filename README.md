@@ -135,7 +135,7 @@ Explore the comprehensive documentation to learn more about Beacon:
 - **[Toolkits/Modules](toolkit.md)** - Module system documentation
 - **[Bridges (Interfaces)](Bridge.md)** - Interface specifications
 - **[Library Reference](Lib.md)** - Extended library documentation
-- **[UOP (Universal User Oriented Programming)](UOP.md)** - UOP paradigm and user-centric design documentation
+- **[UOP (Unique Object Protocol)](UOP.md)** - Object protocol specification
 
 ---
 
@@ -216,7 +216,7 @@ Hello, Beacon! 🔥
 ## 💡 Quick Examples
 
 > [!NOTE]
-> The following examples demonstrate **stable, tested features**. See [Examples.md](Examples.md) for more comprehensive tutorials.
+> The following examples demonstrate **stable, tested features**. See [Examples.md](docs/Examples.md) for more comprehensive tutorials.
 
 ### Hello World
 ```beacon
@@ -279,7 +279,7 @@ list_numbers()
 ```
 
 > [!TIP]
-> For advanced examples including OOP, modules, and concurrency (experimental features), see the [Examples.md](Examples.md) documentation.
+> For advanced examples including OOP, modules, and concurrency (experimental features), see the [Examples.md](docs/Examples.md) documentation.
 
 ---
 
@@ -291,11 +291,12 @@ Beacon-Labs/
 ├── compiler_backend_c/        # C-based interpreter and runtime
 ├── beacon-vscode-extension/   # VS Code language extension
 ├── beacon-website/            # Official Beacon website
-├── bpl-icon-theme/           # Icon theme for .bpl files
-├── tests/                    # Test suite
+├── docs/                     # Documentation files
+├── tests/                    # Test suite and .bpl test files
+├── scripts/                  # Utility scripts
+├── data/                     # Data and input/output files
 ├── cJSON/                    # JSON parsing library (dependency)
-├── assets/                   # Project assets
-├── *.md                      # Documentation files
+├── *.md                      # Root documentation
 └── README.md                 # This file
 ```
 
