@@ -16,6 +16,21 @@ Beacon is designed as a general-purpose language that emphasizes clarity. By uti
 -   **Concurrency Models**: Experimental support for parallel execution primitives.
 -   **Error Handling**: Structured exception handling using `attempt`, `trap`, and `conclude` blocks.
 
+## Feature Support Status
+
+The following table explicitly outlines the current implementation status of Beacon language features.
+
+| Feature Category | Implementation Status | Notes |
+| :--- | :--- | :--- |
+| **Core Syntax** | ✅ **Stable** | Variables, Functions, I/O, Comments, Docstrings |
+| **Control Flow** | ✅ **Stable** | `check`/`alter`, `traverse`/`until`, `attempt`/`trap` |
+| **Data Types** | ✅ **Stable** | Dynamic typing (`firm`), Type Conversion, String Interpolation |
+| **Object-Oriented** | ✅ **Stable** | Classes (`blueprint`), Single Inheritance (`adopt`), Properties |
+| **Standard Library** | ✅ **Stable** | Basic I/O, Math, String manipulation |
+| **Concurrency** | ⚠️ **Experimental** | Keywords (`paral`, `signal`) defined; runtime currently limited |
+| **Modules** | ⚠️ **Experimental** | Syntax (`toolkit`, `plug`) defined; file resolution in progress |
+| **Functional** | 🚧 **Roadmap** | `transform` (map), `condense` (reduce) planned for future release |
+
 ## Installation
 
 ### Prerequisites
