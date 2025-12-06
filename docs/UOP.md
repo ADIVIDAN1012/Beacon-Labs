@@ -1,6 +1,6 @@
 # Universal User-Oriented Programming (UOP)
 
-Universal User-Oriented Programming (UOP) is the foundational philosophy of the Beacon language. It is a programming paradigm designed to prioritize human readability, intuition, and clarity above machine-oriented optimizations or complex syntax. UOP aims to make coding feel more like a natural conversation between the developer and the computer.
+Universal User-Oriented Programming (UOP) is the design philosophy behind the Beacon language. It prioritizes human readability, intuition, and clarity, aiming to bridge the gap between human thought processes and machine execution.
 
 ---
 

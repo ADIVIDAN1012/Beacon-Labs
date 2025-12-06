@@ -1,4 +1,4 @@
-# Beacon Syntax Reference
+# Beacon Syntax Guide
 
 This document provides a complete reference to the syntax of the Beacon programming language. All code blocks are enclosed in curly braces `{}` and do not require indentation.
 
