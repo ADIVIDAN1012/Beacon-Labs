@@ -91,7 +91,7 @@ These features are **fully implemented and tested**:
 - **Literals:** `Num`, `Text`, `On` (true), `Off` (false), `Nil` (null)
 - **Type Conversion:** `convert ... to ...`
 - **Operators:** Arithmetic (`+`, `-`, `*`, `/`), comparison (`==`, `'=`, `<`, `>`, `<=`, `>=`)
-- **String Interpolation:** `"text |expression| more text"`
+- **String Interpolation:** `"text |expression| more text"` (e.g., `"Hello |name|!"`)
 
 #### Object-Oriented Programming
 - **Classes:** `blueprint` (class declaration)
