@@ -1,0 +1,1 @@
+gcc -o main.exe main.c ../../third_party/cJSON/cJSON.c -I../../third_party/cJSON -lm

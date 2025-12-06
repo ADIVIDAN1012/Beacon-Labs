@@ -53,9 +53,9 @@ The following table explicitly outlines the current implementation status of Bea
     Navigate to the C backend directory and execute the build script:
 
     ```bash
-    cd compiler_backend_c
+    cd src/runtime
     .\build.bat
-    cd ..
+    cd ../..
     ```
 
     This process compiles the C source code into the `main.exe` interpreter.
@@ -83,7 +83,7 @@ main()
 Run the Python frontend to generate the Abstract Syntax Tree (AST):
 
 ```bash
-py compiler_frontend_py/frontend.py hello.bpl
+py src/frontend/frontend.py hello.bpl
 ```
 
 **Step 2: Execute Runtime**
@@ -91,7 +91,7 @@ py compiler_frontend_py/frontend.py hello.bpl
 Run the compiled C interpreter with the generated AST:
 
 ```bash
-.\compiler_backend_c\main.exe ast.json
+.\src\runtime\main.exe ast.json
 ```
 
 ## Language Examples
