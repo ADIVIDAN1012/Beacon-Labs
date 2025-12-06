@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Beacon is a high-level, dynamically typed, object-oriented programming language developed by **Beacon Labs**. It is designed to prioritize readability and reduce cognitive load through natural language syntax. It implements the Universal User-Oriented Programming (UOP) paradigm, aiming to bridge the gap between human thought processes and machine execution.
+Beacon is a high-level, dynamically typed programming language developed by **Beacon Labs**. It integrates **Object-Oriented Programming (OOP)** with the **Universal User-Oriented Programming (UOP)** paradigm. This unique combination prioritizes readability and user intuition while maintaining the structural benefits of object-oriented design, bridging the gap between human thought processes and machine execution.
 
 ## Introduction
 
