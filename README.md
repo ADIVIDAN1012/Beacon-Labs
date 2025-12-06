@@ -135,7 +135,7 @@ Explore the comprehensive documentation to learn more about Beacon:
 - **[Toolkits/Modules](toolkit.md)** - Module system documentation
 - **[Bridges (Interfaces)](Bridge.md)** - Interface specifications
 - **[Library Reference](Lib.md)** - Extended library documentation
-- **[UOP (Universal Object Oriented Programming)](UOP.md)** - UOP paradigm and user-centric design documentation
+- **[UOP (Universal User Oriented Programming)](UOP.md)** - UOP paradigm and user-centric design documentation
 
 ---
 
