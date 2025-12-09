@@ -1,0 +1,15 @@
+spec check_greater(val) {
+    check (val > 5) {
+        show("val is greater than 5")
+    } altern {
+        show("val is not greater than 5")
+    }
+}
+
+spec main() {
+    firm a = 10 
+    funcall check_greater(a)
+    funcall check_greater(3)
+}
+
+funcall main()

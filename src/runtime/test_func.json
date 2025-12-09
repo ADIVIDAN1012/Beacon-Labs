@@ -1,0 +1,46 @@
+{
+  "type": "PROGRAM",
+  "statements": [
+    {
+      "type": "FUNCTION_DECL",
+      "name": "add",
+      "params": ["a", "b"],
+      "body": [
+        {
+          "type": "RETURN_STATEMENT",
+          "expression": {
+            "type": "BINARY_OP",
+            "op": "+",
+            "left": {
+              "type": "VAR_ACCESS",
+              "name": "a"
+            },
+            "right": {
+              "type": "VAR_ACCESS",
+              "name": "b"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "SHOW_STATEMENT",
+      "expressions": [
+        {
+          "type": "FUNCTION_CALL",
+          "function_name": "add",
+          "arguments": [
+            {
+              "type": "NUMBER",
+              "value": 10
+            },
+            {
+              "type": "NUMBER",
+              "value": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

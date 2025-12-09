@@ -1,0 +1,61 @@
+{
+  "type": "ProgramNode",
+  "statements": [
+    {
+      "type": "VarAssignNode",
+      "target": {
+        "type": "VarAccessNode",
+        "var_name": "counter"
+      },
+      "value": {
+        "type": "NumberNode",
+        "value": 0
+      }
+    },
+    {
+      "type": "UntilNode",
+      "condition": {
+        "type": "BinaryOpNode",
+        "left": {
+          "type": "VarAccessNode",
+          "var_name": "counter"
+        },
+        "op": "==",
+        "right": {
+          "type": "NumberNode",
+          "value": 5
+        }
+      },
+      "body": [
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "VarAccessNode",
+              "var_name": "counter"
+            }
+          ]
+        },
+        {
+          "type": "VarAssignNode",
+          "target": {
+            "type": "VarAccessNode",
+            "var_name": "counter"
+          },
+          "value": {
+            "type": "BinaryOpNode",
+            "left": {
+              "type": "VarAccessNode",
+              "var_name": "counter"
+            },
+            "op": "+",
+            "right": {
+              "type": "NumberNode",
+              "value": 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "beacon",
+  "displayName": "Beacon",
+  "description": "Language support for Beacon",
+  "version": "0.0.3",
+  "publisher": "BeaconLabs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BeaconLabs/beacon-vscode-extension.git"
+  },
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "beacon",
+      "aliases": ["Beacon", "beacon"],
+      "extensions": [".bpl"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "beacon",
+      "scopeName": "source.beacon",
+      "path": "./syntaxes/beacon.tmLanguage.json"
+    }],
+    "themes": [{
+      "label": "Beacon Dark",
+      "uiTheme": "vs-dark",
+      "path": "./themes/beacon-color-theme.json"
+    }]
+  }
+}

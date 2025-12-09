@@ -1,0 +1,50 @@
+{
+    "type": "ProgramNode",
+    "statements": [
+        {
+            "type": "FunctionDeclNode",
+            "name": "main",
+            "params": [],
+            "body": [
+                {
+                    "type": "ConstantDeclNode",
+                    "const_name": "x",
+                    "value": {
+                        "type": "NumberNode",
+                        "value": 100.0
+                    }
+                },
+                {
+                    "type": "ShowStatementNode",
+                    "expressions": [
+                        {
+                            "type": "InterpolatedStringNode",
+                            "parts": [
+                                {
+                                    "type": "StringNode",
+                                    "value": "Build Verification (Icon Centered): x = "
+                                },
+                                {
+                                    "type": "VarAccessNode",
+                                    "var_name": "x"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "func_type": "spec",
+            "exposed": false,
+            "shared": false,
+            "docstring": null
+        },
+        {
+            "type": "ExpressionStatementNode",
+            "expression": {
+                "type": "FunctionCallNode",
+                "function_name": "main",
+                "arguments": []
+            }
+        }
+    ]
+}

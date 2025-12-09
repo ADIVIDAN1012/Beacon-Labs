@@ -1,0 +1,91 @@
+Create a modern, professional landing page for the Beacon Programming Language with the following specifications:
+
+## Brand Identity
+- Name: Beacon - "Illuminate Your Logic"
+- Theme: Lighthouse/navigation/guidance
+- Colors: Dark blue background (#0d1117), cyan accents (#00ffff), white text, purple gradients (#667eea to #764ba2)
+- Typography: Outfit for headings, JetBrains Mono for code
+
+## Layout Structure
+
+### Header
+- Logo: Lighthouse icon + "Beacon" text
+- Navigation: Features | Code | Contact | "Get Started" button
+
+### Hero Section
+- Headline: "Illuminate Your Logic"
+- Subheading: "A modern, readable programming language with intelligent type conversion. Features dual execution modes: compile to C for performance or interpret for rapid development."
+- CTA Buttons:
+  * Primary: "⚡ Download BPL.exe v1.0.0" (links to https://github.com/ADIVIDAN1012/Beacon-Labs/releases/download/v1.0.0/BPL.exe)
+  * Secondary: "🧩 VS Code Extension" (links to https://github.com/ADIVIDAN1012/Beacon-Labs/releases/download/v1.0.0/beacon-0.0.3.vsix)
+- Code Preview Window (dark theme with window controls):
+```
+< NEW: String Interpolation >
+firm name = ask("Name: ")
+show("Hello, |name|!")
+
+< Strict Constants >
+firm PI = 3.14
+< PI = 3.14159 -> Runtime Error >
+
+check(PI > 3) {
+    show("Math works!")
+}
+```
+
+### Why Beacon? (Features Grid)
+Four cards with icons:
+
+1. 💡 Readable Syntax
+   "Designed to read like natural language, making your logic clear and accessible."
+
+2. ⚡ Dual Execution Modes
+   "Compile to C for production performance, or interpret for rapid development and testing."
+
+3. 🎨 Modern & Safe [v1.0.0 badge]
+   "Featuring |var| string interpolation, clean number formatting, and strict constant enforcement."
+
+4. 🎯 Smart Type Detection [highlighted border]
+   "ask() automatically converts input: numbers, booleans (On/Off), Nil, or text - no manual conversion needed!"
+
+### Get Started (Usage Modes)
+Two side-by-side cards:
+
+Left: ⚡ Interpret Mode
+"Fast development with instant execution"
+```
+BPL run program.bpl
+BPL program.bpl  # default mode
+```
+
+Right: 🚀 Compile Mode
+"Maximum performance for production"
+```
+BPL compile program.bpl
+# Generates optimized C code
+```
+
+### Contact Section
+- Phone: +91 6005706055
+- Email: aadityasadhu50@gmail.com
+
+### Footer
+"© 2025 Beacon Labs. All rights reserved."
+
+## Design Requirements
+- Dark theme throughout
+- Gradient overlays and glows for depth
+- Smooth hover effects and transitions
+- Responsive layout (mobile-friendly)
+- Clean, modern aesthetic inspired by GitHub/Vercel
+- Code blocks with syntax highlighting (keywords in purple, strings in green, comments in gray)
+- Glassmorphism effects on cards
+- Subtle animations (fade-in on scroll, hover scale)
+
+## Technical Notes
+- Single-page application
+- Smooth scroll navigation
+- Favicon should be the lighthouse icon
+- Meta tags for SEO (title, description, Open Graph)
+- All external links should open in new tab
+- Download links should trigger direct file downloads
