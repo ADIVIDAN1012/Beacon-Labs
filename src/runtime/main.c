@@ -69,6 +69,7 @@ typedef struct Value {
 typedef struct Symbol {
     char *name;
     Value *value;
+    bool is_constant;
 } Symbol;
 
 // Definition of Scope
@@ -84,6 +85,7 @@ Scope* create_scope(Scope* parent);
 void destroy_scope(Scope* scope);
 Value* get_variable(Scope* scope, const char* name);
 void set_variable(Scope* scope, const char* name, Value* value);
+void define_variable(Scope* scope, const char* name, Value* value, bool is_const);
 
 Value* copy_value(const Value* val) {
     if (!val) return NULL;
@@ -817,7 +819,7 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
         }
         case NODE_CONSTANT_DECL: {
             Value* value_to_assign = interpret_ast(node->data.constant_decl.value, scope);
-            set_variable(scope, node->data.constant_decl.const_name, value_to_assign);
+            define_variable(scope, node->data.constant_decl.const_name, value_to_assign, true);
             result_val = (Value*)malloc(sizeof(Value));
             result_val->type = VAL_NIL;
             break;
@@ -1314,7 +1316,16 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
         }
         case NODE_ASK: {
             for (int i = 0; i < node->data.ask.num_body_statements; i++) {
-                free_value(interpret_ast(node->data.ask.body[i], scope));
+                ASTNode* stmt = node->data.ask.body[i];
+                if (stmt->type == NODE_EXPRESSION_STATEMENT) {
+                    Value* val = interpret_ast(stmt->data.expr_statement.expression, scope);
+                    if (val && val->type == VAL_STRING) {
+                        printf("%s", val->as.string);
+                    }
+                    free_value(val);
+                } else {
+                    free_value(interpret_ast(stmt, scope));
+                }
             }
 
             char *line = NULL;
@@ -2226,6 +2237,12 @@ ASTNode* parse_ast_from_json(cJSON *json_node) {
         }
         node->data.attempt_trap_conclude.peek = cJSON_GetObjectItemCaseSensitive(json_node, "peek")->valueint;
 
+    } else if (strcmp(type_str, "KindNode") == 0) {
+        node->type = NODE_KIND;
+        node->data.kind.expression = parse_ast_from_json(cJSON_GetObjectItemCaseSensitive(json_node, "expression"));
+    } else if (strcmp(type_str, "TypeNode") == 0) {
+        node->type = NODE_TYPE;
+        node->data.type_node.type_name = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "type_name")->valuestring);
     } else if (strcmp(type_str, "BooleanNode") == 0) {
         node->type = NODE_BOOL;
         cJSON *val_json = cJSON_GetObjectItemCaseSensitive(json_node, "value");
@@ -2299,11 +2316,35 @@ Value* get_variable(Scope* scope, const char* name) {
     return NULL; // Variable not found
 }
 
-void set_variable(Scope* scope, const char* name, Value* value) {
+// Helper to define a new variable in the current scope
+// is_const: true if defined with 'firm'
+void define_variable(Scope* scope, const char* name, Value* value, bool is_const) {
+     // Check if already defined in CURRENT scope? 
+     // For now, simpler implementation: just append. 
+     // Ideally we should check if it exists in current scope and error if so?
+     // Existing set_variable handles update. We probably want to split "declare" vs "assign".
+     // But following existing pattern, let's just use set_variable logic but add const flag support.
+    
+    // Check if exists
     for (int i = 0; i < scope->symbol_count; i++) {
         if (strcmp(scope->symbols[i].name, name) == 0) {
+            // Already exists. If it was constant, error.
+            if (scope->symbols[i].is_constant) {
+                fprintf(stderr, "Runtime Error: Cannot reassign constant '%s'.\n", name);
+                // For now, just return (ignoring assignment) or we could exit.
+                // Let's print error and keep old value to safe-guard.
+                free_value(value);
+                return;
+            }
+            // If we are trying to REDEFINE it as constant (e.g. firm x = ... again?), 
+            // usually languages allow shadowing in new scopes, but here we are in same scope.
+            // If it's a reassignment `x = 5`, we use set_variable. 
+            // If it's `firm x = 5`, parser produced NODE_CONSTANT_DECL.
+            
+            // Overwrite value
             free_value(scope->symbols[i].value);
             scope->symbols[i].value = value;
+            scope->symbols[i].is_constant = is_const; // Update const-ness if redefined?
             return;
         }
     }
@@ -2315,7 +2356,33 @@ void set_variable(Scope* scope, const char* name, Value* value) {
 
     scope->symbols[scope->symbol_count].name = strdup(name);
     scope->symbols[scope->symbol_count].value = value;
+    scope->symbols[scope->symbol_count].is_constant = is_const;
     scope->symbol_count++;
+}
+
+void set_variable(Scope* scope, const char* name, Value* value) {
+    // Look up in scope chain
+    Scope* current = scope;
+    while (current) {
+        for (int i = 0; i < current->symbol_count; i++) {
+            if (strcmp(current->symbols[i].name, name) == 0) {
+                if (current->symbols[i].is_constant) {
+                    fprintf(stderr, "Runtime Error: Cannot assign to constant '%s'.\n", name);
+                    free_value(value);
+                    return;
+                }
+                free_value(current->symbols[i].value);
+                current->symbols[i].value = value;
+                return;
+            }
+        }
+        current = current->parent;
+    }
+
+    // If not found, define in current scope (implicit declaration as non-constant variable?)
+    // Beacon seems to allow implicit variable creation on assignment if not found?
+    // Based on previous code: yes, it appended to `scope` (which was passed in).
+    define_variable(scope, name, value, false);
 }
 
 char* value_to_string(Value* val) {
@@ -2325,7 +2392,11 @@ char* value_to_string(Value* val) {
     char* str = malloc(100); // Allocate a buffer
     switch (val->type) {
         case VAL_NUMBER:
-            sprintf(str, "%f", val->as.number);
+            if ((long long)val->as.number == val->as.number) {
+                sprintf(str, "%lld", (long long)val->as.number);
+            } else {
+                sprintf(str, "%g", val->as.number);
+            }
             break;
         case VAL_STRING:
             sprintf(str, "%s", val->as.string);

@@ -2,9 +2,9 @@
 
 
 a = Analysis(
-    ['compiler_frontend_py\\main.py'],
-    pathex=['compiler_frontend_py'],
-    binaries=[('compiler_backend_c/main.exe', '.')],
+    ['src\\frontend\\main.py'],
+    pathex=['src\\frontend'],
+    binaries=[('src/runtime/main.exe', '.')],
     datas=[],
     hiddenimports=['interpreter', 'frontend', 'lexer', 'parser', 'beacon_ast', 'symbol_table'],
     hookspath=[],
@@ -35,5 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='assets/icon.ico',
+    icon='assets\\beacon_icon.ico',
 )

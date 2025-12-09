@@ -512,6 +512,8 @@ class Parser:
             return self.parse_den_expression()
         elif token.type == 'CONVERT':
             return self.parse_convert_expression()
+        elif token.type == 'KIND':
+            return self.parse_kind_statement()
 
         node = None
         if token.type == 'LPAREN':
@@ -987,6 +989,13 @@ class Parser:
         type_name = self.current_token.value
         self.eat('WORD')
         return TypeNode(type_name)
+
+    def parse_kind_statement(self):
+        self.eat('KIND')
+        self.eat('LPAREN')
+        expr = self.expression()
+        self.eat('RPAREN')
+        return KindNode(expr)
 
     def parse_nick_statement(self):
         self.eat('NICK')
