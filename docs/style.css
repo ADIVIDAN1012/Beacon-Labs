@@ -97,7 +97,7 @@ nav a:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8rem 5% 0 5%;
+    padding: 12rem 5% 0 5%;
     gap: 4rem;
     background: url('assets/hero.png') no-repeat center center/cover;
     position: relative;
