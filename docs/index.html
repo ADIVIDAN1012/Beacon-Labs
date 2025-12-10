@@ -28,7 +28,7 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>Illuminate Your <span class="gradient-text">Logic</span></h1>
-                <p class="subtitle">A modern, readable programming language with <strong>intelligent type conversion</strong>. Features dual execution modes: compile to C for performance or interpret for rapid development.</p>
+                <p class="subtitle">A modern, readable programming language with <strong>intelligent type conversion</strong>. Powered by a fast C runtime for excellent performance.</p>
                 <div class="cta-group">
                 <div class="cta-group">
                     <a href="https://github.com/ADIVIDAN1012/Beacon-Labs/releases/download/v2.0.0/BPL.exe" class="btn btn-primary" download>
@@ -72,8 +72,8 @@
                 </div>
                 <div class="feature-card">
                     <div class="icon">⚡</div>
-                    <h3>Dual Execution Modes</h3>
-                    <p>Compile to C for production performance, or interpret for rapid development and testing.</p>
+                    <h3>C-Powered Runtime</h3>
+                    <p>Python frontend generates JSON AST, executed by optimized C runtime for near-native performance.</p>
                 </div>
                 <div class="feature-card">
                     <div class="icon">🎨</div>
@@ -97,16 +97,14 @@
             <h2>Get Started</h2>
             <div class="usage-modes">
                 <div class="mode-card">
-                    <h3>⚡ Interpret Mode</h3>
-                    <p>Fast development with instant execution</p>
-                    <pre><code>BPL run program.bpl
-BPL program.bpl  # default mode</code></pre>
-                </div>
-                <div class="mode-card">
-                    <h3>🚀 Compile Mode</h3>
-                    <p>Maximum performance for production</p>
-                    <pre><code>BPL compile program.bpl
-# Generates optimized C code</code></pre>
+                    <h3>⚡ Run Your Code</h3>
+                    <p>Compile .bpl to JSON AST, then execute with C runtime</p>
+                    <pre><code># Compile to JSON AST
+python -m src.frontend.lexer program.bpl
+python -m src.frontend.parser program.bpl
+
+# Execute with BPL runtime
+BPL.exe program.bpl.json</code></pre>
                 </div>
             </div>
         </section>
