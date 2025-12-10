@@ -1,0 +1,42 @@
+{
+    "traverse loop": {
+        "prefix": "traverse",
+        "body": [
+            "traverse ${1:variable} from ${2:start} to ${3:end} {",
+            "\t$0",
+            "}"
+        ],
+        "description": "A traverse loop."
+    },
+    "blueprint": {
+        "prefix": "blueprint",
+        "body": [
+            "blueprint ${1:name} {",
+            "\t$0",
+            "}"
+        ],
+        "description": "A blueprint definition."
+    },
+    "prep": {
+        "prefix": "prep",
+        "body": [
+            "prep ${1:name}(${2:parameters}) {",
+            "\t$0",
+            "}"
+        ],
+        "description": "A prep (function) definition."
+    },
+    "attempt...trap...conclude": {
+        "prefix": "attempt",
+        "body": [
+            "attempt {",
+            "\t$1",
+            "} trap ${2:errorType} by ${3:errorVar} {",
+            "\t$4",
+            "} conclude {",
+            "\t$5",
+            "}"
+        ],
+        "description": "An attempt...trap...conclude block."
+    }
+}
