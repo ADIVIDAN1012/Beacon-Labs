@@ -2,7 +2,7 @@
   "name": "beacon",
   "displayName": "Beacon",
   "description": "Language support for Beacon",
-  "version": "0.0.3",
+  "version": "2.0.0",
   "publisher": "BeaconLabs",
   "repository": {
     "type": "git",
