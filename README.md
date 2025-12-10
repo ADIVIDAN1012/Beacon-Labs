@@ -25,6 +25,7 @@ The following table explicitly outlines the current implementation status of Bea
 | **Core Syntax** | ✅ **Stable** | Variables, Functions, I/O, Comments, Docstrings |
 | **Control Flow** | ✅ **Stable** | `check`/`alter`, `traverse`/`until`, `attempt`/`trap` |
 | **Data Types** | ✅ **Stable** | Dynamic typing (`firm`), Type Conversion, String Interpolation |
+| **Collections** | ✅ **Stable** | `pack`/`unpack` for data collections (v2.0) |
 | **Object-Oriented** | ✅ **Stable** | Classes (`blueprint`), Single Inheritance (`adopt`), Properties |
 | **Standard Library** | ✅ **Stable** | Basic I/O, Math, String manipulation |
 | **Concurrency** | ⚠️ **Experimental** | Keywords (`paral`, `signal`) defined; runtime currently limited |
@@ -69,11 +70,11 @@ Beacon programs are executed in two stages: parsing (frontend) and interpretatio
 Create a file with the `.bpl` extension, for example `hello.bpl`:
 
 ```beacon
-spec main() {
-    show("Hello, World!")
-}
+spec main:
+    show "Hello, World!"
+done
 
-main()
+funcall main
 ```
 
 ### 2. Execution
@@ -83,15 +84,15 @@ main()
 Run the Python frontend to generate the Abstract Syntax Tree (AST):
 
 ```bash
-py src/frontend/frontend.py hello.bpl
+python -m src.frontend.parser hello.bpl
 ```
 
 **Step 2: Execute Runtime**
 
-Run the compiled C interpreter with the generated AST:
+Run the C runtime with the generated JSON AST:
 
 ```bash
-.\src\runtime\main.exe ast.json
+BPL.exe hello.bpl.json
 ```
 
 ## Language Examples
@@ -99,8 +100,8 @@ Run the compiled C interpreter with the generated AST:
 ### Variable Declaration and I/O
 
 ```beacon
-firm user_name = ask("Enter your name: ")
-show("Welcome, |user_name|.")
+firm user_name = ask "Enter your name: "
+show "Welcome, |user_name|."
 ```
 
 ### Control Flow
@@ -108,22 +109,22 @@ show("Welcome, |user_name|.")
 ```beacon
 firm value = 10
 
-check (value > 5) {
-    show("Value exceeds threshold.")
-} altern {
-    show("Value is within limits.")
-}
+check (value > 5):
+    show "Value exceeds threshold."
+altern:
+    show "Value is within limits."
+done
 ```
 
 ### Functions
 
 ```beacon
-spec calculate_area(radius) {
+spec calculate_area(radius):
     forward 3.14 * radius * radius
-}
+done
 
 firm area = funcall calculate_area(5)
-show("Area: |area|")
+show "Area: |area|"
 ```
 
 ## Documentation
