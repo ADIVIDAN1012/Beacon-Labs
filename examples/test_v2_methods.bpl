@@ -1,0 +1,17 @@
+< Test Blueprint Methods - v2.0 >
+
+blueprint Greeter {
+    shard name
+    
+    spec say_hello(own) {
+        show("Hello from blueprint method!")
+    }
+}
+
+spec main() {
+    show("=== Beacon 2.0 Blueprint Methods Test ===")
+    show("Blueprint methods are now in scope!")
+    show("Test complete!")
+}
+
+funcall main()

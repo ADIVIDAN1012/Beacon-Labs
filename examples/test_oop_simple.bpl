@@ -1,0 +1,24 @@
+< Test Beacon OOP - Simple Version >
+
+spec main() {
+    show("Testing OOP...")
+    
+    < Define blueprint without constructor >
+    blueprint SimpleBox {
+        shard value
+    }
+    
+    < Create instance >
+    firm box = spawn SimpleBox()
+    
+    < Set property >
+    box.value = 42
+    
+    < Read property >
+    show("Box value:")
+    show(box.value)
+    
+    show("OOP test complete!")
+}
+
+funcall main()

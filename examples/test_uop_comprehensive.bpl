@@ -1,0 +1,86 @@
+< Beacon UOP Comprehensive Test >
+< Tests the Universal User-Oriented Programming paradigm >
+< Including functions, control flow, and readable syntax >
+
+spec calculate_sum(a, b) {
+    forward a + b
+}
+
+spec greet_user(name) {
+    show("Welcome to Beacon UOP!")
+    show("Hello, " + name + "!")
+}
+
+spec demonstrate_control_flow() {
+    firm score = 85
+    
+    check score > 90 {
+        show("Excellent!")
+    }
+    alter score > 60 {
+        show("Good job!")
+    }
+    altern {
+        show("Keep trying!")
+    }
+}
+
+spec demonstrate_loops() {
+    show("Loop demonstration:")
+    traverse i from 1 to 3 {
+        show(i)
+    }
+}
+
+spec demonstrate_error_handling() {
+   show("Error handling demo:")
+    attempt {
+        show("Attempting operation...")
+        firm x = 10
+        check x > 5 {
+            show("Success!")
+        }
+    }
+    trap {
+        show("An error occurred")
+    }
+    conclude {
+        show("Cleanup complete")
+    }
+}
+
+spec main() {
+    show("=== Beacon UOP Test Suite ===")
+    show("")
+    
+    < Test 1: Functions >
+    show("Test 1: Function Calls")
+    firm result = funcall calculate_sum(10, 20)
+    show("Sum result:")
+    show(result)
+    show("")
+    
+    < Test 2: User interaction >
+    show("Test 2: Greetings")
+    funcall greet_user("Developer")
+    show("")
+    
+    < Test 3: Control flow >
+    show("Test 3: Control Flow")
+    funcall demonstrate_control_flow()
+    show("")
+    
+    < Test 4: Loops >
+   show("Test 4: Loops")
+    funcall demonstrate_loops()
+    show("")
+    
+    < Test 5: Error handling >
+    show("Test 5: Error Handling")
+    funcall demonstrate_error_handling()
+    show("")
+    
+    show("=== All UOP Tests Complete ===")
+}
+
+funcall main()

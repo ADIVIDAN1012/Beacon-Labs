@@ -1,4 +1,4 @@
-# ast.py
+# beacon_ast.py
 
 from dataclasses import dataclass
 
@@ -143,6 +143,20 @@ class FunctionCallNode(ASTNode):
             "arguments": [arg.to_dict() for arg in self.arguments]
         }
 
+@dataclass
+class MethodCallNode(ASTNode):
+    obj: ASTNode
+    method_name: str
+    arguments: list[ASTNode]
+
+    def to_dict(self):
+        return {
+            "type": "MethodCallNode",
+            "object": self.obj.to_dict(),
+            "method_name": self.method_name,
+            "arguments": [arg.to_dict() for arg in self.arguments]
+        }
+
 class StringNode(ASTNode):
     def __init__(self, value):
         self.value = value
@@ -200,21 +214,17 @@ class CheckStatementNode(ASTNode):
             "altern_clause": [stmt.to_dict() for stmt in self.altern_clause] if self.altern_clause else None
         }
 
-class TraverseNode(ASTNode):
-    def __init__(self, var_name, start_val, end_val, step_val, body):
+class EachNode(ASTNode):
+    def __init__(self, var_name, iterable, body):
         self.var_name = var_name
-        self.start_val = start_val
-        self.end_val = end_val
-        self.step_val = step_val
+        self.iterable = iterable
         self.body = body
 
     def to_dict(self):
         return {
-            "type": "TraverseNode",
+            "type": "EachNode",
             "var_name": self.var_name,
-            "start_val": self.start_val.to_dict(),
-            "end_val": self.end_val.to_dict(),
-            "step_val": self.step_val.to_dict() if self.step_val else None,
+            "iterable": self.iterable.to_dict(),
             "body": [stmt.to_dict() for stmt in self.body]
         }
 
@@ -252,13 +262,14 @@ class AttemptTrapConcludeNode(ASTNode):
         }
 
 class BlueprintNode(ASTNode):
-    def __init__(self, name, attributes, methods, docstring=None, constructor=None, parent=None):
+    def __init__(self, name, attributes, methods, docstring=None, constructor=None, parent=None, contracts=None):
         self.name = name
         self.attributes = attributes
         self.methods = methods
         self.docstring = docstring
         self.constructor = constructor
         self.parent = parent
+        self.contracts = contracts if contracts is not None else []
 
     def to_dict(self):
         return {
@@ -268,7 +279,8 @@ class BlueprintNode(ASTNode):
             "methods": [method.to_dict() for method in self.methods],
             "docstring": self.docstring,
             "constructor": self.constructor.to_dict() if self.constructor else None,
-            "parent": self.parent.to_dict() if hasattr(self.parent, 'to_dict') else self.parent
+            "parent": self.parent, # Assuming string
+            "contracts": self.contracts
         }
 
 class AttributeAccessNode(ASTNode):
@@ -411,11 +423,11 @@ class CondenseNode(ASTNode):
         return {"type": "CondenseNode", "body": [stmt.to_dict() for stmt in self.body]}
 
 class PackNode(ASTNode):
-    def __init__(self, body):
-        self.body = body
+    def __init__(self, items):
+        self.items = items
 
     def to_dict(self):
-        return {"type": "PackNode", "body": [stmt.to_dict() for stmt in self.body]}
+        return {"type": "PackNode", "items": [item.to_dict() for item in self.items]}
 
 class UnpackNode(ASTNode):
     def __init__(self, body):
@@ -458,8 +470,7 @@ class TriggerNode(ASTNode):
 
     def to_dict(self):
         name = self.error_name if isinstance(self.error_name, str) else getattr(self.error_name, 'value', str(self.error_name))
-        msg = self.message.value if hasattr(self.message, 'value') else str(self.message)
-        return {"type": "TriggerNode", "error_name": name, "message": msg}
+        return {"type": "TriggerNode", "error_name": name, "message": self.message.to_dict()}
 
 class BlameNode(ASTNode):
     def __init__(self, name, body):
@@ -546,3 +557,27 @@ class ListenNode(ASTNode):
 
     def to_dict(self):
         return {"type": "ListenNode", "body": [stmt.to_dict() for stmt in self.body]}
+
+@dataclass
+class ModuleNode(ASTNode):
+    name: str
+    body: list[ASTNode]
+    
+    def to_dict(self):
+        return {"type": "ModuleNode", "name": self.name, "body": [s.to_dict() for s in self.body]}
+
+@dataclass
+class BringNode(ASTNode):
+    modules: list[str]
+    source: str
+    
+    def to_dict(self):
+        return {"type": "BringNode", "modules": self.modules, "source": self.source}
+
+@dataclass
+class ContractNode(ASTNode):
+    name: str
+    body: list[ASTNode]
+    
+    def to_dict(self):
+        return {"type": "ContractNode", "name": self.name, "body": [s.to_dict() for s in self.body]}

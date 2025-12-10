@@ -1,0 +1,44 @@
+import sys
+import os
+import json
+import subprocess
+sys.path.append(os.path.join(os.getcwd(), 'src', 'frontend'))
+
+from lexer import Lexer
+from parser import Parser
+
+def compile_to_json(filename, output_filename=None):
+    print(f"Compiling {filename}...")
+    try:
+        with open(filename, 'r') as f:
+            code = f.read()
+            
+        lexer = Lexer(code)
+        tokens = lexer.tokenize()
+        
+        parser = Parser(tokens)
+        ast = parser.parse()
+        
+        if not output_filename:
+            output_filename = filename + ".json"
+            
+        with open(output_filename, 'w') as f:
+            json.dump(ast.to_dict(), f, indent=2)
+        print(f"Generated {output_filename}")
+        return output_filename
+            
+    except Exception as e:
+        print(f"Error compiling {filename}: {e}")
+        return None
+
+if __name__ == "__main__":
+    test_json = compile_to_json("test_basics.bpl")
+    if not test_json:
+        sys.exit(1)
+        
+    print("\n--- Executing Runtime ---")
+    result = subprocess.run(['src/runtime/BPL.exe', test_json], capture_output=True, text=True)
+    print(result.stdout)
+    if result.stderr:
+        print("Errors:")
+        print(result.stderr)

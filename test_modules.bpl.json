@@ -1,0 +1,130 @@
+{
+  "type": "ProgramNode",
+  "statements": [
+    {
+      "type": "FunctionDeclNode",
+      "name": "main",
+      "params": [],
+      "body": [
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "Testing Modules..."
+            }
+          ]
+        },
+        {
+          "type": "BringNode",
+          "modules": [
+            "lib_math"
+          ],
+          "source": "lib_math.bpl.json"
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "Pi is: "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "pi"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "sum",
+          "value": {
+            "type": "FunctionCallNode",
+            "function_name": "add",
+            "arguments": [
+              {
+                "type": "NumberNode",
+                "value": 10.0
+              },
+              {
+                "type": "NumberNode",
+                "value": 20.0
+              }
+            ]
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "10 + 20 = "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "sum"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "diff",
+          "value": {
+            "type": "FunctionCallNode",
+            "function_name": "sub",
+            "arguments": [
+              {
+                "type": "NumberNode",
+                "value": 100.0
+              },
+              {
+                "type": "NumberNode",
+                "value": 50.0
+              }
+            ]
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "100 - 50 = "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "diff"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "func_type": "spec",
+      "exposed": false,
+      "shared": false,
+      "docstring": null
+    },
+    {
+      "type": "ExpressionStatementNode",
+      "expression": {
+        "type": "FunctionCallNode",
+        "function_name": "main",
+        "arguments": []
+      }
+    }
+  ]
+}

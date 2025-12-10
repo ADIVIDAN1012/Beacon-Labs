@@ -79,10 +79,10 @@ spec calculate_sum(a, b) {
 `check`, `alter`, and `altern` are used for conditional logic.
 
 ```beacon
-check x > 10 {
+check(x > 10) {
     show("x is greater than 10")
 }
-alter x == 10 {
+alter(x == 10) {
     show("x is exactly 10")
 }
 altern {

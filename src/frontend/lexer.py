@@ -17,65 +17,57 @@ class Lexer:
         'spec': 'SPEC',
         'note': 'NOTE',
         'forward': 'FORWARD',
-        'check': 'CHECK',
-        'alter': 'ALTER',
-        'altern': 'ALTERN',
-        'traverse': 'TRAVERSE',
+        'giving': 'GIVING',
+        'when': 'WHEN',
+        'otherwise': 'OTHERWISE',
+        'done': 'DONE',
+        'each': 'EACH',
+        'in': 'IN',
+        'from': 'FROM',
         'until': 'UNTIL',
         'halt': 'HALT',
         'proceed': 'PROCEED',
-        'skip': 'PROCEED',
-        'cease': 'HALT',
         'wait': 'WAIT',
         'attempt': 'ATTEMPT',
         'trap': 'TRAP',
-        'conclude': 'CONCLUDE',
+        'always': 'ALWAYS',
         'trigger': 'TRIGGER',
         'blame': 'BLAME',
         'peek': 'PEEK',
-        'Num': 'NUM',
+        'Num': 'NUM', # Types
         'Text': 'TEXT',
         'On': 'ON',
         'Off': 'OFF',
         'Nil': 'NIL',
-        'kind': 'KIND',
-        'convert': 'CONVERT',
-        'to': 'TO',
-        'nick': 'NICK',
+        'is': 'IS',
         'as': 'AS',
+        'a': 'A',
+        'an': 'AN',
         'blueprint': 'BLUEPRINT',
-        'shard': 'SHARD',
-        'solid': 'SOLID',
-        'prep': 'PREP',
+        'has': 'HAS',
+        'does': 'DOES',
+        'make': 'MAKE',
         'own': 'OWN',
         'adopt': 'ADOPT',
         'spawn': 'SPAWN',
-        'toolkit': 'TOOLKIT',
+        'module': 'MODULE',
         'share': 'SHARE',
-        'plug': 'PLUG',
-        'from': 'FROM',
-        'hidden': 'HIDDEN',
-        'shielded': 'SHIELDED',
-        'internal': 'INTERNAL',
-        'bridge': 'BRIDGE',
-        'expose': 'EXPOSE',
-        'inlet': 'INLET',
-        'link': 'LINK',
-        'embed': 'EMBED',
-        'den': 'DEN',
-        'paral': 'PARAL',
-        'hold': 'HOLD',
+        'bring': 'BRING',
+        'contract': 'CONTRACT',
+        'needs': 'NEEDS',
+        'fulfills': 'FULFILLS',
+        'both': 'BOTH',
+        'either': 'EITHER',
+        'and': 'AND',
+        'or': 'OR',
+        'ask': 'ASK',
+        'ask': 'ASK',
+        'with': 'WITH',
         'signal': 'SIGNAL',
         'listen': 'LISTEN',
-        'ask': 'ASK',
-        'authen': 'AUTHEN',
-        'transform': 'TRANSFORM',
-        'condense': 'CONDENSE',
         'pack': 'PACK',
         'unpack': 'UNPACK',
-        'in': 'IN',
-        'by': 'BY',
-        'funcall': 'FUNCALL',
+        'prep': 'PREP',
     }
 
     def __init__(self, source_code: str):
@@ -183,8 +175,21 @@ class Lexer:
                 tokens.append(Token('COMMA', ','))
                 self.advance()
             elif self.current_char == '.':
-                tokens.append(Token('DOT', '.'))
-                self.advance()
+                if self.peek() == '.':
+                    tokens.append(Token('RANGE', '..'))
+                    self.advance()
+                    self.advance()
+                else:
+                    # Deprecated standalone dot, but might be used? Plan says ~> replaces it.
+                    # Retaining error for now to enforce unique syntax.
+                    raise Exception("Unexpected character '.' (Use '~>' for access or '..' for range)")
+            elif self.current_char == '~':
+                if self.peek() == '>':
+                    tokens.append(Token('ACCESS', '~>'))
+                    self.advance()
+                    self.advance()
+                else:
+                    raise Exception(f"Unknown character: {self.current_char}")
             elif self.current_char == ':':
                 tokens.append(Token('COLON', ':'))
                 self.advance()
@@ -264,6 +269,10 @@ class Lexer:
             result += self.current_char
             self.advance()
         if self.current_char == '.':
+            # Check if it's a range operator '..'
+            if self.peek() == '.':
+                return Token('NUMBER', float(result))
+            
             result += self.current_char
             self.advance()
             while self.current_char is not None and self.current_char.isdigit():

@@ -1,0 +1,36 @@
+< Test Beacon OOP Features >
+< This tests blueprint, shard, prep, own, spawn >
+
+spec main() {
+    < Define a simple Counter blueprint >
+    blueprint Counter {
+        shard count
+        
+        prep(own, start_val) {
+            own.count = start_val
+        }
+        
+        spec increment(own) {
+            own.count = own.count + 1
+            show("Count incremented")
+        }
+        
+        spec show_count(own) {
+            show("Current count:")
+            show(own.count)
+        }
+    }
+    
+    < Create Counter instance >
+    firm counter = spawn Counter(0)
+    
+    < Call methods >
+    funcall counter.show_count()
+    funcall counter.increment()
+    funcall counter.increment()
+    funcall counter.show_count()
+    
+    show("OOP test complete!")
+}
+
+funcall main()

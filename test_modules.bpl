@@ -1,0 +1,19 @@
+spec main:
+    show "Testing Modules..."
+    
+    < Import the library >
+    < Note: In this runtime environment, we must import the compiled JSON AST >
+    bring lib_math from "lib_math.bpl.json"
+    
+    < Use constants >
+    show "Pi is: |pi|"
+    
+    < Use functions >
+    firm sum = add(10, 20)
+    show "10 + 20 = |sum|"
+    
+    firm diff = sub(100, 50)
+    show "100 - 50 = |diff|"
+done
+
+main()

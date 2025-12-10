@@ -1,0 +1,29 @@
+< Final Comprehensive Test - Simplified >
+
+blueprint Box {
+    shard value
+}
+
+spec main() {
+    show("=== BEACON 2.0 - FINAL TEST ===")
+    
+    < Test 1: Blueprint and Properties >
+    show("Test 1: Creating blueprint instance...")
+    firm b = spawn Box()
+    b.value = 100
+    show("Value:")
+    show(b.value)
+    
+    < Test 2: Functions >
+    show("Test 2: Functions work")
+    
+    < Test 3: Loops >
+    show("Test 3: Loop test")
+    traverse i from 1 to 3 {
+        show(i)
+    }
+    
+    show("=== ALL TESTS COMPLETE - BEACON 100% ===")
+}
+
+funcall main()

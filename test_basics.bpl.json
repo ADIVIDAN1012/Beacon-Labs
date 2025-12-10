@@ -1,0 +1,535 @@
+{
+  "type": "ProgramNode",
+  "statements": [
+    {
+      "type": "FunctionDeclNode",
+      "name": "main",
+      "params": [],
+      "body": [
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "--- Testing Basics ---"
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "1. Variables & Types"
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "pi",
+          "value": {
+            "type": "NumberNode",
+            "value": 3.14
+          }
+        },
+        {
+          "type": "VarAssignNode",
+          "target": {
+            "type": "VarAccessNode",
+            "var_name": "count"
+          },
+          "value": {
+            "type": "NumberNode",
+            "value": 0.0
+          }
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "name",
+          "value": {
+            "type": "StringNode",
+            "value": "Beacon"
+          }
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "is_active",
+          "value": {
+            "type": "BooleanNode",
+            "value": true
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "Pi: "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "pi"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "Count: "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "count"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "Name: "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "name"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "Active: "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "is_active"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "2. Math Operations"
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "val1",
+          "value": {
+            "type": "NumberNode",
+            "value": 10.0
+          }
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "val2",
+          "value": {
+            "type": "NumberNode",
+            "value": 5.0
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "10 + 5 = "
+                },
+                {
+                  "type": "BinaryOpNode",
+                  "left": {
+                    "type": "VarAccessNode",
+                    "var_name": "val1"
+                  },
+                  "op": {
+                    "type": "PLUS",
+                    "value": "+"
+                  },
+                  "right": {
+                    "type": "VarAccessNode",
+                    "var_name": "val2"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "10 - 5 = "
+                },
+                {
+                  "type": "BinaryOpNode",
+                  "left": {
+                    "type": "VarAccessNode",
+                    "var_name": "val1"
+                  },
+                  "op": {
+                    "type": "MINUS",
+                    "value": "-"
+                  },
+                  "right": {
+                    "type": "VarAccessNode",
+                    "var_name": "val2"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "10 * 5 = "
+                },
+                {
+                  "type": "BinaryOpNode",
+                  "left": {
+                    "type": "VarAccessNode",
+                    "var_name": "val1"
+                  },
+                  "op": {
+                    "type": "MULTIPLY",
+                    "value": "*"
+                  },
+                  "right": {
+                    "type": "VarAccessNode",
+                    "var_name": "val2"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "10 / 5 = "
+                },
+                {
+                  "type": "BinaryOpNode",
+                  "left": {
+                    "type": "VarAccessNode",
+                    "var_name": "val1"
+                  },
+                  "op": {
+                    "type": "DIVIDE",
+                    "value": "/"
+                  },
+                  "right": {
+                    "type": "VarAccessNode",
+                    "var_name": "val2"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "3. Control Flow (when/otherwise)"
+            }
+          ]
+        },
+        {
+          "type": "CheckStatementNode",
+          "condition": {
+            "type": "BinaryOpNode",
+            "left": {
+              "type": "VarAccessNode",
+              "var_name": "count"
+            },
+            "op": {
+              "type": "EQUALS",
+              "value": "=="
+            },
+            "right": {
+              "type": "NumberNode",
+              "value": 0.0
+            }
+          },
+          "body": [
+            {
+              "type": "ShowStatementNode",
+              "expressions": [
+                {
+                  "type": "StringNode",
+                  "value": "Count is zero (Correct)"
+                }
+              ]
+            }
+          ],
+          "alter_clauses": [
+            {
+              "condition": {
+                "type": "BinaryOpNode",
+                "left": {
+                  "type": "VarAccessNode",
+                  "var_name": "count"
+                },
+                "op": {
+                  "type": "GREATER_THAN",
+                  "value": ">"
+                },
+                "right": {
+                  "type": "NumberNode",
+                  "value": 0.0
+                }
+              },
+              "body": [
+                {
+                  "type": "ShowStatementNode",
+                  "expressions": [
+                    {
+                      "type": "StringNode",
+                      "value": "Count is positive (Incorrect)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "altern_clause": [
+            {
+              "type": "ShowStatementNode",
+              "expressions": [
+                {
+                  "type": "StringNode",
+                  "value": "Count is negative (Incorrect)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "4. Loops (until)"
+            }
+          ]
+        },
+        {
+          "type": "VarAssignNode",
+          "target": {
+            "type": "VarAccessNode",
+            "var_name": "i"
+          },
+          "value": {
+            "type": "NumberNode",
+            "value": 0.0
+          }
+        },
+        {
+          "type": "UntilNode",
+          "condition": {
+            "type": "BinaryOpNode",
+            "left": {
+              "type": "VarAccessNode",
+              "var_name": "i"
+            },
+            "op": {
+              "type": "GREATER_THAN_EQUAL",
+              "value": ">="
+            },
+            "right": {
+              "type": "NumberNode",
+              "value": 3.0
+            }
+          },
+          "body": [
+            {
+              "type": "ShowStatementNode",
+              "expressions": [
+                {
+                  "type": "InterpolatedStringNode",
+                  "parts": [
+                    {
+                      "type": "StringNode",
+                      "value": "Loop i: "
+                    },
+                    {
+                      "type": "VarAccessNode",
+                      "var_name": "i"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "VarAssignNode",
+              "target": {
+                "type": "VarAccessNode",
+                "var_name": "i"
+              },
+              "value": {
+                "type": "BinaryOpNode",
+                "left": {
+                  "type": "VarAccessNode",
+                  "var_name": "i"
+                },
+                "op": {
+                  "type": "PLUS",
+                  "value": "+"
+                },
+                "right": {
+                  "type": "NumberNode",
+                  "value": 1.0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "5. Functions"
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "res",
+          "value": {
+            "type": "FunctionCallNode",
+            "function_name": "add",
+            "arguments": [
+              {
+                "type": "NumberNode",
+                "value": 5.0
+              },
+              {
+                "type": "NumberNode",
+                "value": 7.0
+              }
+            ]
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "5 + 7 = "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "res"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "--- Basics Verification Complete ---"
+            }
+          ]
+        }
+      ],
+      "func_type": "spec",
+      "exposed": false,
+      "shared": false,
+      "docstring": null
+    },
+    {
+      "type": "FunctionDeclNode",
+      "name": "add",
+      "params": [
+        "v1",
+        "v2"
+      ],
+      "body": [
+        {
+          "type": "ReturnStatementNode",
+          "expression": {
+            "type": "BinaryOpNode",
+            "left": {
+              "type": "VarAccessNode",
+              "var_name": "v1"
+            },
+            "op": {
+              "type": "PLUS",
+              "value": "+"
+            },
+            "right": {
+              "type": "VarAccessNode",
+              "var_name": "v2"
+            }
+          }
+        }
+      ],
+      "func_type": "spec",
+      "exposed": false,
+      "shared": false,
+      "docstring": null
+    },
+    {
+      "type": "ExpressionStatementNode",
+      "expression": {
+        "type": "FunctionCallNode",
+        "function_name": "main",
+        "arguments": []
+      }
+    }
+  ]
+}

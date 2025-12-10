@@ -1,0 +1,254 @@
+{
+  "type": "ProgramNode",
+  "statements": [
+    {
+      "type": "FunctionDeclNode",
+      "name": "main",
+      "params": [],
+      "body": [
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "--- Testing Pack Collections ---"
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "1. Basic Pack"
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "numbers",
+          "value": {
+            "type": "PackNode",
+            "items": [
+              {
+                "type": "NumberNode",
+                "value": 1.0
+              },
+              {
+                "type": "NumberNode",
+                "value": 2.0
+              },
+              {
+                "type": "NumberNode",
+                "value": 3.0
+              }
+            ]
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "Numbers: "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "numbers"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "2. Mixed Types"
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "mixed",
+          "value": {
+            "type": "PackNode",
+            "items": [
+              {
+                "type": "StringNode",
+                "value": "hello"
+              },
+              {
+                "type": "NumberNode",
+                "value": 42.0
+              },
+              {
+                "type": "BooleanNode",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "Mixed: "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "mixed"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "3. Empty Pack"
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "empty",
+          "value": {
+            "type": "PackNode",
+            "items": []
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "Empty: "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "empty"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "4. Nested Expression"
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "values",
+          "value": {
+            "type": "PackNode",
+            "items": [
+              {
+                "type": "BinaryOpNode",
+                "left": {
+                  "type": "NumberNode",
+                  "value": 10.0
+                },
+                "op": {
+                  "type": "PLUS",
+                  "value": "+"
+                },
+                "right": {
+                  "type": "NumberNode",
+                  "value": 5.0
+                }
+              },
+              {
+                "type": "BinaryOpNode",
+                "left": {
+                  "type": "NumberNode",
+                  "value": 20.0
+                },
+                "op": {
+                  "type": "MINUS",
+                  "value": "-"
+                },
+                "right": {
+                  "type": "NumberNode",
+                  "value": 5.0
+                }
+              },
+              {
+                "type": "BinaryOpNode",
+                "left": {
+                  "type": "NumberNode",
+                  "value": 30.0
+                },
+                "op": {
+                  "type": "MULTIPLY",
+                  "value": "*"
+                },
+                "right": {
+                  "type": "NumberNode",
+                  "value": 2.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "InterpolatedStringNode",
+              "parts": [
+                {
+                  "type": "StringNode",
+                  "value": "Values: "
+                },
+                {
+                  "type": "VarAccessNode",
+                  "var_name": "values"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "--- Pack Verification Complete ---"
+            }
+          ]
+        }
+      ],
+      "func_type": "spec",
+      "exposed": false,
+      "shared": false,
+      "docstring": null
+    },
+    {
+      "type": "ExpressionStatementNode",
+      "expression": {
+        "type": "FunctionCallNode",
+        "function_name": "main",
+        "arguments": []
+      }
+    }
+  ]
+}

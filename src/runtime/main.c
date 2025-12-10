@@ -14,7 +14,8 @@ typedef enum {
     VAL_BLUEPRINT,
     VAL_BLUEPRINT_INSTANCE,
     VAL_TOOLKIT,
-    VAL_BRIDGE
+    VAL_BRIDGE,
+    VAL_RANGE
 } ValueType;
 
 // Forward declaration of Value
@@ -33,6 +34,7 @@ typedef struct Scope Scope;
 typedef struct {
     char* name;
     Scope* scope;
+    ASTNode* constructor;
 } Blueprint;
 
 // Struct for Blueprint instance values
@@ -62,6 +64,10 @@ typedef struct Value {
         BlueprintInstanceValue blueprint_instance;
         ToolkitValue toolkit;
         BridgeValue bridge;
+        struct {
+            double start;
+            double end;
+        } range;
     } as;
 } Value;
 
@@ -94,10 +100,12 @@ Value* copy_value(const Value* val) {
     if (val->type == VAL_STRING) {
         new_val->as.string = strdup(val->as.string);
     } else if (val->type == VAL_BLUEPRINT_INSTANCE) {
-        new_val->as.blueprint_instance.instance_scope = create_scope(val->as.blueprint_instance.blueprint_scope);
-        for (int i = 0; i < val->as.blueprint_instance.instance_scope->symbol_count; i++) {
-            set_variable(new_val->as.blueprint_instance.instance_scope, val->as.blueprint_instance.instance_scope->symbols[i].name, copy_value(val->as.blueprint_instance.instance_scope->symbols[i].value));
-        }
+        // Reference semantics: Just copy pointers
+        new_val->as.blueprint_instance.blueprint_scope = val->as.blueprint_instance.blueprint_scope;
+        new_val->as.blueprint_instance.instance_scope = val->as.blueprint_instance.instance_scope;
+    } else if (val->type == VAL_RANGE) {
+        new_val->as.range.start = val->as.range.start;
+        new_val->as.range.end = val->as.range.end;
     }
     return new_val;
 }
@@ -107,14 +115,12 @@ void free_value(Value* value) {
     if (value->type == VAL_STRING && value->as.string) {
         free(value->as.string);
     } else if (value->type == VAL_BLUEPRINT) {
-        free(value->as.blueprint.name);
-        destroy_scope(value->as.blueprint.scope);
+        // Reference semantics: Do not free name or scope as they are shared/shallow copied
+        // free(value->as.blueprint.name);
+        // destroy_scope(value->as.blueprint.scope);
     } else if (value->type == VAL_BLUEPRINT_INSTANCE) {
-        // For blueprint instances, the scope is managed, but the value struct itself must be freed.
-        // The name is not stored in the instance value, so no free for name.
-        destroy_scope(value->as.blueprint_instance.blueprint_scope);
-    } else if (value->type == VAL_BLUEPRINT_INSTANCE) {
-        destroy_scope(value->as.blueprint_instance.instance_scope);
+        // Reference semantics: Do NOT destroy scopes here as they might be shared.
+        // This causes a memory leak but fixes functionality and double-free crashes.
     } else if (value->type == VAL_TOOLKIT) {
         destroy_scope(value->as.toolkit.toolkit_scope);
         destroy_scope(value->as.toolkit.exports);
@@ -133,6 +139,7 @@ char* value_to_string(Value* val);
 Value* interpret_ast(ASTNode *node, Scope* scope);
 void free_ast(ASTNode *node);
 ASTNode* parse_ast_from_json(cJSON *json_node);
+ASTNode* parse_ast_from_file(const char* filename); // Forward decl
 
 // Simple event registry and parallel task queue
 typedef struct {
@@ -221,6 +228,13 @@ bool value_to_bool(Value* val) {
     }
 }
 
+Value* create_string_value_helper(const char* s) {
+    Value* val = (Value*)malloc(sizeof(Value));
+    val->type = VAL_STRING;
+    val->as.string = strdup(s ? s : "");
+    return val;
+}
+
 typedef enum {
     NODE_PROGRAM,
     NODE_NUMBER,
@@ -275,10 +289,16 @@ typedef enum {
     NODE_UNPACK,
     NODE_INTERPOLATED_STRING,
     NODE_TRAVERSE,
+    NODE_EACH, // Replaces TRAVERSE
     NODE_UNTIL,
     NODE_DOCSTRING,
     NODE_CONSTRUCTOR_DECL,
-    NODE_ATTEMPT_TRAP_CONCLUDE
+    NODE_ATTEMPT_TRAP_CONCLUDE,
+    NODE_METHOD_CALL,
+    NODE_MODULE,
+    NODE_BRING,
+    NODE_CONTRACT,
+    NODE_UNARY_OP
 } NodeType;
 
 
@@ -380,6 +400,8 @@ typedef struct {
     ASTNode *constructor;
     ASTNode **attributes;
     int num_attributes;
+    ASTNode **methods;
+    int num_methods;
     char *docstring;
 } BlueprintNode;
 
@@ -408,10 +430,7 @@ typedef struct {
     ASTNode *duration;
 } WaitNode;
 
-typedef struct {
-    char *error_name;
-    char *message;
-} TriggerNode;
+
 
 typedef struct {
     char *name;
@@ -490,8 +509,8 @@ typedef struct {
 } CondenseNode;
 
 typedef struct {
-    ASTNode **body;
-    int num_body_statements;
+    ASTNode **items;
+    int num_items;
 } PackNode;
 
 typedef struct {
@@ -556,10 +575,45 @@ typedef struct {
 } TraverseNode;
 
 typedef struct {
+    char *var_name;
+    ASTNode *iterable;
+    ASTNode **body;
+    int num_body_statements;
+} EachNode;
+
+typedef struct {
     ASTNode *condition;
     ASTNode **body;
     int num_body_statements;
 } UntilNode;
+
+typedef struct {
+    ASTNode *object;
+    char *method_name;
+    ASTNode **args;
+    int num_args;
+} MethodCallNode;
+
+typedef struct {
+    char *name;
+    ASTNode **body;
+    int num_body_statements;
+} ModuleNode;
+
+typedef struct {
+    char *module;
+    char *source;
+} BringNode;
+
+typedef struct {
+    char *name;
+    // For now simple struct
+} ContractNode;
+
+typedef struct {
+    char *error_name;
+    ASTNode *message;
+} TriggerNode;
 
 typedef enum {
     INTERPOLATED_STRING_PART_STRING,
@@ -616,8 +670,17 @@ typedef union {
     LinkNode link;
     ExposeNode expose;
     InterpolatedStringNode interpolated_string;
-    TraverseNode traverse;
+    TraverseNode traverse; // Kept for legacy if needed, or mapped to Each
+    EachNode each;
     UntilNode until;
+    MethodCallNode method_call;
+    ModuleNode module;
+    BringNode bring;
+    ContractNode contract;
+    struct {
+        char *op;
+        ASTNode *operand;
+    } unary_op;
     HaltNode halt;
     ProceedNode proceed;
     WaitNode wait;
@@ -642,6 +705,7 @@ typedef union {
     UnpackNode unpack;
     ConstructorNode constructor_decl;
     AttemptTrapConcludeNode attempt_trap_conclude;
+    TriggerNode trigger_node;
 } ASTNodeData;
 
 struct ASTNode {
@@ -710,6 +774,8 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
     }
 
     Value* result_val = NULL;
+
+    // printf("Node type: %d\n", node->type); // Trace
 
     switch (node->type) {
         case NODE_PROGRAM: {
@@ -786,6 +852,44 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
                 }
             }
 
+            else if (strcmp(node->data.binary_op.op, "..") == 0) {
+                 result_val->type = VAL_RANGE;
+                 result_val->as.range.start = (left_val->type == VAL_NUMBER) ? left_val->as.number : 0;
+                 result_val->as.range.end = (right_val->type == VAL_NUMBER) ? right_val->as.number : 0;
+            } else if (strcmp(node->data.binary_op.op, "is") == 0) {
+                // Type check: 'val is a Num' -> operator 'is', right operand is TypeNode/String?
+                // Parser likely produces right operand as TypeNode or similar.
+                // Assuming right operand evaluates to type string.
+                // If the parser handles `is a`, it might produce `is` operator.
+                result_val->type = VAL_BOOL;
+                result_val->as.boolean = false;
+                
+                // We need to check left value's type against right value string
+                char* type_name = NULL;
+                if (right_val->type == VAL_STRING) {
+                    type_name = right_val->as.string;
+                } else {
+                     // Try to interpret right node directly if it's a TYPE node
+                     // But here right_val is already evaluated.
+                     // The parser might have converted TypeNode to a String or similar?
+                     // Let's assume right_val contains the type name as string.
+                }
+
+                if (type_name) {
+                     if (strcmp(type_name, "Num") == 0) result_val->as.boolean = (left_val->type == VAL_NUMBER);
+                     else if (strcmp(type_name, "Text") == 0) result_val->as.boolean = (left_val->type == VAL_STRING);
+                     else if (strcmp(type_name, "On") == 0) result_val->as.boolean = (left_val->type == VAL_BOOL && left_val->as.boolean); // Maybe? or type Bool
+                     else if (strcmp(type_name, "Off") == 0) result_val->as.boolean = (left_val->type == VAL_BOOL && !left_val->as.boolean); 
+                     else if (strcmp(type_name, "Nil") == 0) result_val->as.boolean = (left_val->type == VAL_NIL);
+                     else if (strcmp(type_name, "Spec") == 0) result_val->as.boolean = (left_val->type == VAL_FUNCTION);
+                     else if (strcmp(type_name, "Blueprint") == 0) result_val->as.boolean = (left_val->type == VAL_BLUEPRINT);
+                     else if (strcmp(type_name, "Instance") == 0) result_val->as.boolean = (left_val->type == VAL_BLUEPRINT_INSTANCE);
+                }
+            } else {
+                fprintf(stderr, "Unknown binary operator: %s\n", node->data.binary_op.op);
+                result_val->type = VAL_NIL;
+            }
+
             free_value(left_val);
             free_value(right_val);
             break;
@@ -798,6 +902,7 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
                 if (stored_val->type == VAL_STRING) {
                     result_val->as.string = strdup(stored_val->as.string);
                 }
+                // printf("VAR_ACCESS: '%s' found. Type: %d (Scope %p)\n", node->data.var_access.var_name, result_val->type, scope);
             } else {
                 fprintf(stderr, "Variable '%s' not found.\n", node->data.var_access.var_name);
                 result_val = (Value*)malloc(sizeof(Value));
@@ -810,8 +915,20 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
             Value* value_to_assign = interpret_ast(node->data.var_assign.value, scope);
             if (node->data.var_assign.target->type == NODE_VAR_ACCESS) {
                 set_variable(scope, node->data.var_assign.target->data.var_access.var_name, value_to_assign);
+            } else if (node->data.var_assign.target->type == NODE_ATTRIBUTE_ACCESS) {
+                // Handle attribute assignment (e.g., obj.property = value)
+                Value* object_val = interpret_ast(node->data.var_assign.target->data.attribute_access.object, scope);
+                if (object_val && object_val->type == VAL_BLUEPRINT_INSTANCE) {
+                    // Set the attribute in the instance scope
+                    set_variable(object_val->as.blueprint_instance.instance_scope, 
+                                node->data.var_assign.target->data.attribute_access.attribute_name, 
+                                value_to_assign);
+                } else {
+                    fprintf(stderr, "Cannot assign attribute to non-blueprint instance.\n");
+                }
+                free_value(object_val);
             } else {
-                // Handle other assignment targets like attributes if necessary
+                fprintf(stderr, "Unsupported assignment target type.\n");
             }
             result_val = (Value*)malloc(sizeof(Value));
             result_val->type = VAL_NIL;
@@ -926,19 +1043,8 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
             }
             break;
         }
-        case NODE_TRIGGER: {
-            Value* name_val = (Value*)malloc(sizeof(Value));
-            name_val->type = VAL_STRING;
-            name_val->as.string = strdup(node->data.trigger.error_name);
-            set_variable(scope, "__last_error_name", name_val);
-            Value* msg_val = (Value*)malloc(sizeof(Value));
-            msg_val->type = VAL_STRING;
-            msg_val->as.string = strdup(node->data.trigger.message ? node->data.trigger.message : "");
-            set_variable(scope, "__last_error_message", msg_val);
-            result_val = (Value*)malloc(sizeof(Value));
-            result_val->type = VAL_NIL;
-            break;
-        }
+
+
         case NODE_ATTEMPT_TRAP_CONCLUDE: {
             Scope* attempt_scope = create_scope(scope);
             bool has_error = false;
@@ -1028,23 +1134,7 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
             result_val->type = VAL_NIL;
             break;
         }
-        case NODE_UNTIL: {
-            while (1) {
-                Value* cond_val = interpret_ast(node->data.until.condition, scope);
-                bool stop = value_to_bool(cond_val);
-                free_value(cond_val);
-                if (stop) break;
-                for (int j = 0; j < node->data.until.num_body_statements; j++) {
-                    ASTNode* stmt = node->data.until.body[j];
-                    if (stmt->type == NODE_PROCEED) continue;
-                    if (stmt->type == NODE_HALT) { j = node->data.until.num_body_statements; break; }
-                    free_value(interpret_ast(stmt, scope));
-                }
-            }
-            result_val = (Value*)malloc(sizeof(Value));
-            result_val->type = VAL_NIL;
-            break;
-        }
+
         case NODE_CHECK_STATEMENT: {
             Value* condition_val = interpret_ast(node->data.check_statement.condition, scope);
             bool condition_is_true = value_to_bool(condition_val);
@@ -1085,6 +1175,7 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
             blueprint_val->type = VAL_BLUEPRINT;
 
             Scope* blueprint_scope = create_scope(scope);
+            // printf("Created Blueprint Scope: %p\n", blueprint_scope);
 
             // Interpret attributes and constructor in the blueprint's scope
             for (int i = 0; i < node->data.blueprint.num_attributes; i++) {
@@ -1093,9 +1184,15 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
             if (node->data.blueprint.constructor) {
                 free_value(interpret_ast(node->data.blueprint.constructor, blueprint_scope));
             }
+            
+            // Interpret methods in the blueprint's scope
+            for (int i = 0; i < node->data.blueprint.num_methods; i++) {
+                free_value(interpret_ast(node->data.blueprint.methods[i], blueprint_scope));
+            }
 
             blueprint_val->as.blueprint.name = strdup(node->data.blueprint.name);
             blueprint_val->as.blueprint.scope = blueprint_scope;
+            blueprint_val->as.blueprint.constructor = node->data.blueprint.constructor;
 
             // Register the blueprint in the current scope
             set_variable(scope, node->data.blueprint.name, blueprint_val);
@@ -1113,6 +1210,7 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
                 result_val->type = VAL_NIL;
             } else {
                 Scope* instance_scope = create_scope(blueprint_val->as.blueprint.scope);
+                // printf("Spawned Instance Scope: %p (Blueprint Scope: %p)\n", instance_scope, blueprint_val->as.blueprint.scope);
                 for (int i = 0; i < blueprint_val->as.blueprint.scope->symbol_count; i++) {
                     set_variable(instance_scope, blueprint_val->as.blueprint.scope->symbols[i].name, copy_value(blueprint_val->as.blueprint.scope->symbols[i].value));
                 }
@@ -1121,7 +1219,41 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
                 result_val->type = VAL_BLUEPRINT_INSTANCE;
                 result_val->as.blueprint_instance.blueprint_scope = blueprint_val->as.blueprint.scope;
                 result_val->as.blueprint_instance.instance_scope = instance_scope;
-                set_variable(instance_scope, "self", result_val);
+                result_val->as.blueprint_instance.instance_scope = instance_scope;
+                // set_variable(instance_scope, "self", result_val); // Removed erroneous line
+                
+                // Important: Pass a COPY of result_val as 'self' so instance_scope owns its own Value struct.
+                // Otherwise if result_val is freed, self becomes dangling.
+                set_variable(instance_scope, "self", copy_value(result_val));
+
+                // Call 'make' constructor if it exists in blueprint
+                if (blueprint_val->as.blueprint.constructor) {
+                    ASTNode* ctor_node = blueprint_val->as.blueprint.constructor;
+                    // Locate constructor function declaration (it should be the node itself)
+
+                    // Basic argument count check
+                    // Constructor has 'own' as first parameter, so user provides num_params - 1 arguments
+                    if (node->data.spawn.num_arguments != ctor_node->data.constructor_decl.num_params - 1) {
+                         fprintf(stderr, "Constructor called with incorrect number of arguments (expected %d, got %d).\n", 
+                                 ctor_node->data.constructor_decl.num_params - 1, node->data.spawn.num_arguments);
+                    } else {
+                         Scope* ctor_scope = create_scope(instance_scope);
+                         // Pass a COPY of result_val as 'own', because ctor_scope will free it!
+                         set_variable(ctor_scope, "own", copy_value(result_val)); 
+                         
+                         // Skip first param (own) when mapping arguments
+                         for(int i=0; i<node->data.spawn.num_arguments; i++) {
+                             Value* arg_val = interpret_ast(node->data.spawn.arguments[i], scope);
+                             // Param index is i+1 because param[0] is own
+                             set_variable(ctor_scope, ctor_node->data.constructor_decl.params[i+1], arg_val);
+                         }
+                         
+                         for(int i=0; i<ctor_node->data.constructor_decl.num_body_statements; i++) {
+                             free_value(interpret_ast(ctor_node->data.constructor_decl.body[i], ctor_scope));
+                         }
+                         destroy_scope(ctor_scope);
+                    }
+                }
             }
             free_value(blueprint_val);
             break;
@@ -1365,6 +1497,197 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
             result_val->as.string = full_str;
             break;
         }
+        case NODE_UNARY_OP: {
+            Value* operand = interpret_ast(node->data.unary_op.operand, scope);
+            if (strcmp(node->data.unary_op.op, "'") == 0) { // NOT operator
+                bool val = value_to_bool(operand);
+                free_value(operand);
+                result_val = (Value*)malloc(sizeof(Value));
+                result_val->type = VAL_BOOL;
+                result_val->as.boolean = !val;
+            } else {
+                fprintf(stderr, "Unknown unary operator: %s\n", node->data.unary_op.op);
+                free_value(operand);
+                result_val = (Value*)malloc(sizeof(Value));
+                result_val->type = VAL_NIL;
+            }
+            break;
+        }
+        case NODE_EACH: {
+             Value* iterable_val = interpret_ast(node->data.each.iterable, scope);
+             if (iterable_val->type == VAL_RANGE) {
+                 double start = iterable_val->as.range.start;
+                 double end = iterable_val->as.range.end;
+                 double step = 1.0;
+                 if (start > end) step = -1.0;
+                 
+                 for (double i = start; (step > 0 ? i <= end : i >= end); i += step) {
+                     Value* loop_var = (Value*)malloc(sizeof(Value));
+                     loop_var->type = VAL_NUMBER;
+                     loop_var->as.number = i;
+                     
+                     // Create loop scope? Or use current scope?
+                     // Usually loops have their own scope to prevent var leakage?
+                     // But Beacon might be simple. Let's use a sub-scope.
+                     Scope* loop_scope = create_scope(scope);
+                     set_variable(loop_scope, node->data.each.var_name, loop_var);
+                     
+                     for (int j = 0; j < node->data.each.num_body_statements; j++) {
+                         ASTNode* stmt = node->data.each.body[j];
+                         // Handle Proceed/Halt if needed (omitted for brevity unless needed)
+                         free_value(interpret_ast(stmt, loop_scope));
+                     }
+                     destroy_scope(loop_scope);
+                 }
+             } else {
+                 fprintf(stderr, "Type mismatch: 'each' loop requires a range.\n");
+             }
+             free_value(iterable_val);
+             result_val = (Value*)malloc(sizeof(Value));
+             result_val->type = VAL_NIL;
+             break;
+        }
+        case NODE_UNTIL: {
+             while (1) {
+                Value* cond_val = interpret_ast(node->data.until.condition, scope);
+                bool stop = value_to_bool(cond_val);
+                free_value(cond_val);
+                if (stop) break; // UNTIL condition is met, stop.
+                for (int j = 0; j < node->data.until.num_body_statements; j++) {
+                    ASTNode* stmt = node->data.until.body[j];
+                    if (stmt->type == NODE_PROCEED) continue;
+                    if (stmt->type == NODE_HALT) { j = node->data.until.num_body_statements; break; }
+                    free_value(interpret_ast(stmt, scope));
+                }
+            }
+            result_val = (Value*)malloc(sizeof(Value));
+            result_val->type = VAL_NIL;
+            break;
+        }
+        case NODE_METHOD_CALL: {
+            Value* object_val = interpret_ast(node->data.method_call.object, scope);
+            if (object_val && object_val->type == VAL_BLUEPRINT_INSTANCE) {
+                 // Look for method in instance scope? Or blueprint scope?
+                 // Methods are usually in Blueprint scope (shared), but `own` is the instance.
+                 // Values: 
+                 // BlueprintInstance has instance_scope (vars) and blueprint_scope (shared/methods).
+                 // Get method from blueprint_scope?
+                 Value* method_val = get_variable(object_val->as.blueprint_instance.blueprint_scope, node->data.method_call.method_name);
+                 // printf("Method Call Object Scopes: Inst %p, Blue %p\n", object_val->as.blueprint_instance.instance_scope, object_val->as.blueprint_instance.blueprint_scope);
+                 if (method_val && method_val->type == VAL_FUNCTION) {
+                     FunctionSymbol* func_sym = method_val->as.function;
+                     ASTNode* func_node = func_sym->node;
+                     
+                     // Create method scope (child of blueprint scope? No, needs access to `own`)
+                     // Method scope should usually be child of global or definition scope, but with `own` injected.
+                     Scope* method_scope = create_scope(object_val->as.blueprint_instance.instance_scope);
+                     // Pass a COPY of object_val as 'own', because method_scope will free it!             
+                     set_variable(method_scope, "own", copy_value(object_val)); 
+                     
+                     // Helper: map arguments
+                     // Method 'own' is param[0]
+                     if (node->data.method_call.num_args != func_node->data.function_decl.num_params - 1) {
+                          fprintf(stderr, "Method '%s' called with incorrect number of arguments (expected %d, got %d).\n", 
+                                  node->data.method_call.method_name, func_node->data.function_decl.num_params - 1, node->data.method_call.num_args);
+                          result_val = (Value*)malloc(sizeof(Value));
+                          result_val->type = VAL_NIL;
+                     } else {
+                         for (int i = 0; i < node->data.method_call.num_args; i++) {
+                            Value* arg_val = interpret_ast(node->data.method_call.args[i], scope);
+                            // Param index i+1 because param[0] is own
+                            set_variable(method_scope, func_node->data.function_decl.params[i+1], arg_val);
+                        }
+                        
+                        result_val = NULL;
+                        for (int i = 0; i < func_node->data.function_decl.num_body_statements; i++) {
+                            // Execute body
+                            Value* r = interpret_ast(func_node->data.function_decl.body[i], method_scope);
+                             if (func_node->data.function_decl.body[i]->type == NODE_RETURN_STATEMENT) {
+                                if (result_val) free_value(result_val);
+                                result_val = r;
+                                break;
+                            }
+                            free_value(r);
+                        }
+                        if (!result_val) {
+                             result_val = (Value*)malloc(sizeof(Value));
+                             result_val->type = VAL_NIL;
+                        }
+                     }
+                     destroy_scope(method_scope);
+                 } else {
+                      fprintf(stderr, "Method '%s' not found.\n", node->data.method_call.method_name);
+                      // Debug: Print available symbols in blueprint scope
+                      Scope* sc = object_val->as.blueprint_instance.blueprint_scope;
+                      fprintf(stderr, "Available symbols in blueprint scope (%p): ", sc);
+                      for(int k=0; k<sc->symbol_count; k++) {
+                          fprintf(stderr, "'%s'(type=%d), ", sc->symbols[k].name, sc->symbols[k].value->type);
+                      }
+                      fprintf(stderr, "\n");
+                      Value* check_val = get_variable(sc, node->data.method_call.method_name);
+                      fprintf(stderr, "get_variable('%s') returned %p. Type if not null: %d\n", 
+                              node->data.method_call.method_name, check_val, check_val ? check_val->type : -1);
+
+                      result_val = (Value*)malloc(sizeof(Value));
+                      result_val->type = VAL_NIL;
+                 }
+            } else {
+                fprintf(stderr, "Method call on non-instance. Type: %d\n", object_val ? object_val->type : -1);
+                result_val = (Value*)malloc(sizeof(Value));
+                result_val->type = VAL_NIL;
+            }
+            free_value(object_val);
+            break;
+        }
+        case NODE_MODULE: {
+             // Just interpret body in current scope? Or create namespace?
+             // Modules usually create a namespace.
+             // Let's create a VAL_TOOLKIT-like structure for Module?
+             // For now, simplicity: Execute body in current scope (flattened) or create a scope and assign to name.
+             // Beaconic modules seem to be namespaces.
+             result_val = (Value*)malloc(sizeof(Value));
+             result_val->type = VAL_NIL;
+             break;
+        }
+        case NODE_BRING: {
+             // Real import implementation
+             // printf("Bringing module %s from %s\n", node->data.bring.module, node->data.bring.source ? node->data.bring.source : "(default)");
+             
+             if (node->data.bring.source) {
+                 // 1. Parse the referenced file (AST JSON)
+                 ASTNode* imported_ast = parse_ast_from_file(node->data.bring.source);
+                 if (imported_ast) {
+                     // 2. Create a module scope or just interpret in current scope?
+                     // Beacon 'bring' usually imports INTO current namespace or as a namespace.
+                     // If 'bring File', usually puts definitions in current scope.
+                     // Let's assume unlimited import for now (interprets ProgramNode in current scope).
+                     
+                     if (imported_ast->type == NODE_PROGRAM) {
+                         for (int i = 0; i < imported_ast->data.program.num_statements; i++) {
+                             free_value(interpret_ast(imported_ast->data.program.statements[i], scope));
+                         }
+                     } else {
+                         free_value(interpret_ast(imported_ast, scope));
+                     }
+                     free_ast(imported_ast);
+                 } else {
+                     fprintf(stderr, "Runtime Error: Failed to import module '%s' from '%s'\n", 
+                             node->data.bring.module, node->data.bring.source);
+                 }
+             } else {
+                 fprintf(stderr, "Runtime Error: No source file provided for module '%s'\n", node->data.bring.module);
+             }
+
+             result_val = (Value*)malloc(sizeof(Value));
+             result_val->type = VAL_NIL;
+             break;
+        }
+        case NODE_CONTRACT: {
+             // Define contract (interface) - currently no-op or register name
+             result_val = (Value*)malloc(sizeof(Value));
+             result_val->type = VAL_NIL;
+             break;
+        }
         case NODE_EMBED: {
             Scope* embed_scope = create_scope(scope);
             for (int i = 0; i < node->data.embed.num_body_statements; i++) {
@@ -1390,8 +1713,32 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
             result_val->type = VAL_NIL;
             break;
         }
+        case NODE_TRIGGER: {
+            // Evaluator message
+            Value* msg_val = interpret_ast(node->data.trigger_node.message, scope);
+            // Set error variables in current scope (and parent scopes? For now simple scope)
+            // Ideally we walk up scopes until we find one with 'attempt' context?
+            // But we can just set it in current and rely on recursion to find it? 
+            // Actually, set_variable bubbles up if variable exists. NODE_ATTEMPT checks local attempt_scope.
+            // If trigger is inside attempt_scope, set_variable works.
+            set_variable(scope, "__last_error_name", create_string_value_helper(node->data.trigger_node.error_name));
+            if (msg_val->type == VAL_STRING) {
+                set_variable(scope, "__last_error_message", msg_val);
+            } else {
+                set_variable(scope, "__last_error_message", create_string_value_helper("Error triggered"));
+                free_value(msg_val);
+            }
+            // Return NIL or ERROR? 
+            // We need interpret_ast to return NULL or special value to signal interrupt?
+            // Current main.c logic relies on caller checking specific variables or return values?
+            // NODE_ATTEMPT checks __last_error_name.
+            result_val = (Value*)malloc(sizeof(Value));
+            result_val->type = VAL_NIL; 
+            break;
+        }
         case NODE_SIGNAL: {
             const char *event = NULL;
+            int start_idx = 0;
             if (node->data.signal_node.num_body_statements > 0 && node->data.signal_node.body[0]->type == NODE_EXPRESSION_STATEMENT) {
                 ASTNode* expr = node->data.signal_node.body[0]->data.expr_statement.expression;
                 if (expr->type == NODE_STRING) {
@@ -1455,6 +1802,39 @@ Value* interpret_ast(ASTNode* node, Scope* scope) {
             result_val = (Value*)malloc(sizeof(Value));
             result_val->type = VAL_STRING;
             result_val->as.string = strdup(node->data.type_node.type_name);
+            break;
+        }
+        case NODE_PACK: {
+            // Create a string representation of the pack (simple implementation)
+            // Format: "[item1, item2, item3]"
+            char buffer[4096] = "[";
+            int offset = 1;
+            
+            for (int i = 0; i < node->data.pack.num_items; i++) {
+                Value* item_val = interpret_ast(node->data.pack.items[i], scope);
+                char item_str[512];
+                
+                if (item_val->type == VAL_NUMBER) {
+                    snprintf(item_str, sizeof(item_str), "%.10g", item_val->as.number);
+                } else if (item_val->type == VAL_STRING) {
+                    snprintf(item_str, sizeof(item_str), "\"%s\"", item_val->as.string);
+                } else if (item_val->type == VAL_BOOL) {
+                    snprintf(item_str, sizeof(item_str), "%s", item_val->as.boolean ? "true" : "false");
+                } else {
+                    snprintf(item_str, sizeof(item_str), "nil");
+                }
+                
+                offset += snprintf(buffer + offset, sizeof(buffer) - offset, "%s%s", 
+                                  i > 0 ? ", " : "", item_str);
+                free_value(item_val);
+            }
+            
+            buffer[offset++] = ']';
+            buffer[offset] = '\0';
+            
+            result_val = (Value*)malloc(sizeof(Value));
+            result_val->type = VAL_STRING;
+            result_val->as.string = strdup(buffer);
             break;
         }
         default:
@@ -1685,8 +2065,8 @@ void free_ast(ASTNode *node) {
             free(node->data.condense.body);
             break;
         case NODE_PACK:
-            for (int i = 0; i < node->data.pack.num_body_statements; i++) { free_ast(node->data.pack.body[i]); }
-            free(node->data.pack.body);
+            for (int i = 0; i < node->data.pack.num_items; i++) { free_ast(node->data.pack.items[i]); }
+            free(node->data.pack.items);
             break;
         case NODE_UNPACK:
             for (int i = 0; i < node->data.unpack.num_body_statements; i++) { free_ast(node->data.unpack.body[i]); }
@@ -1719,6 +2099,47 @@ void free_ast(ASTNode *node) {
             }
             free(node->data.attempt_trap_conclude.conclude_body);
             break;
+        case NODE_EACH:
+            free(node->data.each.var_name);
+            free_ast(node->data.each.iterable);
+            for (int i = 0; i < node->data.each.num_body_statements; i++) {
+                free_ast(node->data.each.body[i]);
+            }
+            free(node->data.each.body);
+            break;
+        case NODE_UNTIL:
+            free_ast(node->data.until.condition);
+            for (int i = 0; i < node->data.until.num_body_statements; i++) {
+                free_ast(node->data.until.body[i]);
+            }
+            free(node->data.until.body);
+            break;
+        case NODE_METHOD_CALL:
+            free_ast(node->data.method_call.object);
+            free(node->data.method_call.method_name);
+            for (int i = 0; i < node->data.method_call.num_args; i++) {
+                free_ast(node->data.method_call.args[i]);
+            }
+            free(node->data.method_call.args);
+            break;
+        case NODE_MODULE:
+            free(node->data.module.name);
+            for (int i = 0; i < node->data.module.num_body_statements; i++) {
+                free_ast(node->data.module.body[i]);
+            }
+            free(node->data.module.body);
+            break;
+        case NODE_BRING:
+            free(node->data.bring.module);
+            if (node->data.bring.source) free(node->data.bring.source);
+            break;
+        case NODE_CONTRACT:
+            free(node->data.contract.name);
+            break;
+        case NODE_UNARY_OP:
+            free(node->data.unary_op.op);
+            free_ast(node->data.unary_op.operand);
+            break;
         // Add other cases for other node types to prevent memory leaks
         default:
             // For nodes like NODE_NUMBER, there's nothing to free inside the union
@@ -1727,7 +2148,60 @@ void free_ast(ASTNode *node) {
     free(node);
 }
 
-int main(int argc, char *argv[]) {
+
+
+ASTNode* parse_ast_from_file(const char* filename) {
+    printf("Opening file: %s\n", filename);
+    FILE *file = fopen(filename, "rb");
+    if (!file) {
+        printf("Failed to open file: %s\n", filename); // Changed to printf
+        return NULL;
+    }
+
+    fseek(file, 0, SEEK_END);
+    long length = ftell(file);
+    fseek(file, 0, SEEK_SET);
+    printf("File size: %ld\n", length);
+
+    char *buffer = (char*)malloc(length + 1);
+    if (!buffer) {
+        printf("Failed to allocate memory for file content: %s\n", filename);
+        fclose(file);
+        return NULL;
+    }
+
+    fread(buffer, 1, length, file);
+    fclose(file);
+    buffer[length] = '\0';
+
+    printf("Parsing JSON...\n");
+    cJSON *json = cJSON_Parse(buffer);
+    if (json == NULL) {
+        const char *error_ptr = cJSON_GetErrorPtr();
+        if (error_ptr != NULL) {
+            printf("Error parsing JSON in %s near: %s\n", filename, error_ptr);
+        } else {
+            printf("Error parsing JSON: unknown error\n");
+        }
+        free(buffer);
+        return NULL;
+    }
+
+    printf("Building AST...\n");
+    ASTNode *ast = parse_ast_from_json(json);
+    if (!ast) {
+        printf("Failed to parse AST from %s (root is null or invalid).\n", filename);
+    } else {
+        printf("AST parsed successfully.\n");
+    }
+
+    cJSON_Delete(json);
+    free(buffer);
+    return ast;
+}
+
+int main(int argc, char** argv) {
+    printf("BPL running: %s\n", argv[1]); // Debug
     setvbuf(stdout, NULL, _IONBF, 0);
     setvbuf(stderr, NULL, _IONBF, 0);
     if (argc < 2) {
@@ -1735,38 +2209,10 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    FILE *file = fopen(argv[1], "rb");
-    if (!file) {
-        perror("Failed to open file");
+    ASTNode *ast = parse_ast_from_file(argv[1]);
+    if (!ast) {
         return 1;
     }
-
-    fseek(file, 0, SEEK_END);
-    long length = ftell(file);
-    fseek(file, 0, SEEK_SET);
-
-    char *buffer = (char*)malloc(length + 1);
-    if (!buffer) {
-        fprintf(stderr, "Failed to allocate memory for file content\n");
-        fclose(file);
-        return 1;
-    }
-
-    fread(buffer, 1, length, file);
-    fclose(file);
-    buffer[length] = '\0';
-
-    cJSON *json = cJSON_Parse(buffer);
-    if (json == NULL) {
-        const char *error_ptr = cJSON_GetErrorPtr();
-        if (error_ptr != NULL) {
-            fprintf(stderr, "Error before: %s\n", error_ptr);
-        }
-        free(buffer);
-        return 1;
-    }
-
-    ASTNode *ast = parse_ast_from_json(json);
     
     Scope* global_scope = create_scope(NULL);
     if (ast->type == NODE_PROGRAM) {
@@ -1785,22 +2231,23 @@ int main(int argc, char *argv[]) {
 
     destroy_scope(global_scope);
     free_ast(ast);
-    cJSON_Delete(json);
-    free(buffer);
 
     return 0;
 }
 
 ASTNode* parse_ast_from_json(cJSON *json_node) {
-    if (!json_node) return NULL;
+    if (!json_node || cJSON_IsNull(json_node)) return NULL;
 
     cJSON *type_json = cJSON_GetObjectItemCaseSensitive(json_node, "type");
     char *type_str = type_json ? type_json->valuestring : NULL;
 
     if (!type_str) {
-        fprintf(stderr, "Invalid or missing type in JSON AST\n");
+        char *json_str = cJSON_Print(json_node);
+        fprintf(stderr, "Invalid or missing type in JSON AST: %s\n", json_str);
+        free(json_str);
         return NULL;
     }
+    // printf("Parsing node type: %s\n", type_str);
 
     ASTNode *node = (ASTNode*)malloc(sizeof(ASTNode));
     if (!node) {
@@ -1821,6 +2268,10 @@ ASTNode* parse_ast_from_json(cJSON *json_node) {
     } else if (strcmp(type_str, "NumberNode") == 0) {
         node->type = NODE_NUMBER;
         node->data.number_val = cJSON_GetObjectItemCaseSensitive(json_node, "value")->valuedouble;
+    } else if (strcmp(type_str, "UnaryOpNode") == 0) {
+        node->type = NODE_UNARY_OP;
+        node->data.unary_op.op = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "op")->valuestring);
+        node->data.unary_op.operand = parse_ast_from_json(cJSON_GetObjectItemCaseSensitive(json_node, "operand"));
     } else if (strcmp(type_str, "BinaryOpNode") == 0) {
         node->type = NODE_BINARY_OP;
         node->data.binary_op.left = parse_ast_from_json(cJSON_GetObjectItemCaseSensitive(json_node, "left"));
@@ -1903,7 +2354,20 @@ ASTNode* parse_ast_from_json(cJSON *json_node) {
         }
     } else if (strcmp(type_str, "SpawnNode") == 0) {
         node->type = NODE_SPAWN;
-        node->data.spawn.blueprint_expr = parse_ast_from_json(cJSON_GetObjectItemCaseSensitive(json_node, "blueprint_expr"));
+        
+        // The JSON has "blueprint_name" as a string, create a VarAccessNode from it
+        cJSON *blueprint_name_json = cJSON_GetObjectItemCaseSensitive(json_node, "blueprint_name");
+        if (blueprint_name_json && cJSON_IsString(blueprint_name_json)) {
+            // Create a VarAccessNode for the blueprint name
+            ASTNode *var_node = (ASTNode*)malloc(sizeof(ASTNode));
+            var_node->type = NODE_VAR_ACCESS;
+            var_node->data.var_access.var_name = strdup(blueprint_name_json->valuestring);
+            node->data.spawn.blueprint_expr = var_node;
+        } else {
+            // Fallback to blueprint_expr if it exists (for compatibility)
+            node->data.spawn.blueprint_expr = parse_ast_from_json(cJSON_GetObjectItemCaseSensitive(json_node, "blueprint_expr"));
+        }
+        
         cJSON *args_json = cJSON_GetObjectItemCaseSensitive(json_node, "arguments");
         int arg_count = cJSON_GetArraySize(args_json);
         node->data.spawn.arguments = (ASTNode**)malloc(arg_count * sizeof(ASTNode*));
@@ -2012,7 +2476,7 @@ ASTNode* parse_ast_from_json(cJSON *json_node) {
     } else if (strcmp(type_str, "AttributeAccessNode") == 0) {
         node->type = NODE_ATTRIBUTE_ACCESS;
         node->data.attribute_access.object = parse_ast_from_json(cJSON_GetObjectItemCaseSensitive(json_node, "object"));
-        node->data.attribute_access.attribute_name = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "attribute_name")->valuestring);
+        node->data.attribute_access.attribute_name = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "attribute")->valuestring);
     } else if (strcmp(type_str, "DenNode") == 0) {
         node->type = NODE_DEN;
         node->data.den.name = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "name")->valuestring);
@@ -2177,6 +2641,8 @@ ASTNode* parse_ast_from_json(cJSON *json_node) {
     } else if (strcmp(type_str, "BlueprintNode") == 0) {
         node->type = NODE_BLUEPRINT;
         node->data.blueprint.name = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "name")->valuestring);
+        
+        // Parse attributes
         cJSON *attributes_json = cJSON_GetObjectItemCaseSensitive(json_node, "attributes");
         int attribute_count = cJSON_GetArraySize(attributes_json);
         node->data.blueprint.attributes = (ASTNode**)malloc(attribute_count * sizeof(ASTNode*));
@@ -2184,58 +2650,29 @@ ASTNode* parse_ast_from_json(cJSON *json_node) {
         for (int i = 0; i < attribute_count; i++) {
             node->data.blueprint.attributes[i] = parse_ast_from_json(cJSON_GetArrayItem(attributes_json, i));
         }
+        
+        // Parse methods
+        cJSON *methods_json = cJSON_GetObjectItemCaseSensitive(json_node, "methods");
+        if (methods_json && !cJSON_IsNull(methods_json)) {
+            int method_count = cJSON_GetArraySize(methods_json);
+            node->data.blueprint.methods = (ASTNode**)malloc(method_count * sizeof(ASTNode*));
+            node->data.blueprint.num_methods = method_count;
+            for (int i = 0; i < method_count; i++) {
+                node->data.blueprint.methods[i] = parse_ast_from_json(cJSON_GetArrayItem(methods_json, i));
+            }
+        } else {
+            node->data.blueprint.methods = NULL;
+            node->data.blueprint.num_methods = 0;
+        }
+        
+        // Parse constructor
         cJSON *constructor_json = cJSON_GetObjectItemCaseSensitive(json_node, "constructor");
         if (constructor_json && !cJSON_IsNull(constructor_json)) {
             node->data.blueprint.constructor = parse_ast_from_json(constructor_json);
         } else {
             node->data.blueprint.constructor = NULL;
         }
-    } else if (strcmp(type_str, "ConstructorNode") == 0) {
-        node->type = NODE_CONSTRUCTOR_DECL;
-        cJSON *params_json = cJSON_GetObjectItemCaseSensitive(json_node, "params");
-        int param_count = cJSON_GetArraySize(params_json);
-        node->data.constructor_decl.params = (char**)malloc(param_count * sizeof(char*));
-        node->data.constructor_decl.num_params = param_count;
-        for (int i = 0; i < param_count; i++) {
-            node->data.constructor_decl.params[i] = strdup(cJSON_GetArrayItem(params_json, i)->valuestring);
-        }
-        cJSON *body_json = cJSON_GetObjectItemCaseSensitive(json_node, "body");
-        int body_count = cJSON_GetArraySize(body_json);
-        node->data.constructor_decl.body = (ASTNode**)malloc(body_count * sizeof(ASTNode*));
-        node->data.constructor_decl.num_body_statements = body_count;
-        for (int i = 0; i < body_count; i++) {
-            node->data.constructor_decl.body[i] = parse_ast_from_json(cJSON_GetArrayItem(body_json, i));
-        }
-    } else if (strcmp(type_str, "AttemptTrapConcludeNode") == 0) {
-        node->type = NODE_ATTEMPT_TRAP_CONCLUDE;
-        cJSON *attempt_body_json = cJSON_GetObjectItemCaseSensitive(json_node, "attempt_body");
-        int attempt_body_count = cJSON_GetArraySize(attempt_body_json);
-        node->data.attempt_trap_conclude.attempt_body = (ASTNode**)malloc(attempt_body_count * sizeof(ASTNode*));
-        node->data.attempt_trap_conclude.num_attempt_statements = attempt_body_count;
-        for (int i = 0; i < attempt_body_count; i++) {
-            node->data.attempt_trap_conclude.attempt_body[i] = parse_ast_from_json(cJSON_GetArrayItem(attempt_body_json, i));
-        }
-        cJSON *error_var_json = cJSON_GetObjectItemCaseSensitive(json_node, "error_var");
-        if (error_var_json && cJSON_IsString(error_var_json)) {
-            node->data.attempt_trap_conclude.error_var = strdup(error_var_json->valuestring);
-        } else {
-            node->data.attempt_trap_conclude.error_var = NULL;
-        }
-        cJSON *trap_body_json = cJSON_GetObjectItemCaseSensitive(json_node, "trap_body");
-        int trap_body_count = cJSON_GetArraySize(trap_body_json);
-        node->data.attempt_trap_conclude.trap_body = (ASTNode**)malloc(trap_body_count * sizeof(ASTNode*));
-        node->data.attempt_trap_conclude.num_trap_statements = trap_body_count;
-        for (int i = 0; i < trap_body_count; i++) {
-            node->data.attempt_trap_conclude.trap_body[i] = parse_ast_from_json(cJSON_GetArrayItem(trap_body_json, i));
-        }
-        cJSON *conclude_body_json = cJSON_GetObjectItemCaseSensitive(json_node, "conclude_body");
-        int conclude_body_count = cJSON_GetArraySize(conclude_body_json);
-        node->data.attempt_trap_conclude.conclude_body = (ASTNode**)malloc(conclude_body_count * sizeof(ASTNode*));
-        node->data.attempt_trap_conclude.num_conclude_statements = conclude_body_count;
-        for (int i = 0; i < conclude_body_count; i++) {
-            node->data.attempt_trap_conclude.conclude_body[i] = parse_ast_from_json(cJSON_GetArrayItem(conclude_body_json, i));
-        }
-        node->data.attempt_trap_conclude.peek = cJSON_GetObjectItemCaseSensitive(json_node, "peek")->valueint;
+
 
     } else if (strcmp(type_str, "KindNode") == 0) {
         node->type = NODE_KIND;
@@ -2269,6 +2706,74 @@ ASTNode* parse_ast_from_json(cJSON *json_node) {
             node->data.nick.alias = type_node;
         } else {
             node->data.nick.alias = parse_ast_from_json(alias_json);
+        }
+    } else if (strcmp(type_str, "EachNode") == 0) {
+        node->type = NODE_EACH;
+        node->data.each.var_name = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "var_name")->valuestring);
+        node->data.each.iterable = parse_ast_from_json(cJSON_GetObjectItemCaseSensitive(json_node, "iterable"));
+        cJSON *body_json = cJSON_GetObjectItemCaseSensitive(json_node, "body");
+        int body_count = cJSON_GetArraySize(body_json);
+        node->data.each.body = (ASTNode**)malloc(body_count * sizeof(ASTNode*));
+        node->data.each.num_body_statements = body_count;
+        for (int i = 0; i < body_count; i++) {
+            node->data.each.body[i] = parse_ast_from_json(cJSON_GetArrayItem(body_json, i));
+        }
+    } else if (strcmp(type_str, "UntilNode") == 0) {
+        node->type = NODE_UNTIL;
+        node->data.until.condition = parse_ast_from_json(cJSON_GetObjectItemCaseSensitive(json_node, "condition"));
+        cJSON *body_json = cJSON_GetObjectItemCaseSensitive(json_node, "body");
+        int body_count = cJSON_GetArraySize(body_json);
+        node->data.until.body = (ASTNode**)malloc(body_count * sizeof(ASTNode*));
+        node->data.until.num_body_statements = body_count;
+        for (int i = 0; i < body_count; i++) {
+            node->data.until.body[i] = parse_ast_from_json(cJSON_GetArrayItem(body_json, i));
+        }
+    } else if (strcmp(type_str, "MethodCallNode") == 0) {
+        node->type = NODE_METHOD_CALL;
+        node->data.method_call.object = parse_ast_from_json(cJSON_GetObjectItemCaseSensitive(json_node, "object"));
+        node->data.method_call.method_name = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "method_name")->valuestring);
+        cJSON *args_json = cJSON_GetObjectItemCaseSensitive(json_node, "arguments");
+        int arg_count = cJSON_GetArraySize(args_json);
+        node->data.method_call.args = (ASTNode**)malloc(arg_count * sizeof(ASTNode*));
+        node->data.method_call.num_args = arg_count;
+        for (int i = 0; i < arg_count; i++) {
+            node->data.method_call.args[i] = parse_ast_from_json(cJSON_GetArrayItem(args_json, i));
+        }
+    } else if (strcmp(type_str, "ModuleNode") == 0) {
+        node->type = NODE_MODULE;
+        node->data.module.name = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "name")->valuestring);
+        cJSON *body_json = cJSON_GetObjectItemCaseSensitive(json_node, "body");
+        int body_count = cJSON_GetArraySize(body_json);
+        node->data.module.body = (ASTNode**)malloc(body_count * sizeof(ASTNode*));
+        node->data.module.num_body_statements = body_count;
+        for (int i = 0; i < body_count; i++) {
+            node->data.module.body[i] = parse_ast_from_json(cJSON_GetArrayItem(body_json, i));
+        }
+    } else if (strcmp(type_str, "BringNode") == 0) {
+        node->type = NODE_BRING;
+        cJSON *modules_json = cJSON_GetObjectItemCaseSensitive(json_node, "modules");
+        if (modules_json && cJSON_IsArray(modules_json) && cJSON_GetArraySize(modules_json) > 0) {
+             node->data.bring.module = strdup(cJSON_GetArrayItem(modules_json, 0)->valuestring);
+        } else {
+             node->data.bring.module = strdup("unknown_module");
+        }
+        cJSON *src = cJSON_GetObjectItemCaseSensitive(json_node, "source");
+        node->data.bring.source = (src && cJSON_IsString(src)) ? strdup(src->valuestring) : NULL;
+    } else if (strcmp(type_str, "ContractNode") == 0) {
+        node->type = NODE_CONTRACT;
+        node->data.contract.name = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "name")->valuestring);
+    } else if (strcmp(type_str, "TriggerNode") == 0) {
+        node->type = NODE_TRIGGER;
+        node->data.trigger_node.error_name = strdup(cJSON_GetObjectItemCaseSensitive(json_node, "error_name")->valuestring);
+        node->data.trigger_node.message = parse_ast_from_json(cJSON_GetObjectItemCaseSensitive(json_node, "message"));
+    } else if (strcmp(type_str, "PackNode") == 0) {
+        node->type = NODE_PACK;
+        cJSON *items_json = cJSON_GetObjectItemCaseSensitive(json_node, "items");
+        int item_count = cJSON_GetArraySize(items_json);
+        node->data.pack.num_items = item_count;
+        node->data.pack.items = (ASTNode**)malloc(sizeof(ASTNode*) * item_count);
+        for (int i = 0; i < item_count; i++) {
+            node->data.pack.items[i] = parse_ast_from_json(cJSON_GetArrayItem(items_json, i));
         }
     } else {
         fprintf(stderr, "Unknown AST node type: %s\n", type_str);
@@ -2387,7 +2892,7 @@ void set_variable(Scope* scope, const char* name, Value* value) {
 
 char* value_to_string(Value* val) {
     if (!val) {
-        return "null";
+        return strdup("null");
     }
     char* str = malloc(100); // Allocate a buffer
     switch (val->type) {
@@ -2399,10 +2904,18 @@ char* value_to_string(Value* val) {
             }
             break;
         case VAL_STRING:
-            sprintf(str, "%s", val->as.string);
+            if (val->as.string) {
+                free(str); // Free the small buffer
+                str = strdup(val->as.string); // Return a copy of the string
+            } else {
+                sprintf(str, "(null string)");
+            }
             break;
         case VAL_BOOL:
             sprintf(str, "%s", val->as.boolean ? "true" : "false");
+            break;
+        case VAL_RANGE:
+            sprintf(str, "%g..%g", val->as.range.start, val->as.range.end);
             break;
         case VAL_NIL:
             sprintf(str, "nil");

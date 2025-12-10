@@ -1,0 +1,64 @@
+< Complete Beacon UOP Integration Test >
+< Tests all working features in one unified program >
+
+spec calculate_sum(a, b) {
+    forward a + b
+}
+
+spec main() {
+    show("=== Beacon UOP Complete Test ===")
+    show("")
+    
+    < Test 1: Variables and Constants >
+    show("Test 1: Variables and Constants")
+    firm pi = 3.14159
+    firm name = "Beacon"
+    show(pi)
+    show(name)
+    show("")
+    
+    < Test 2: Functions >
+    show("Test 2: Function Calls")
+    firm result = funcall calculate_sum(10, 20)
+    show(result)
+    show("")
+    
+    < Test 3: Control Flow >
+    show("Test 3: Control Flow")
+    firm score = 85
+    check score > 90 {
+        show("Grade: A")
+    }
+    alter score > 60 {
+        show("Grade: B")
+    }
+    altern {
+        show("Grade: C")
+    }
+    show("")
+    
+    < Test 4: Loops >
+    show("Test 4: Loops")
+    traverse i from 1 to 3 {
+        show(i)
+    }
+    show("")
+    
+    < Test 5: Error Handling >
+    show("Test 5: Error Handling")
+    attempt {
+        show("Executing code...")
+        firm x = 100
+    }
+    trap {
+        show("Error caught!")
+    }
+    conclude {
+        show("Cleanup done")
+    }
+    show("")
+    
+    show("=== All UOP Tests Complete ===")
+}
+
+funcall main()

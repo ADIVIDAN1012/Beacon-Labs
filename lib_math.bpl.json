@@ -1,0 +1,86 @@
+{
+  "type": "ProgramNode",
+  "statements": [
+    {
+      "type": "ShowStatementNode",
+      "expressions": [
+        {
+          "type": "StringNode",
+          "value": "Loading Math Library..."
+        }
+      ]
+    },
+    {
+      "type": "ConstantDeclNode",
+      "const_name": "pi",
+      "value": {
+        "type": "NumberNode",
+        "value": 3.14159
+      }
+    },
+    {
+      "type": "FunctionDeclNode",
+      "name": "add",
+      "params": [
+        "x",
+        "y"
+      ],
+      "body": [
+        {
+          "type": "ReturnStatementNode",
+          "expression": {
+            "type": "BinaryOpNode",
+            "left": {
+              "type": "VarAccessNode",
+              "var_name": "x"
+            },
+            "op": {
+              "type": "PLUS",
+              "value": "+"
+            },
+            "right": {
+              "type": "VarAccessNode",
+              "var_name": "y"
+            }
+          }
+        }
+      ],
+      "func_type": "spec",
+      "exposed": false,
+      "shared": false,
+      "docstring": null
+    },
+    {
+      "type": "FunctionDeclNode",
+      "name": "sub",
+      "params": [
+        "x",
+        "y"
+      ],
+      "body": [
+        {
+          "type": "ReturnStatementNode",
+          "expression": {
+            "type": "BinaryOpNode",
+            "left": {
+              "type": "VarAccessNode",
+              "var_name": "x"
+            },
+            "op": {
+              "type": "MINUS",
+              "value": "-"
+            },
+            "right": {
+              "type": "VarAccessNode",
+              "var_name": "y"
+            }
+          }
+        }
+      ],
+      "func_type": "spec",
+      "exposed": false,
+      "shared": false,
+      "docstring": null
+    }
+  ]
+}
