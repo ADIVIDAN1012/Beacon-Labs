@@ -48,7 +48,7 @@
                         <span class="dot green"></span>
                     </div>
                     <pre><code class="language-beacon"><span class="comment">&lt; NEW v2.0: Pack Collections &gt;</span>
-<span class="keyword">firm</span> nums = <span class="keyword">pack</span> {1, 2, 3}
+<span class="keyword">firm</span> nums = <span class="keyword">pack</span>(1, 2, 3)
 <span class="function">show</span> <span class="string">"Numbers: |nums|"</span>
 
 <span class="comment">&lt; String Interpolation &gt;</span>
@@ -102,6 +102,10 @@
                     <h3>Traverse Loops <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7em; margin-left: 8px;">v2.0.0</span></h3>
                     <p>New `traverse i from 1 to 10` syntax replaces complex loop structures. Readable, expressive, and efficient.</p>
                 </div>
+                <div class="mode-card">
+                    <h3>⚡ Run Your Code</h3>
+                    <p>Compile .bpl to JSON AST, then execute with C runtime</p>
+                    <pre><code># Compile to JSON AST
 python -m src.frontend.parser program.bpl
 
 # Execute with BPL runtime
