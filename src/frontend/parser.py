@@ -1,8 +1,8 @@
 # parser.py
 
-from symbol_table import SymbolTable
-from lexer import Token
-from beacon_ast import (
+from .symbol_table import SymbolTable
+from .lexer import Token
+from .beacon_ast import (
     ProgramNode, NumberNode, BinaryOpNode, UnaryOpNode, VarAccessNode, VarAssignNode, ConstantDeclNode, 
     ShowStatementNode, NickDeclNode, FunctionDeclNode, ReturnStatementNode, FunctionCallNode, MethodCallNode, 
     StringNode, ExpressionStatementNode, DocstringNode, CheckStatementNode, EachNode, UntilNode, 
@@ -14,160 +14,7 @@ from beacon_ast import (
     ModuleNode, BringNode, ContractNode
 )
 
-class Parser:
-    def __init__(self, tokens: list[Token]):
-        self.tokens = tokens
-        self.position = 0
-        self.current_token = self.tokens[self.position] if self.tokens else None
-        self.symbol_table = SymbolTable()
 
-    def advance(self):
-        self.position += 1
-        self.current_token = self.tokens[self.position] if self.position < len(self.tokens) else None
-
-    def eat(self, token_type):
-        if self.current_token and self.current_token.type == token_type:
-            self.advance()
-        else:
-            raise Exception(f"Expected {token_type}, got {self.current_token.type if self.current_token else 'EOF'}")
-
-    def parse(self):
-        return self.program()
-
-    def program(self):
-        statements = []
-        while self.current_token.type != 'EOF':
-            statements.append(self.statement())
-        return ProgramNode(statements)
-
-    def statement(self):
-        if self.current_token.type == 'FIRM':
-            return self.parse_constant_declaration()
-
-        elif self.current_token.type == 'NOTE':
-            self.eat('NOTE')
-            if self.current_token.type == 'STRING':
-                docstring_value = self.current_token.value
-                self.eat('STRING')
-                return DocstringNode(docstring_value)
-            else:
-                raise Exception("Expected STRING after NOTE for docstring")
-        elif self.current_token.type == 'SPEC':
-            return self.parse_function_declaration()
-        elif self.current_token.type == 'FORWARD':
-            self.eat('FORWARD')
-            expression = self.expression()
-            return ReturnStatementNode(expression)
-        elif self.current_token.type == 'GIVING':
-            self.eat('GIVING')
-            expression = self.expression()
-            return ReturnStatementNode(expression)
-        elif self.current_token.type == 'SHOW':
-            return self.parse_show_statement()
-        elif self.current_token.type == 'WHEN':
-            return self.parse_when_statement()
-        elif self.current_token.type == 'EACH':
-            return self.parse_each_statement()
-        elif self.current_token.type == 'UNTIL':
-            return self.parse_until_statement()
-        elif self.current_token.type == 'ATTEMPT':
-            return self.parse_attempt_trap_statement()
-        elif self.current_token.type == 'BLUEPRINT':
-            return self.parse_blueprint_declaration()
-        elif self.current_token.type == 'MODULE':
-            return self.parse_module_declaration()
-        elif self.current_token.type == 'BRING':
-            return self.parse_bring_statement()
-        elif self.current_token.type == 'CONTRACT':
-            return self.parse_contract_declaration()
-        elif self.current_token.type == 'SPAWN':
-             # Spawn statement (expression stmt)
-             expr = self.parse_spawn_expression()
-             return ExpressionStatementNode(expr)
-        # Keep specialized statements if keywords exist, else remove/deprecate
-        elif self.current_token.type == 'HALT':
-            return self.parse_halt_statement()
-        elif self.current_token.type == 'PROCEED':
-            return self.parse_proceed_statement()
-        elif self.current_token.type == 'WAIT':
-            return self.parse_wait_statement()
-        elif self.current_token.type == 'TRIGGER':
-            return self.parse_trigger_statement()
-        elif self.current_token.type == 'BLAME':
-            return self.parse_blame_statement()
-        # Removed TYPE, KIND, NICK, HIDDEN, SHIELDED, INTERNAL, EMBED, PARAL, HOLD, SIGNAL, LISTEN, ASK (expr), AUTHEN, TRANSFORM, CONDENSE, PACK, UNPACK
-        # funcall legacy support:
-        elif self.current_token.type == 'WORD' and self.current_token.value == 'funcall':
-             # Legacy support removed or error?
-             raise Exception("'funcall' is deprecated. Use function() directly.")
-        else:
-            left = self.expression()
-            if self.current_token and self.current_token.type == 'ASSIGN':
-                self.eat('ASSIGN')
-                right = self.expression()
-                if not isinstance(left, (VarAccessNode, AttributeAccessNode)):
-                    raise Exception("Invalid assignment target.")
-                return VarAssignNode(target=left, value=right)
-            return ExpressionStatementNode(left)
-
-    def parse_function_call_statement(self):
-        self.eat('FUNCALL')
-        expr = self.expression()
-        if isinstance(expr, VarAccessNode):
-            expr = FunctionCallNode(expr.var_name, [])
-        
-        if not isinstance(expr, (FunctionCallNode, AttributeAccessNode)):
-            raise Exception(f"Expected a function call or method call after 'funcall', but got {type(expr)}")
-
-        return ExpressionStatementNode(expr)
-
-    def parse_function_declaration(self, exposed=False, shared=False):
-        func_type = self.current_token.type
-        if func_type not in ['SPEC', 'PREP']:
-            raise Exception(f"Expected SPEC or PREP, got {func_type}")
-        self.eat(func_type) # Consume 'spec' or 'prep'
-        if self.current_token.type == 'WORD':
-            function_name = self.current_token.value
-            self.eat('WORD') # Consume function name
-        else:
-            function_name = None
-        self.eat('LPAREN') # Consume '('
-        params = []
-        if self.current_token.type == 'WORD' or self.current_token.type == 'OWN':
-            params.append(self.current_token.value)
-            self.eat(self.current_token.type)
-            while self.current_token.type == 'COMMA':
-                self.eat('COMMA')
-                params.append(self.current_token.value)
-                self.eat(self.current_token.type)
-        self.eat('RPAREN')
-
-        docstring = None
-        if self.current_token.type == 'NOTE':
-            self.eat('NOTE')
-            if self.current_token.type == 'STRING':
-                docstring = self.current_token.value
-                self.eat('STRING')
-            else:
-                raise Exception("Expected STRING after NOTE")
-
-        body = []
-        if not exposed:
-            self.eat('LBRACE')
-            while self.current_token.type != 'RBRACE':
-                body.append(self.statement())
-            self.eat('RBRACE') # Consume '}'
-        
-        return FunctionDeclNode(function_name, params, body, func_type.lower(), exposed, shared, docstring=docstring)
-
-    def parse_show_statement(self):
-        self.eat('SHOW')
-        self.eat('LPAREN')
-        expressions = []
-        while self.current_token and self.current_token.type != 'RPAREN':
-            if self.current_token.type == 'COMMA':
-                self.eat('COMMA')
-                continue
 
 
 class Parser:
@@ -218,8 +65,8 @@ class Parser:
             return self.parse_show_statement()
         elif self.current_token.type == 'WHEN':
             return self.parse_when_statement()
-        elif self.current_token.type == 'EACH':
-            return self.parse_each_statement()
+        elif self.current_token.type == 'TRAVERSE':
+            return self.parse_traverse_statement()
         elif self.current_token.type == 'MODULE':
              return self.parse_module_declaration()
         elif self.current_token.type == 'BRING':
@@ -416,13 +263,13 @@ class Parser:
         self.eat('DONE')
         return CheckStatementNode(condition, body, alter_clauses, altern_clause)
 
-    def parse_each_statement(self):
-        self.eat('EACH')
+    def parse_traverse_statement(self):
+        self.eat('TRAVERSE')
         var_name = self.current_token.value
         self.eat('WORD')
-        self.eat('IN')
+        self.eat('FROM')
         start_val = self.expression()
-        self.eat('RANGE')
+        self.eat('TO')
         end_val = self.expression()
         self.eat('COLON')
         
@@ -431,7 +278,12 @@ class Parser:
             body.append(self.statement())
         self.eat('DONE')
         
-        return TraverseNode(var_name, start_val, end_val, NumberNode(1.0), body)
+        # Synthetic range node using '..' operator token
+        # We manually create the Token object as it's no longer produced by Lexer
+        range_op = Token('RANGE', '..')
+        iterable = BinaryOpNode(start_val, range_op, end_val)
+        
+        return EachNode(var_name, iterable, body)
 
     def expression(self):
         return self.logic_or()
@@ -578,7 +430,7 @@ class Parser:
                         if interp_expr.strip() == 'peek':
                             parts.append(VarAccessNode('peek'))
                         else:
-                            from lexer import Lexer
+                            from .lexer import Lexer
                             temp_lexer = Lexer(interp_expr)
                             temp_parser = self.__class__(temp_lexer.tokenize())
                             parts.append(temp_parser.expression())
@@ -601,14 +453,14 @@ class Parser:
             return self.parse_spawn_expression()
         elif token.type == 'PACK':
             self.eat('PACK')
-            self.eat('LBRACE')
+            self.eat('LPAREN')
             items = []
-            if self.current_token.type != 'RBRACE':
+            if self.current_token.type != 'RPAREN':
                 items.append(self.expression())
                 while self.current_token.type == 'COMMA':
                     self.eat('COMMA')
                     items.append(self.expression())
-            self.eat('RBRACE')
+            self.eat('RPAREN')
             return PackNode(items)
         
         # Removed DEN, CONVERT, KIND (legacy)
@@ -861,6 +713,7 @@ class Parser:
                     body.append(self.statement())
                 self.eat('DONE')
                 
+                params.insert(0, 'own')
                 methods.append(FunctionDeclNode(method_name, params, body, func_type, docstring=m_docstring))
             elif self.current_token.type in ('MAKE', 'PREP'):
                  self.eat(self.current_token.type)
@@ -908,6 +761,7 @@ class Parser:
                  while self.current_token.type not in ('DONE', 'EOF'):
                      c_body.append(self.statement())
                  self.eat('DONE')
+                 params.insert(0, 'own')
                  constructor = ConstructorNode(params, c_body)
             else:
                  if self.current_token.type == 'DONE':
@@ -923,6 +777,20 @@ class Parser:
         # Implementing as dict return for now if BlueprintNode not updated? 
         # No, update BlueprintNode.
         return BlueprintNode(name, attributes, methods, docstring=docstring, constructor=constructor, parent=parent, contracts=contracts)
+
+    def parse_spawn_expression(self):
+        self.eat('SPAWN')
+        blueprint_name = self.current_token.value
+        self.eat('WORD')
+        self.eat('LPAREN')
+        arguments = []
+        if self.current_token.type != 'RPAREN':
+            arguments.append(self.expression())
+            while self.current_token.type == 'COMMA':
+                self.eat('COMMA')
+                arguments.append(self.expression())
+        self.eat('RPAREN')
+        return SpawnNode(blueprint_name, arguments)
 
     def parse_contract_declaration(self):
         self.eat('CONTRACT')

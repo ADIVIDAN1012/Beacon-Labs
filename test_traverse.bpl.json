@@ -1,0 +1,97 @@
+{
+  "type": "ProgramNode",
+  "statements": [
+    {
+      "type": "FunctionDeclNode",
+      "name": "main",
+      "params": [],
+      "body": [
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "Testing Traverse Loop"
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "start_val",
+          "value": {
+            "type": "NumberNode",
+            "value": 1.0
+          }
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "end_val",
+          "value": {
+            "type": "NumberNode",
+            "value": 5.0
+          }
+        },
+        {
+          "type": "EachNode",
+          "var_name": "i",
+          "iterable": {
+            "type": "BinaryOpNode",
+            "left": {
+              "type": "VarAccessNode",
+              "var_name": "start_val"
+            },
+            "op": {
+              "type": "RANGE",
+              "value": ".."
+            },
+            "right": {
+              "type": "VarAccessNode",
+              "var_name": "end_val"
+            }
+          },
+          "body": [
+            {
+              "type": "ShowStatementNode",
+              "expressions": [
+                {
+                  "type": "InterpolatedStringNode",
+                  "parts": [
+                    {
+                      "type": "StringNode",
+                      "value": "Value: "
+                    },
+                    {
+                      "type": "VarAccessNode",
+                      "var_name": "i"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "Loop Complete"
+            }
+          ]
+        }
+      ],
+      "func_type": "spec",
+      "exposed": false,
+      "shared": false,
+      "docstring": null
+    },
+    {
+      "type": "ExpressionStatementNode",
+      "expression": {
+        "type": "FunctionCallNode",
+        "function_name": "main",
+        "arguments": []
+      }
+    }
+  ]
+}

@@ -2,10 +2,10 @@ import sys
 import os
 import json
 import subprocess
-sys.path.append(os.path.join(os.getcwd(), 'src', 'frontend'))
+sys.path.append(os.getcwd())
 
-from lexer import Lexer
-from parser import Parser
+from src.frontend.lexer import Lexer
+from src.frontend.parser import Parser
 
 def compile_to_json(filename, output_filename=None):
     print(f"Compiling {filename}...")

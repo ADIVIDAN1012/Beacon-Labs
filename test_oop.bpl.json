@@ -1,0 +1,256 @@
+{
+  "type": "ProgramNode",
+  "statements": [
+    {
+      "type": "BlueprintNode",
+      "name": "Animal",
+      "attributes": [
+        {
+          "type": "VarAssignNode",
+          "target": {
+            "type": "VarAccessNode",
+            "var_name": "name"
+          },
+          "value": null
+        },
+        {
+          "type": "VarAssignNode",
+          "target": {
+            "type": "VarAccessNode",
+            "var_name": "age"
+          },
+          "value": null
+        }
+      ],
+      "methods": [
+        {
+          "type": "FunctionDeclNode",
+          "name": "speak",
+          "params": [
+            "own"
+          ],
+          "body": [
+            {
+              "type": "ShowStatementNode",
+              "expressions": [
+                {
+                  "type": "StringNode",
+                  "value": "Animal speaks"
+                }
+              ]
+            },
+            {
+              "type": "ShowStatementNode",
+              "expressions": [
+                {
+                  "type": "AttributeAccessNode",
+                  "object": {
+                    "type": "VarAccessNode",
+                    "var_name": "own"
+                  },
+                  "attribute": "name"
+                }
+              ]
+            }
+          ],
+          "func_type": "spec",
+          "exposed": false,
+          "shared": false,
+          "docstring": null
+        },
+        {
+          "type": "FunctionDeclNode",
+          "name": "get_age",
+          "params": [
+            "own"
+          ],
+          "body": [
+            {
+              "type": "ReturnStatementNode",
+              "expression": {
+                "type": "AttributeAccessNode",
+                "object": {
+                  "type": "VarAccessNode",
+                  "var_name": "own"
+                },
+                "attribute": "age"
+              }
+            }
+          ],
+          "func_type": "spec",
+          "exposed": false,
+          "shared": false,
+          "docstring": null
+        }
+      ],
+      "docstring": null,
+      "constructor": {
+        "type": "ConstructorNode",
+        "params": [
+          "own",
+          "n",
+          "age_val"
+        ],
+        "body": [
+          {
+            "type": "VarAssignNode",
+            "target": {
+              "type": "AttributeAccessNode",
+              "object": {
+                "type": "VarAccessNode",
+                "var_name": "own"
+              },
+              "attribute": "name"
+            },
+            "value": {
+              "type": "VarAccessNode",
+              "var_name": "n"
+            }
+          },
+          {
+            "type": "VarAssignNode",
+            "target": {
+              "type": "AttributeAccessNode",
+              "object": {
+                "type": "VarAccessNode",
+                "var_name": "own"
+              },
+              "attribute": "age"
+            },
+            "value": {
+              "type": "VarAccessNode",
+              "var_name": "age_val"
+            }
+          }
+        ]
+      },
+      "parent": null,
+      "contracts": []
+    },
+    {
+      "type": "FunctionDeclNode",
+      "name": "main",
+      "params": [],
+      "body": [
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "--- Testing OOP (Blueprint/Spawn) ---"
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "1. Creating instance"
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "dog",
+          "value": {
+            "type": "SpawnNode",
+            "blueprint_name": "Animal",
+            "arguments": [
+              {
+                "type": "StringNode",
+                "value": "Rex"
+              },
+              {
+                "type": "NumberNode",
+                "value": 3.0
+              }
+            ]
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "2. Calling method"
+            }
+          ]
+        },
+        {
+          "type": "ExpressionStatementNode",
+          "expression": {
+            "type": "MethodCallNode",
+            "object": {
+              "type": "VarAccessNode",
+              "var_name": "dog"
+            },
+            "method_name": "speak",
+            "arguments": []
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "3. Getting attribute via method"
+            }
+          ]
+        },
+        {
+          "type": "ConstantDeclNode",
+          "const_name": "dog_age",
+          "value": {
+            "type": "MethodCallNode",
+            "object": {
+              "type": "VarAccessNode",
+              "var_name": "dog"
+            },
+            "method_name": "get_age",
+            "arguments": []
+          }
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "Dog age:"
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "VarAccessNode",
+              "var_name": "dog_age"
+            }
+          ]
+        },
+        {
+          "type": "ShowStatementNode",
+          "expressions": [
+            {
+              "type": "StringNode",
+              "value": "--- OOP Verification Complete ---"
+            }
+          ]
+        }
+      ],
+      "func_type": "spec",
+      "exposed": false,
+      "shared": false,
+      "docstring": null
+    },
+    {
+      "type": "ExpressionStatementNode",
+      "expression": {
+        "type": "FunctionCallNode",
+        "function_name": "main",
+        "arguments": []
+      }
+    }
+  ]
+}

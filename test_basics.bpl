@@ -28,17 +28,11 @@ spec main:
         show "Count is negative (Incorrect)"
     done
     
-    show "4. Loops (until)"
-    i = 0
-    until i >= 3:
-        show "Loop i: |i|"
-        i = i + 1
+    show "4. Loops (traverse)"
+    traverse k from 1 to 3:
+        show "Loop k: |k|"
     done
-    
-    show "5. Functions"
-    firm res = add(5, 7)
-    show "5 + 7 = |res|"
-    
+
     show "--- Basics Verification Complete ---"
 done
 

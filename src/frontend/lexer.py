@@ -21,9 +21,9 @@ class Lexer:
         'when': 'WHEN',
         'otherwise': 'OTHERWISE',
         'done': 'DONE',
-        'each': 'EACH',
-        'in': 'IN',
+        'traverse': 'TRAVERSE',
         'from': 'FROM',
+        'to': 'TO',
         'until': 'UNTIL',
         'halt': 'HALT',
         'proceed': 'PROCEED',
@@ -165,6 +165,12 @@ class Lexer:
             elif self.current_char == ')':
                 tokens.append(Token('RPAREN', ')'))
                 self.advance()
+            elif self.current_char == '[':
+                tokens.append(Token('LBRACKET', '['))
+                self.advance()
+            elif self.current_char == ']':
+                tokens.append(Token('RBRACKET', ']'))
+                self.advance()
             elif self.current_char == '{':
                 tokens.append(Token('LBRACE', '{'))
                 self.advance()
@@ -174,15 +180,17 @@ class Lexer:
             elif self.current_char == ',':
                 tokens.append(Token('COMMA', ','))
                 self.advance()
-            elif self.current_char == '.':
-                if self.peek() == '.':
-                    tokens.append(Token('RANGE', '..'))
+                if self.peek() == '>':
+                    tokens.append(Token('ACCESS', '~>'))
                     self.advance()
                     self.advance()
-                else:
-                    # Deprecated standalone dot, but might be used? Plan says ~> replaces it.
-                    # Retaining error for now to enforce unique syntax.
-                    raise Exception("Unexpected character '.' (Use '~>' for access or '..' for range)")
+                else: 
+                     # Deprecated dot access and range
+                     # Show context
+                     start = max(0, self.position - 10)
+                     end = min(len(self.source_code), self.position + 10)
+                     context = self.source_code[start:end]
+                     raise Exception(f"Unexpected character '.' at pos {self.position} near '{context}' (Use '~>' for access)")
             elif self.current_char == '~':
                 if self.peek() == '>':
                     tokens.append(Token('ACCESS', '~>'))

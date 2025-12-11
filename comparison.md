@@ -14,7 +14,7 @@
 | **Memory Model** | Manual + Scopes | GC | GC | Manual |
 | **Compilation** | AST→JSON→C Runtime | Interpreted/JIT | Bytecode→JVM | Native |
 | **OOP** | Blueprint/Spawn | Class-based | Class-based | Struct-based |
-| **Collections** | `pack {}` | List/Dict | ArrayList/HashMap | Arrays |
+| **Collections** | `pack()` | List/Dict | ArrayList/HashMap | Arrays |
 | **Error Handling** | `attempt`/`trap`/`trigger` | try/except | try/catch | Return codes |
 | **Modules** | `bring` + `toolkit` | import | import | #include |
 | **Events** | `signal`/`listen` | ❌ (libs only) | ❌ (libs only) | ❌ |
@@ -59,6 +59,23 @@ int main() {
 }
 ```
 
+### Loop Syntax
+
+**Beacon (Traverse):**
+```beacon
+traverse i from 1 to 10:
+    show i
+done
+```
+
+**Python:**
+```python
+for i in range(1, 11):
+    print(i)
+```
+
+**Analysis:** Beacon's `traverse` offers a readable, English-like alternative to standard for-loops.
+
 **Analysis:** Beacon balances verbosity (explicit `spec`/`done`) with readability (natural keywords).
 
 ---
@@ -67,8 +84,8 @@ int main() {
 
 ### 1. **Pack Collections**
 ```beacon
-firm numbers = pack {1, 2, 3, 4, 5}
-firm mixed = pack {"text", 42, On}
+firm numbers = pack(1, 2, 3, 4, 5)
+firm mixed = pack("text", 42, On)
 ```
 
 ### 2. **Built-in Events**

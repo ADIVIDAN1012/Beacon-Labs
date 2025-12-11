@@ -79,7 +79,7 @@
                 <div class="feature-card">
                     <div class="icon">🎨</div>
                     <h3>Pack Collections <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7em; margin-left: 8px;">v2.0.0</span></h3>
-                    <p>Unique `pack {items}` syntax for data collections. Supports mixed types, expressions, and clean string representation.</p>
+                    <p>Unique `pack(items)` syntax for data collections. Supports mixed types, expressions, and clean string representation.</p>
                 </div>
                 <div class="feature-card">
                     <div class="icon">🎨</div>
@@ -97,11 +97,11 @@
         <section id="code" class="usage">
             <h2>Get Started</h2>
             <div class="usage-modes">
-                <div class="mode-card">
-                    <h3>⚡ Run Your Code</h3>
-                    <p>Compile .bpl to JSON AST, then execute with C runtime</p>
-                    <pre><code># Compile to JSON AST
-python -m src.frontend.lexer program.bpl
+                <div class="feature-card">
+                    <div class="icon">🔁</div>
+                    <h3>Traverse Loops <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7em; margin-left: 8px;">v2.0.0</span></h3>
+                    <p>New `traverse i from 1 to 10` syntax replaces complex loop structures. Readable, expressive, and efficient.</p>
+                </div>
 python -m src.frontend.parser program.bpl
 
 # Execute with BPL runtime
