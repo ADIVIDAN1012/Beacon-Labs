@@ -1,79 +1,121 @@
-# Release Notes - v1.1.0: Dynamic Type Conversion
+# Release Notes - v2.0.0: Pack Collections & Unique Features
 
-## 🎉 New Feature: Automatic Type Detection in `ask()`
+## 🎉 Major Update: Pack Collections and OOP Enhancements
 
-The `ask()` function now automatically detects and converts user input to the appropriate data type, making Beacon even more intuitive and user-friendly!
+Beacon v2.0.0 introduces powerful new features that make the language even more expressive and unique!
 
 ### ✨ What's New
 
-**Dynamic Type Conversion**
-- `ask()` now intelligently converts input based on content
-- Works exactly like Python's `input()` but with automatic type detection
-- No need for manual `convert ... to ...` for common types
+**Pack Collections** 🎒
+- New `pack(items)` syntax for creating data collections
+- Support for mixed-type collections: `pack(1, "hello", On)`
+- Clean string representation
+- Runtime interpretation for flexible data handling
 
-### 🔧 Type Detection Rules
+**Traverse Loops** 🔁
+- New `traverse i from start to end` syntax
+- Replaces legacy `each` and `..` conventions
+- Cleaner, more English-like iteration
 
-| Input | Detected Type | Example |
-|-------|---------------|---------|
-| `42` | Number | `firm age = ask("Age: ")` → 42 (Num) |
-| `3.14` | Number | `firm pi = ask("Pi: ")` → 3.14 (Num) |
-| `On` | Boolean | `firm active = ask("Active: ")` → true |
-| `Off` | Boolean | `firm disabled = ask("Disabled: ")` → false |
-| `Nil` | Nil | `firm empty = ask("Empty: ")` → Nil |
-| `hello` | Text | `firm name = ask("Name: ")` → "hello" |
-| `123abc` | Text | Mixed alphanumeric → "123abc" |
+**Blueprint/Spawn OOP Improvements** 🏗️
+- Added `spec` keyword for method declarations
+- Added `prep` keyword for constructors (alongside `make`)
+- Enhanced parser support for complex OOP structures
 
-### 📝 Usage Examples
+**Accurate Documentation** 📚
+- Created comprehensive `comparison.md` comparing Beacon vs Java/C/Python
+- Updated website with honest runtime description (C-powered JSON AST interpreter)
+- Fixed all misleading dual-mode claims
+
+### 🔧 Pack Collections Usage
 
 ```beacon
-spec main() {
-    < Automatically converts to number >
-    firm age = ask("Enter your age: ")
+< Basic pack >
+firm nums = pack(1, 2, 3)
+show "Numbers: |nums|"
+
+< Mixed types >
+firm data = pack("hello", 42, On)
+
+< Empty pack >
+firm empty = pack()
+
+< Pack with expressions >
+firm calculated = pack(10 + 5, 20 * 2)
+```
+
+### 🔁 Traverse Loops
+
+```beacon
+traverse i from 1 to 5:
+    show "Count: |i|"
+done
+```
+
+### 📝 Blueprint/Spawn Enhancements
+
+```beacon
+blueprint Animal:
+    has name
+    has age
     
-    < Automatically converts to boolean >
-    firm active = ask("Are you active? (On/Off): ")
+    prep (n, age_val):
+        own~>name = n
+        own~>age = age_val
+    done
     
-    < Stores as text >
-    firm name = ask("Enter your name: ")
-}
+    spec speak:
+        show "Animal speaks"
+    done
+done
+
+firm dog = spawn Animal("Rex", 3)
 ```
 
 ### 🔨 Implementation Details
 
 **Frontend Changes:**
-- Updated `parser.py` to recognize `ask()` as callable expression
-- Modified to support both `ask("prompt")` and legacy `ask { }` syntax
+- Added `pack` and `unpack` keywords to lexer
+- Updated parser to handle `pack(items)` as expression
+- Enhanced blueprint parsing for `spec`/`prep` syntax
 
 **Backend Changes:**
-- Added `detect_and_convert_type()` function in `main.c`
-- Implemented automatic type detection with `strtod()` for numbers
-- Added AskNode JSON parser support
+- Implemented `PackNode` JSON parsing in `main.c`
+- Added pack interpretation with string representation
+- Fixed `TriggerNode` JSON serialization
 
-**Documentation:**
-- Updated `README.md` with feature documentation
-- Updated `builtins.md` with new `ask()` behavior
-- Added comprehensive examples
+**Website & Documentation:**
+- Updated website to v2.0.0 with accurate content
+- Removed false "dual execution modes" claims
+- Added pack collections feature showcase
+- Fixed syntax examples (removed parentheses from `show`/`ask`)
+- Updated VS Code extension to v2.0.0
 
-### 📦 Download
+### 📦 Downloads
 
-**BPL.exe** (Windows Executable)
-- Fully compiled standalone executable
-- Includes C backend with type conversion
-- No dependencies required
+**Latest Release:** [v2.0.0](https://github.com/ADIVIDAN1012/Beacon-Labs/releases/tag/v2.0.0)
+
+- **BPL.exe** - C runtime interpreter (near-native performance)
+- **beacon-2.0.0.vsix** - VS Code extension with pack/unpack support
 
 ### 🐛 Bug Fixes
-- Fixed parser to support `ask()` in expression contexts
-- Updated frontend to use correct backend executable name
+- Fixed `TriggerNode` serialization in JSON AST
+- Resolved parser issues with constructor parameters
+- Fixed string interpolation in method bodies
 
 ### 📚 Documentation
-- [README.md](README.md) - Updated with dynamic type conversion feature
-- [builtins.md](builtins.md) - Updated ask() documentation
+- [comparison.md](https://github.com/ADIVIDAN1012/Beacon-Labs/blob/master/comparison.md) - Language comparison guide
+- [Website](https://adividan1012.github.io/Beacon-Labs/) - Updated with v2.0 features
 
 ---
 
-**Full Changelog**: See commit history for detailed changes
+**Full Changelog**: [v1.0.0...v2.0.0](https://github.com/ADIVIDAN1012/Beacon-Labs/compare/v1.0.0...v2.0.0)
 
-**Installation**: Download `BPL.exe` and run your `.bpl` files:
+**Execution**: 
 ```bash
-BPL.exe your_program.bpl
+# Compile .bpl to JSON AST
+python -m src.frontend.parser program.bpl
+
+# Execute with C runtime
+BPL.exe program.bpl.json
 ```
