@@ -2,12 +2,12 @@
 
 ## ✅ Changes Pushed to GitHub
 
-Your website files are now updated and pushed to: https://github.com/ADIVIDAN1012/Beacon-Labs
+Your website files are now updated and pushed to: https://github.com/ADIVIDAN1012/BCE
 
 **Updated:**
 - Download links now point to v2.0.0 GitHub release assets
-- BPL.exe link: `https://github.com/ADIVIDAN1012/Beacon-Labs/releases/download/v2.0.0/BPL.exe`
-- VS Code extension link: `https://github.com/ADIVIDAN1012/Beacon-Labs/releases/download/v2.0.0/beacon-2.0.0.vsix`
+- BPL.exe link: `https://github.com/ADIVIDAN1012/BCE/releases/download/v2.0.0/BPL.exe`
+- VS Code extension link: `https://github.com/ADIVIDAN1012/BCE/releases/download/v2.0.0/beacon-2.0.0.vsix`
 
 ---
 
@@ -15,7 +15,7 @@ Your website files are now updated and pushed to: https://github.com/ADIVIDAN101
 
 ### Option 1: Deploy from `beacon-website` folder (Recommended)
 
-1. Go to: https://github.com/ADIVIDAN1012/Beacon-Labs/settings/pages
+1. Go to: https://github.com/ADIVIDAN1012/BCE/settings/pages
 
 2. Under **Source**:
    - Branch: Select **main**
@@ -41,7 +41,7 @@ If you want the site at the root URL without the `/beacon-website` path, you'll 
 
 **Just follow these 3 steps:**
 
-1. **Open Settings**: https://github.com/ADIVIDAN1012/Beacon-Labs/settings/pages
+1. **Open Settings**: https://github.com/ADIVIDAN1012/BCE/settings/pages
 
 2. **Configure**:
    - Source: **Deploy from a branch**

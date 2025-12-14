@@ -93,7 +93,7 @@ firm dog = spawn Animal("Rex", 3)
 
 ### 📦 Downloads
 
-**Latest Release:** [v2.0.0](https://github.com/ADIVIDAN1012/Beacon-Labs/releases/tag/v2.0.0)
+**Latest Release:** [v2.0.0](https://github.com/ADIVIDAN1012/BCE/releases/tag/v2.0.0)
 
 - **BPL.exe** - C runtime interpreter (near-native performance)
 - **beacon-2.0.0.vsix** - VS Code extension with pack/unpack support
@@ -104,12 +104,12 @@ firm dog = spawn Animal("Rex", 3)
 - Fixed string interpolation in method bodies
 
 ### 📚 Documentation
-- [comparison.md](https://github.com/ADIVIDAN1012/Beacon-Labs/blob/master/comparison.md) - Language comparison guide
+- [comparison.md](https://github.com/ADIVIDAN1012/BCE/blob/master/comparison.md) - Language comparison guide
 - [Website](https://adividan1012.github.io/Beacon-Labs/) - Updated with v2.0 features
 
 ---
 
-**Full Changelog**: [v1.0.0...v2.0.0](https://github.com/ADIVIDAN1012/Beacon-Labs/compare/v1.0.0...v2.0.0)
+**Full Changelog**: [v1.0.0...v2.0.0](https://github.com/ADIVIDAN1012/BCE/compare/v1.0.0...v2.0.0)
 
 **Execution**: 
 ```bash

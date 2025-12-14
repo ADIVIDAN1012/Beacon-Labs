@@ -5,7 +5,7 @@ Thank you for your interest in contributing to Beacon! This document contains te
 ## 🏗️ Project Structure
 
 ```
-Beacon-Labs/
+BCE/
 ├── src/
 │   ├── frontend/         # Python Compiler (Lexer/Parser/AST)
 │   └── runtime/          # C Interpreter (VM/Backend)

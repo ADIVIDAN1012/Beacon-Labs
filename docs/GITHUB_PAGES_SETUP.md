@@ -1,12 +1,12 @@
 # Enable GitHub Pages for Beacon Website
 
 ## ✅ Your code is now on GitHub!
-Repository: https://github.com/ADIVIDAN1012/Beacon-Labs
+Repository: https://github.com/ADIVIDAN1012/BCE
 
 ## Next Steps: Enable GitHub Pages
 
 ### 1. Go to Repository Settings
-1. Open: https://github.com/ADIVIDAN1012/Beacon-Labs
+1. Open: https://github.com/ADIVIDAN1012/BCE
 2. Click **Settings** (top right)
 3. Click **Pages** (left sidebar)
 
@@ -79,13 +79,13 @@ Once your site is live, update the download links in `index.html`:
 
 ```html
 <!-- Change to GitHub releases -->
-<a href="https://github.com/ADIVIDAN1012/Beacon-Labs/releases/download/v1.0/beacon.exe">
+<a href="https://github.com/ADIVIDAN1012/BCE/releases/download/v1.0/beacon.exe">
     Download Compiler
 </a>
 ```
 
 To create a release:
-1. Go to: https://github.com/ADIVIDAN1012/Beacon-Labs/releases/new
+1. Go to: https://github.com/ADIVIDAN1012/BCE/releases/new
 2. Tag: `v1.0`
 3. Title: `Beacon v1.0`
 4. Upload `beacon.exe` and `beacon-0.0.3.vsix`
