@@ -45,8 +45,8 @@ The following table explicitly outlines the current implementation status of Bea
 1.  **Clone the Repository**
 
     ```bash
-    git clone https://github.com/ADIVIDAN1012/BCE.git
-    cd BCE
+    git clone https://github.com/ADIVIDAN1012/Beacon-Code-Engine-BCE.git
+    cd Beacon-Code-Engine-BCE
     ```
 
 2.  **Build the Runtime Environment**
