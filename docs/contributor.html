@@ -141,7 +141,13 @@
             <p class="subtitle" style="margin: 0 auto;">Join the Beacon Codex Institute and help us define the future of clarity in code.</p>
         </div>
 
-        <form id="beacon-form">
+        <form id="beacon-form" action="https://formsubmit.co/aadityasadhu50@gmail.com" method="POST">
+            <!-- Form Settings -->
+            <input type="hidden" name="_subject" value="New Contributor Application - Beacon">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://adividan1012.github.io/Beacon-Code-Engine-BCE/docs/contributor.html">
+
             <!-- 1. Personal Info -->
             <div class="form-section">
                 <h3 class="section-title">1. Personal Information</h3>
@@ -235,21 +241,6 @@
         <p>&copy; 2025 Beacon Codex Institute. All rights reserved.</p>
     </footer>
 
-    <script>
-        document.getElementById('beacon-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.innerHTML = 'Sending...';
-            btn.style.opacity = '0.7';
-            
-            setTimeout(() => {
-                alert('Application Submitted! We will contact you shortly.');
-                btn.innerHTML = 'Application Sent';
-                btn.style.background = '#2ea043'; // Green success
-                btn.disabled = true;
-                btn.style.opacity = '1';
-            }, 1500);
-        });
-    </script>
+    <!-- Real submission handled by FormSubmit.co -->
 </body>
 </html>
