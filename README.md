@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Beacon is a high-level, dynamically typed programming language developed by **Solo open source beacon dev** (under the banner of **BCE - Beacon Code Engine**). It integrates **Object-Oriented Programming (OOP)** with the **Universal User-Oriented Programming (UOP)** paradigm. This unique combination prioritizes readability and user intuition while maintaining the structural benefits of object-oriented design, bridging the gap between human thought processes and machine execution.
+Beacon is a high-level, dynamically typed programming language developed by **Beacon Codex Institute**. It integrates **Object-Oriented Programming (OOP)** with the **Universal User-Oriented Programming (UOP)** paradigm. This unique combination prioritizes readability and user intuition while maintaining the structural benefits of object-oriented design, bridging the gap between human thought processes and machine execution.
 
 ## Introduction
 
@@ -141,4 +141,4 @@ For detailed language specifications, refer to the following documentation:
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-Copyright © 2025 Solo open source beacon dev.
+Copyright © 2025 Beacon Codex Institute.

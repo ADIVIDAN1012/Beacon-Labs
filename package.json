@@ -1,6 +1,6 @@
 {
   "name": "beacon-code-engine",
-  "description": "Beacon (BPL) - A readable programming language by Solo open source beacon dev (BCE).",
+  "description": "Beacon (BPL) - A readable programming language by Beacon Codex Institute.",
   "private": true,
   "version": "1.0.0",
   "type": "module",
