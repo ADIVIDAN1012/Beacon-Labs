@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributor Application - Beacon</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/icon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem 2rem;
+        }
+
+        .form-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 183, 0, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .required::after {
+            content: " *";
+            color: #ff5f56;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 183, 0, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            margin-right: 1rem;
+            accent-color: var(--primary);
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        .submit-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            justify-content: center;
+            font-size: 1.1rem;
+            padding: 1.2rem;
+            cursor: pointer;
+            border: none;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="glow-overlay"></div>
+    
+    <header>
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
+                <img src="assets/icon.png" alt="Beacon Logo">
+                <span>Beacon</span>
+            </a>
+        </div>
+        <nav>
+            <a href="index.html#features">Features</a>
+            <a href="index.html#code">Code</a>
+            <a href="index.html#contact">Contact</a>
+            <a href="#" class="btn-nav active">Join Us</a>
+        </nav>
+    </header>
+
+    <div class="form-container">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem;">Contributor <span class="gradient-text">Application</span></h1>
+            <p class="subtitle" style="margin: 0 auto;">Join the Beacon Codex Institute and help us define the future of clarity in code.</p>
+        </div>
+
+        <form id="beacon-form">
+            <!-- 1. Personal Info -->
+            <div class="form-section">
+                <h3 class="section-title">1. Personal Information</h3>
+                <div class="form-group">
+                    <label class="required">Full Name</label>
+                    <input type="text" name="name" required placeholder="Jane Doe">
+                </div>
+                <div class="form-group">
+                    <label class="required">Email Address</label>
+                    <input type="email" name="email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone" placeholder="+1 234 567 8900">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="location" placeholder="City, Country">
+                </div>
+            </div>
+
+            <!-- 2. Skills -->
+            <div class="form-section">
+                <h3 class="section-title">2. Background & Skills</h3>
+                <div class="form-group">
+                    <label>Educational Background</label>
+                    <input type="text" name="education" placeholder="Degree / Field of Study">
+                </div>
+                <div class="form-group">
+                    <label class="required">Technical Skills</label>
+                    <div class="checkbox-group">
+                        <label class="option-label"><input type="checkbox" name="skills" value="Programming"> Programming (C/C++, Python, Java)</label>
+                        <label class="option-label"><input type="checkbox" name="skills" value="Compiler Design"> Compiler Design</label>
+                        <label class="option-label"><input type="checkbox" name="skills" value="Documentation"> Documentation & Writing</label>
+                        <label class="option-label"><input type="checkbox" name="skills" value="Community"> Community Management</label>
+                        <label class="option-label"><input type="checkbox" name="skills" value="UI/UX"> UI/UX Design</label>
+                        <label class="option-label"><input type="checkbox" name="skills" value="Other"> Other</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Interests -->
+            <div class="form-section">
+                <h3 class="section-title">3. Contribution Interests</h3>
+                <div class="form-group">
+                    <label class="required">Area of Interest</label>
+                    <div class="checkbox-group">
+                        <label class="option-label"><input type="checkbox" name="interests" value="Language Design"> Language Design</label>
+                        <label class="option-label"><input type="checkbox" name="interests" value="Compiler Dev"> Compiler Development</label>
+                        <label class="option-label"><input type="checkbox" name="interests" value="Docs"> Documentation & Archives</label>
+                        <label class="option-label"><input type="checkbox" name="interests" value="Outreach"> Community Outreach</label>
+                        <label class="option-label"><input type="checkbox" name="interests" value="Testing"> Testing & Feedback</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="required">Why do you want to contribute?</label>
+                    <textarea name="reason" required placeholder="Tell us about your motivation..."></textarea>
+                </div>
+            </div>
+
+            <!-- 4. Availability -->
+            <div class="form-section">
+                <h3 class="section-title">4. Availability</h3>
+                <div class="form-group">
+                    <label class="required">Weekly Commitment</label>
+                    <div class="radio-group">
+                        <label class="option-label"><input type="radio" name="availability" value="<2 hours" required> Less than 2 hours</label>
+                        <label class="option-label"><input type="radio" name="availability" value="2-5 hours"> 2–5 hours</label>
+                        <label class="option-label"><input type="radio" name="availability" value="5-10 hours"> 5–10 hours</label>
+                        <label class="option-label"><input type="radio" name="availability" value=">10 hours"> More than 10 hours</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Agreement -->
+            <div class="form-section" style="border-color: var(--primary);">
+                <h3 class="section-title">5. Agreement</h3>
+                <label class="option-label">
+                    <input type="checkbox" required>
+                    <span>I agree to follow the <strong>Contributor Charter</strong>: maintaining clarity, archival standards, and alignment with the Institute’s philosophy.</span>
+                </label>
+            </div>
+
+            <div class="submit-container">
+                <button type="submit" class="btn btn-primary" id="submitBtn">Submit Application</button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Beacon Codex Institute. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('beacon-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = 'Sending...';
+            btn.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                alert('Application Submitted! We will contact you shortly.');
+                btn.innerHTML = 'Application Sent';
+                btn.style.background = '#2ea043'; // Green success
+                btn.disabled = true;
+                btn.style.opacity = '1';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
